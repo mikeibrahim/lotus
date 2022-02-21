@@ -1,18 +1,29 @@
 class Player {
 	// Data
-	#position;
+	#maxHealth;
 	#size;
 	#speed;
-	#moveDirection;
+	#maxInvincibilityTime;
 	#color;
+	// Updated Data
+	#currentHealth;
+	#currentInvincibilityTime;
+	#position;
+	#moveDirection;
 
 	// Constructor
-	constructor({ position, size, speed, color }) {
-		this.#position = position || createVector(0, 0);
+	constructor({ maxHealth, position, size, speed, maxInvincibilityTime, color }) {
+		// Data
+		this.#maxHealth = maxHealth || 3;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
-		this.#moveDirection = createVector(0, 0);
+		this.#maxInvincibilityTime = maxInvincibilityTime || 1000;
 		this.#color = color || color(255, 0, 0);
+		// Updated Data
+		this.#currentHealth = this.#maxHealth;
+		this.#currentInvincibilityTime = 0;
+		this.#position = position || createVector(0, 0);
+		this.#moveDirection = createVector(0, 0);
 	}
 	// Public Getters
 	getPosition() { return this.#position; }
@@ -36,7 +47,13 @@ class Player {
 	// Public Methods
 	update() {
 		this.#move();
+		this.#invincibility();
 		this.#render();
+	}
+	collideWith(collision) {
+		if (collision instanceof Enemy) {
+			this.#takeDamage(collision.getDamage());
+		}
 	}
 
 	// Private Methods
@@ -53,8 +70,37 @@ class Player {
 			)
 		);
 	}
+	#invincibilityFill() {
+		let interval = 250;
+		if (this.#currentInvincibilityTime > 0 && this.#currentInvincibilityTime % interval > interval / 2)
+			fill(color(red(this.#color), green(this.#color), blue(this.#color), 100));
+	}
 	#render() {
 		fill(this.#color);
+		this.#invincibilityFill();
 		circle(this.#position.x, this.#position.y, this.#size);
+	}
+	#invincibility() {
+		if (this.#currentInvincibilityTime > 0) {
+			this.#currentInvincibilityTime -= deltaTime;
+		}
+	}
+
+	#takeDamage(damage) {
+		if (this.#currentInvincibilityTime <= 0) { // If not invincible
+			this.#currentHealth -= damage; // Take damage
+			this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
+			console.log("Player took " + damage + " damage");
+		}
+
+		// Clamp
+		this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
+		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
+
+		// Death
+		if (this.#currentHealth <= 0) this.#die();
+	}
+	#die() {
+		console.log("Player died");
 	}
 }
