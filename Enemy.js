@@ -1,6 +1,5 @@
 class Enemy {
 	// Data
-	#player;
 	#damage;
 	#size;
 	#speed;
@@ -10,9 +9,8 @@ class Enemy {
 	#position;
 
 	// Constructor
-	constructor({ player, damage, size, speed, color }) {
+	constructor({ damage, size, speed, color }) {
 		// Data
-		this.#player = player;
 		this.#damage = damage || 1;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
@@ -27,11 +25,17 @@ class Enemy {
 		switch (char) {
 			case 'r':
 				return new Enemy({
-					player: PLAYER,
 					damage: 1,
 					size: 100,
-					speed: 200,
+					speed: 300,
 					color: color(255, 0, 0)
+				});
+			case 'g':
+				return new Enemy({
+					damage: 1,
+					size: 75,
+					speed: 500,
+					color: color(0, 255, 0)
 				});
 			default:
 				return null;

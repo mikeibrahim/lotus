@@ -108,7 +108,7 @@ class Player {
 	}
 	#invincibilityFill() {
 		let interval = 250;
-		if (this.#currentInvincibilityTime > 0 && this.#currentInvincibilityTime % interval > interval / 2)
+		if (this.#currentInvincibilityTime > 0 && this.#currentInvincibilityTime % interval > interval / 3)
 			fill(color(red(this.#color), green(this.#color), blue(this.#color), 100));
 	}
 	#render() {
@@ -125,8 +125,18 @@ class Player {
 		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
 		if (this.#currentHealth <= 0) this.#die();
 		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
+		new ParticleSystem({
+			count: 10,
+			lifeTime: 500,
+			color: color(red(this.#color), green(this.#color), blue(this.#color), 100),
+			speed: 300,
+			size: this.#size,
+			position: this.#position
+		});
+		PLAYER_CAMERA.shake(200, 50);
 	}
 	#die() {
+		// TODO: death screen
 		ROUND_MANAGER.loadRound(0);
 	}
 }

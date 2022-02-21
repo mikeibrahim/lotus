@@ -8,22 +8,23 @@ class RoundManager {
 		// Data
 		this.#rounds = [
 			{
+				orbs: 1,
 				enemies: [
 					{ type: 'r', count: 10 },
-				],
-				orbs: 1
+				]
 			},
 			{
+				orbs: 5,
 				enemies: [
 					{ type: 'r', count: 20 },
-				],
-				orbs: 1
+					{ type: 'g', count: 20 },
+				]
 			},
 			{
+				orbs: 5,
 				enemies: [
 					{ type: 'r', count: 30 },
-				],
-				orbs: 1
+				]
 			},
 		];
 		this.#currentRound = 0;

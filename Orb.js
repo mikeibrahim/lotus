@@ -21,6 +21,14 @@ class Orb {
 		this.#render();
 	}
 	destroy() {
+		new ParticleSystem({
+			count: 15,
+			lifeTime: 500,
+			color: color(red(this.#color), green(this.#color), blue(this.#color), 200),
+			speed: 200,
+			size: 30,
+			position: this.#position
+		});
 		ORBS.splice(ORBS.indexOf(this), 1);
 	}
 

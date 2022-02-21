@@ -4,6 +4,7 @@ let ENVIRONMENT = null;
 let ROUND_MANAGER = null;
 let ENEMIES = [];
 let ORBS = [];
+let PARTICLE_SYSTEMS = [];
 
 function setup() {
 	// Environment
@@ -28,5 +29,6 @@ function draw() {
 	ROUND_MANAGER.update();
 	ENEMIES.forEach(enemy => enemy.update());
 	ORBS.forEach(orb => orb.update());
+	PARTICLE_SYSTEMS.forEach(particleSystem => particleSystem.update());
 	ENVIRONMENT.update();
 }
