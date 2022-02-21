@@ -46,8 +46,9 @@ class Player {
 
 	// Public Methods
 	update() {
-		this.#move();
 		this.#invincibility();
+		this.#move();
+		this.#detectEnvironmentCollision();
 		this.#render();
 	}
 	collideWith(collision) {
@@ -57,6 +58,18 @@ class Player {
 	}
 
 	// Private Methods
+	#invincibility() {
+		if (this.#currentInvincibilityTime > 0) {
+			this.#currentInvincibilityTime -= deltaTime;
+		}
+	}
+	#detectEnvironmentCollision() {
+		let size = ENVIRONMENT.getSize();
+		if 		(this.#position.x - (this.#size / 2) <  -size / 2) this.#position.x = -size / 2 + (this.#size / 2);
+		else if (this.#position.x + (this.#size / 2) >  size / 2)  this.#position.x = size / 2 - (this.#size / 2);
+		if 		(this.#position.y - (this.#size / 2) <  -size / 2) this.#position.y = -size / 2 + (this.#size / 2);
+		else if (this.#position.y + (this.#size / 2) >  size / 2)  this.#position.y = size / 2 - (this.#size / 2);
+	}
 	#updateMoveDirection() {
 		let input = this.#getInput();
 		this.#moveDirection = input;
@@ -77,28 +90,18 @@ class Player {
 	}
 	#render() {
 		fill(this.#color);
+		stroke(0);
+		strokeWeight(5);
 		this.#invincibilityFill();
 		circle(this.#position.x, this.#position.y, this.#size);
 	}
-	#invincibility() {
-		if (this.#currentInvincibilityTime > 0) {
-			this.#currentInvincibilityTime -= deltaTime;
-		}
-	}
-
 	#takeDamage(damage) {
-		if (this.#currentInvincibilityTime <= 0) { // If not invincible
-			this.#currentHealth -= damage; // Take damage
-			this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
-			console.log("Player took " + damage + " damage");
-		}
-
-		// Clamp
+		if (this.#currentInvincibilityTime > 0) return; // Player is invincible
+		this.#currentHealth -= damage; // Take damage
 		this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
 		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
-
-		// Death
 		if (this.#currentHealth <= 0) this.#die();
+		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
 	}
 	#die() {
 		console.log("Player died");
