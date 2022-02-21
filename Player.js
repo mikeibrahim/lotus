@@ -25,6 +25,12 @@ class Player {
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
 	}
+	
+	// Public Setters
+	setInvincibility(time) {
+		this.#currentInvincibilityTime = time;
+	}
+
 	// Public Getters
 	getPosition() { return this.#position; }
 	getSize() { return this.#size; }
@@ -51,9 +57,26 @@ class Player {
 		this.#detectEnvironmentCollision();
 		this.#render();
 	}
-	collideWith(collision) {
-		if (collision instanceof Enemy) {
-			this.#takeDamage(collision.getDamage());
+	resetPosition() {
+		this.#position.mult(0);
+	}
+	#isTouching(object) {
+		let position = object.getPosition();
+		let size = object.getSize();
+		return this.#position.dist(position) < (this.#size / 2) + (size / 2);
+	}
+	tryCollide(collision) {
+		if (!this.#isTouching(collision)) return;
+
+		switch (collision.constructor.name) {
+			case 'Enemy':
+				this.#takeDamage(collision.getDamage());
+				break;
+			case 'Orb':
+				collision.destroy();
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -65,10 +88,10 @@ class Player {
 	}
 	#detectEnvironmentCollision() {
 		let size = ENVIRONMENT.getSize();
-		if 		(this.#position.x - (this.#size / 2) <  -size / 2) this.#position.x = -size / 2 + (this.#size / 2);
-		else if (this.#position.x + (this.#size / 2) >  size / 2)  this.#position.x = size / 2 - (this.#size / 2);
-		if 		(this.#position.y - (this.#size / 2) <  -size / 2) this.#position.y = -size / 2 + (this.#size / 2);
-		else if (this.#position.y + (this.#size / 2) >  size / 2)  this.#position.y = size / 2 - (this.#size / 2);
+		let min = (-size / 2) + (this.#size / 2);
+		let max = (size / 2) - (this.#size / 2);
+		this.#position.x = constrain(this.#position.x, min, max);
+		this.#position.y = constrain(this.#position.y, min, max);
 	}
 	#updateMoveDirection() {
 		let input = this.#getInput();
@@ -104,6 +127,6 @@ class Player {
 		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
 	}
 	#die() {
-		console.log("Player died");
+		ROUND_MANAGER.loadRound(0);
 	}
 }

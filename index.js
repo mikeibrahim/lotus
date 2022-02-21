@@ -1,8 +1,9 @@
 let PLAYER = null;
 let PLAYER_CAMERA = null;
 let ENVIRONMENT = null;
-let ROUNDS = null;
+let ROUND_MANAGER = null;
 let ENEMIES = [];
+let ORBS = [];
 
 function setup() {
 	// Environment
@@ -17,13 +18,15 @@ function setup() {
 	});
 	PLAYER_CAMERA = new PlayerCamera({player: PLAYER});
 	// Rounds
-	ROUNDS = new Rounds();
-	ROUNDS.loadRound(0);
+	ROUND_MANAGER = new RoundManager();
+	ROUND_MANAGER.loadRound(0);
 }
 function draw() {
 	background(20);
 	PLAYER_CAMERA.update();
 	PLAYER.update();
+	ROUND_MANAGER.update();
 	ENEMIES.forEach(enemy => enemy.update());
+	ORBS.forEach(orb => orb.update());
 	ENVIRONMENT.update();
 }

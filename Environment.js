@@ -10,6 +10,12 @@ class Environment {
 
 	// Public Getters
 	getSize() { return this.#size; }
+	getRandomPosition(objectSize) {
+		let min = (-this.#size / 2) + (objectSize / 2);
+		let max = (this.#size / 2) - (objectSize / 2);
+		let position = createVector(random(min, max), random(min, max));
+		return position;
+	}
 
 	// Public Methods
 	update() {

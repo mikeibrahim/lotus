@@ -19,7 +19,7 @@ class Enemy {
 		this.#color = color || color(255, 0, 0);
 		// Updated Data
 		this.#velocity = this.#randomVector();
-		this.#position = this.#getRandomPosition();
+		this.#position = ENVIRONMENT.getRandomPosition(this.#size);
 	}
 
 	// Public Getters
@@ -37,17 +37,9 @@ class Enemy {
 				return null;
 		}
 	}
+	getPosition() { return this.#position; }
+	getSize() { return this.#size; }
 	getDamage() { return this.#damage; }
-
-	// Private Getters 
-	#getRandomPosition() {
-		let size = ENVIRONMENT.getSize();
-		let position = createVector(
-			random((-size / 2) + (this.#size / 2), (size / 2) - (this.#size / 2)),
-			random((-size / 2) + (this.#size / 2), (size / 2) - (this.#size / 2))
-		);
-		return position;
-	}
 
 	// Public Methods
 	update() {
@@ -63,11 +55,7 @@ class Enemy {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
 	}
 	#detectPlayerCollision() {
-		let playerPosition = this.#player.getPosition();
-		let playerSize = this.#player.getSize();
-		if (playerPosition.dist(this.#position) < (playerSize / 2) + (this.#size / 2)) {
-			this.#player.collideWith(this);
-		}
+		PLAYER.tryCollide(this);
 	}
 	#detectWallCollision() {
 		let size = ENVIRONMENT.getSize();
