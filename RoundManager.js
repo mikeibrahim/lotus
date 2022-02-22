@@ -6,27 +6,7 @@ class RoundManager {
 	// Constructor
 	constructor() {
 		// Data
-		this.#rounds = [
-			{
-				orbs: 1,
-				enemies: [
-					{ type: 'r', count: 10 },
-				]
-			},
-			{
-				orbs: 5,
-				enemies: [
-					{ type: 'r', count: 20 },
-					{ type: 'g', count: 20 },
-				]
-			},
-			{
-				orbs: 5,
-				enemies: [
-					{ type: 'r', count: 30 },
-				]
-			},
-		];
+		this.#rounds = Rounds.getRounds();
 		this.#currentRound = 0;
 	}
 
