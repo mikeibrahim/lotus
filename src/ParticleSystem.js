@@ -21,7 +21,7 @@ class ParticleSystem {
 		// Updated Data
 		this.#particles = [];
 		this.#createParticles();
-		PARTICLE_SYSTEMS.push(this);
+		Game.inst.particleSystems.push(this);
 	}
 	
 
@@ -61,6 +61,6 @@ class ParticleSystem {
 		});
 	}
 	#destroy() {
-		PARTICLE_SYSTEMS.splice(PARTICLE_SYSTEMS.indexOf(this), 1);
+		Game.inst.particleSystems.splice(Game.inst.particleSystems.indexOf(this), 1);
 	}
 }

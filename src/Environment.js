@@ -1,10 +1,12 @@
 class Environment {
 	// Data
+	static inst;
 	#size;
 
 	// Constructor
 	constructor(size) {
 		// Data
+		Environment.inst = this;
 		this.#size = size;
 	}
 

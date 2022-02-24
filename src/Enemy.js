@@ -17,7 +17,7 @@ class Enemy {
 		this.#color = color || color(255, 0, 0);
 		// Updated Data
 		this.#velocity = this.#randomVector();
-		this.#position = ENVIRONMENT.getRandomPosition(this.#size);
+		this.#position = Environment.inst.getRandomPosition(this.#size);
 	}
 
 	// Public Getters
@@ -59,10 +59,10 @@ class Enemy {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
 	}
 	#detectPlayerCollision() {
-		PLAYER.tryCollide(this);
+		Player.inst.tryCollide(this);
 	}
 	#detectWallCollision() {
-		let size = ENVIRONMENT.getSize();
+		let size = Environment.inst.getSize();
 		// Reflect off walls
 		if (this.#position.x - (this.#size / 2) < -size / 2) this.#velocity.x = abs(this.#velocity.x);
 		else if (this.#position.x + (this.#size / 2) > size / 2) this.#velocity.x = -abs(this.#velocity.x);

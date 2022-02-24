@@ -1,18 +1,20 @@
 class RoundManager {
 	// Data
+	static inst;
 	#rounds;
 	#currentRound;
 
 	// Constructor
 	constructor() {
 		// Data
+		RoundManager.inst = this;
 		this.#rounds = Rounds.getRounds();
 		this.#currentRound = 0;
 	}
 
 	// Public Methods
 	update() {
-		if (ORBS.length == 0) this.nextRound();
+		if (Game.inst.orbs.length == 0) this.nextRound();
 	}
 	loadRound(index) {
 		if (index >= this.#rounds.length) {
@@ -21,21 +23,21 @@ class RoundManager {
 			return;
 		}
 		// Round
-		ENEMIES = [];
-		ORBS = [];
+		Game.inst.enemies = [];
+		Game.inst.orbs = [];
 		this.#currentRound = index;
 		let round = this.#rounds[index];
 		// Enemies
 		round.enemies.forEach(enemy => {
-			for (let j = 0; j < enemy.count; j++) ENEMIES.push(Enemy.charToEnemy(enemy.type));
+			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemy.charToEnemy(enemy.type));
 		});
 		// Orbs
 		for (let i = 0; i < round.orbs; i++)
-			ORBS.push(new Orb());
+			Game.inst.orbs.push(new Orb());
 		// Player
-		PLAYER.resetPosition();
-		PLAYER.setInvincibility(2000);
-		PLAYER_CAMERA.zoomIn();
+		Player.inst.resetPosition();
+		Player.inst.setInvincibility(2000);
+		PlayerCamera.inst.zoomIn();
 	}
 	nextRound() {
 		this.loadRound(this.#currentRound + 1);

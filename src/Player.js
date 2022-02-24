@@ -1,5 +1,6 @@
 class Player {
 	// Data
+	static inst;
 	#maxHealth;
 	#size;
 	#speed;
@@ -14,6 +15,7 @@ class Player {
 	// Constructor
 	constructor({ maxHealth, position, size, speed, maxInvincibilityTime, color }) {
 		// Data
+		Player.inst = this;
 		this.#maxHealth = maxHealth || 3;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
@@ -87,7 +89,7 @@ class Player {
 		}
 	}
 	#detectEnvironmentCollision() {
-		let size = ENVIRONMENT.getSize();
+		let size = Environment.inst.getSize();
 		let min = (-size / 2) + (this.#size / 2);
 		let max = (size / 2) - (this.#size / 2);
 		this.#position.x = constrain(this.#position.x, min, max);
@@ -133,10 +135,10 @@ class Player {
 			size: this.#size,
 			position: this.#position
 		});
-		PLAYER_CAMERA.shake(200, 50);
+		PlayerCamera.inst.shake(200, 50);
 	}
 	#die() {
 		// TODO: death screen
-		ROUND_MANAGER.loadRound(0);
+		RoundManager.inst.loadRound(0);
 	}
 }

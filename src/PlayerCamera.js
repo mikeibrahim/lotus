@@ -1,25 +1,27 @@
 class PlayerCamera {
 	// Data
+	static inst;
 	#camera;
 	#speed;
 	#maxZoom;
 	#zoomSpeed;
 	// Updated Data
-	#playerPosition;
+	// #playerPosition;
 	#position;
 	#currentZoom;
 	#shake;
 	#shakeAmount;
 
 	// Constructor
-	constructor({ player, speed, maxZoom, zoomSpeed }) {
+	constructor({ speed, maxZoom, zoomSpeed }) {
 		// Data
+		PlayerCamera.inst = this;
 		this.#camera = createCamera();
 		this.#speed = speed || 2;
 		this.#maxZoom = maxZoom || 2000;
 		this.#zoomSpeed = zoomSpeed || 1;
 		// Updated Data
-		this.#playerPosition = player.getPosition();
+		// this.#playerPosition = Player.inst.getPosition();
 		this.#position = createVector(0, 0);
 		this.#currentZoom = this.#maxZoom;
 		this.#shake = 0;
@@ -41,11 +43,12 @@ class PlayerCamera {
 
 	// Private Methods
 	#moveToPlayer() {
-		let targetDirection = this.#playerPosition.copy().sub(this.#position);
+		let playerPosition = Player.inst.getPosition();
+		let targetDirection = playerPosition.copy().sub(this.#position);
 		targetDirection.normalize();
 		this.#position.add( // Go to target direction
 			targetDirection.copy().mult( // Multiply by distance
-				this.#playerPosition.dist(this.#position) * this.#speed * (deltaTime / 1000) // Multiply by speed & deltaTime
+				playerPosition.dist(this.#position) * this.#speed * (deltaTime / 1000) // Multiply by speed & deltaTime
 			)
 		);
 		this.#currentZoom += (this.#maxZoom - this.#currentZoom) * this.#zoomSpeed * (deltaTime / 1000);

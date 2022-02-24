@@ -7,7 +7,7 @@ class Orb {
 	// Constructor
 	constructor() {
 		this.#size = 50;
-		this.#position = ENVIRONMENT.getRandomPosition(this.#size);
+		this.#position = Environment.inst.getRandomPosition(this.#size);
 		this.#color = color(0, 0, 255);
 	}
 
@@ -29,12 +29,12 @@ class Orb {
 			size: 30,
 			position: this.#position
 		});
-		ORBS.splice(ORBS.indexOf(this), 1);
+		Game.inst.orbs.splice(Game.inst.orbs.indexOf(this), 1);
 	}
 
 	// Private Methods
 	#detectPlayerCollision() {
-		PLAYER.tryCollide(this);
+		Player.inst.tryCollide(this);
 	}
 	#render() {
 		fill(this.#color);
