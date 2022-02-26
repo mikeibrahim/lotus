@@ -2,12 +2,14 @@ class Environment {
 	// Data
 	static inst;
 	#size;
+	#thickness;
 
 	// Constructor
 	constructor(size) {
 		// Data
 		Environment.inst = this;
 		this.#size = size;
+		this.#thickness = 50;
 	}
 
 	// Public Getters
@@ -26,9 +28,10 @@ class Environment {
 
 	// Private Methods
 	#render() {
-		noFill();
-		stroke(0);
-		strokeWeight(50);
-		rect(-this.#size / 2, -this.#size / 2, this.#size, this.#size);
+		fill(0);
+		rect(-this.#size / 2, -this.#size / 2 - this.#thickness, this.#size, this.#thickness); // top
+		rect(-this.#size / 2, this.#size / 2, this.#size, this.#thickness); // bottom
+		rect(-this.#size / 2 - this.#thickness, -this.#size / 2, this.#thickness, this.#size); // left
+		rect(this.#size / 2, -this.#size / 2, this.#thickness, this.#size); // right
 	}
 }

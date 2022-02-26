@@ -17,14 +17,15 @@ class RoundManager {
 		if (Game.inst.orbs.length == 0) this.nextRound();
 	}
 	loadRound(index) {
+		// TODO: Win game
 		if (index >= this.#rounds.length) {
-			// TODO: Win game
 			this.loadRound(0);
 			return;
 		}
 		// Round
 		Game.inst.enemies = [];
 		Game.inst.orbs = [];
+		Game.inst.particleSystems = [];
 		this.#currentRound = index;
 		let round = this.#rounds[index];
 		// Enemies

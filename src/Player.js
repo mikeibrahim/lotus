@@ -26,6 +26,9 @@ class Player {
 		this.#currentInvincibilityTime = 0;
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
+		// Game UI
+		GameUI.inst.setPlayerMaxHealth(this.#maxHealth);
+		GameUI.inst.setPlayerCurrentHealth(this.#currentHealth);
 	}
 	
 	// Public Setters
@@ -36,6 +39,8 @@ class Player {
 	// Public Getters
 	getPosition() { return this.#position; }
 	getSize() { return this.#size; }
+	getCurrentHealth() { return this.#currentHealth; }
+	getMaxHealth() { return this.#maxHealth; }
 
 	// Private Getters
 	#getInput() {
@@ -127,6 +132,8 @@ class Player {
 		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
 		if (this.#currentHealth <= 0) this.#die();
 		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
+
+		GameUI.inst.setPlayerCurrentHealth(this.#currentHealth);
 		new ParticleSystem({
 			count: 10,
 			lifeTime: 500,

@@ -21,6 +21,18 @@ class Rounds {
 					{ type: 'g', count: 30 },
 				]
 			},
+			{
+				orbs: 10,
+				enemies: [
+					{ type: 'g', count: 30 },
+				]
+			},
+			{
+				orbs: 3,
+				enemies: [
+					{ type: 'r', count: 50 },
+				]
+			},
 		];
 	}
 }

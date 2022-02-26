@@ -28,6 +28,10 @@ class PlayerCamera {
 		this.#shakeAmount = 0;
 	}
 
+	// Public Getters 
+	getPosition() { return this.#position; }
+	getCurrentZoom() { return this.#currentZoom; }
+
 	// Public Methods
 	update() {
 		this.#moveToPlayer();
@@ -38,7 +42,7 @@ class PlayerCamera {
 		this.#shakeAmount = magnitude;
 	}
 	zoomIn() {
-		this.#currentZoom = 100;
+		this.#currentZoom = -100;
 	}
 
 	// Private Methods
@@ -52,7 +56,16 @@ class PlayerCamera {
 			)
 		);
 		this.#currentZoom += (this.#maxZoom - this.#currentZoom) * this.#zoomSpeed * (deltaTime / 1000);
-		this.#camera.setPosition(this.#position.x, this.#position.y, this.#currentZoom);
+		// translate(this.#position.x, this.#position.y, 100);
+		// this.#camera.setPosition(this.#position.x, this.#position.y, this.#currentZoom);
+		this.#camera.ortho(
+			-width / 2 - this.#currentZoom + this.#position.x,
+			width / 2 + this.#currentZoom + this.#position.x,
+			-height / 2 - this.#currentZoom - this.#position.y,
+			height / 2 + this.#currentZoom - this.#position.y,
+			0,
+			1000
+		);
 	}
 	#cameraShake() {
 		if (this.#shake > 0) {

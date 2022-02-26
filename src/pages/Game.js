@@ -4,6 +4,7 @@ class Game extends Page {
 	#environment;
 	#player;
 	#playerCamera;
+	#gameUI;
 	#roundManager;
 	static enemies;
 	static orbs;
@@ -16,6 +17,7 @@ class Game extends Page {
 		this.#environment = null;
 		this.#player = null;
 		this.#playerCamera = null;
+		this.#gameUI = null;
 		this.#roundManager = null;
 		Game.inst.enemies = [];
 		Game.inst.orbs = [];
@@ -26,6 +28,8 @@ class Game extends Page {
 	startUp() {
 		// Environment
 		this.#environment = new Environment(2500);
+		// Game UI
+		this.#gameUI = new GameUI();
 		// // Player
 		this.#player = new Player({
 			position: createVector(200, 200),
@@ -35,7 +39,7 @@ class Game extends Page {
 		});
 		this.#playerCamera = new PlayerCamera({
 			speed: 2,
-			maxZoom: 2000,
+			maxZoom: 500,
 			zoomSpeed: 1
 		});
 		// Rounds
@@ -51,6 +55,7 @@ class Game extends Page {
 		Game.inst.orbs.forEach(orb => orb.update());
 		Game.inst.particleSystems.forEach(particleSystem => particleSystem.update());
 		this.#environment.update();
+		this.#gameUI.update();
 	}
 	takeDown() {
 	}

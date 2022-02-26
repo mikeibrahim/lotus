@@ -8,13 +8,13 @@ class App {
 		this.currentPage = null;
 		this.pages = {
 			"mainMenu": new MainMenu(),
-			"game": new Game()
+			"game": new Game(),
 		};
 	}
 
 	// Callbacks
 	init() {
-		this.switchPage("mainMenu");
+		this.switchPage("game");
 	}
 	update() {
 		background(30);
