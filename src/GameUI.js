@@ -1,6 +1,7 @@
 class GameUI {
 	// Data
 	static inst;
+	#currentRound;
 	#currentHealth;
 	#maxHealth;
 	#currentOrbs;
@@ -9,15 +10,17 @@ class GameUI {
 	// Constructor
 	constructor() {
 		GameUI.inst = this;
-		this.#maxHealth = 0;
+		this.#currentRound = 0;
 		this.#currentHealth = 0;
+		this.#maxHealth = 0;
 		this.#currentOrbs = 0;
 		this.#maxOrbs = 0;
 	}
 
 	// Public Setters
-	setMaxHealth(health) { this.#maxHealth = health; }
+	setCurrentRound(round) { this.#currentRound = round; }
 	setCurrentHealth(health) { this.#currentHealth = health; }
+	setMaxHealth(health) { this.#maxHealth = health; }
 	setCurrentOrbs(orbs) { this.#currentOrbs = orbs; }
 	addCurrentOrbs(orbs) { this.#currentOrbs += orbs; }
 	setMaxOrbs(orbs) { this.#maxOrbs = orbs; }
@@ -34,7 +37,7 @@ class GameUI {
 		let zoom = PlayerCamera.inst.getCurrentZoom();
 		// Health count
 		fill(255);
-		textSize(zoom / 8 + 30);
+		textSize(zoom / 15 + 30);
 		textAlign(LEFT);
 		text(
 			`Health: ${this.#currentHealth}/${this.#maxHealth}`,
@@ -45,6 +48,12 @@ class GameUI {
 		text(
 			`Orbs: ${this.#currentOrbs}/${this.#maxOrbs}`,
 			width / 2 + zoom + pos.x - buffer,
+			-height / 2 - zoom + pos.y + buffer
+		);
+		textAlign(CENTER);
+		text(
+			`Round: ${this.#currentRound}`,
+			pos.x,
 			-height / 2 - zoom + pos.y + buffer
 		);
 	}

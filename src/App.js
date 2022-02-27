@@ -9,6 +9,7 @@ class App {
 		this.pages = {
 			"mainMenu": new MainMenu(),
 			"game": new Game(),
+			"characterSelection": new CharacterSelection(),
 		};
 	}
 
@@ -20,7 +21,10 @@ class App {
 		background(30);
 		this.currentPage.update();
 	}
-
+	keyPressed() {
+		if (this.currentPage) this.currentPage.keyPressed();
+	}
+	
 	// Public Methods
 	switchPage(page) {
 		this.takeDownCurrentPage();

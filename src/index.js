@@ -13,3 +13,6 @@ function setup() {
 function draw() {
 	app.update();
 }
+function keyPressed() {
+	app.keyPressed();
+}

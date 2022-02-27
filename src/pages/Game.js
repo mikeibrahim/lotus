@@ -26,6 +26,7 @@ class Game extends Page {
 
 	// Overrides
 	startUp() {
+		super.startUp();
 		// Environment
 		this.#environment = new Environment(2500);
 		// Game UI
@@ -57,6 +58,10 @@ class Game extends Page {
 		this.#environment.update();
 		this.#gameUI.update();
 	}
+	keyPressed() {
+		super.keyPressed();
+	}
 	takeDown() {
+		super.takeDown();
 	}
 }

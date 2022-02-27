@@ -11,6 +11,8 @@ class Page {
 	startUp() { }
 	update() {
 		this.#renderText();
+	}
+	keyPressed() {
 		this.#checkForActions();
 	}
 	takeDown() {
@@ -18,8 +20,12 @@ class Page {
 	}
 
 	// Public Methods
-	addText({ text, spacing, fontSize }) {
-		this.#texts.push({ text: text, spacing: spacing || 0, fontSize: fontSize || 32 });
+	addText({ id, text, spacing, fontSize }) {
+		this.#texts.push({ id: id || this.#texts.length, text: text, spacing: spacing || 0, fontSize: fontSize || 32 });
+	}
+	setText({ id, text }) {
+		for (let i = 0; i < this.#texts.length; i++)
+			if (this.#texts[i].id == id) { this.#texts[i].text = text; return; }
 	}
 	addAction({ char, callback }) {
 		this.#actions.push({ char: char, callback: callback });
@@ -38,11 +44,10 @@ class Page {
 	}
 	#checkForActions() {
 		for (let i = 0; i < this.#actions.length; i++) {
-			let key = this.#actions[i].char.charCodeAt(0);
-			if (keyIsDown(key)) {
-				console.log("Action: " + this.#actions[i].char);
-				this.#actions[i].callback();
-			}
+			// let key = this.#actions[i].char;
+			let char = this.#actions[i].char;
+			if (typeof char == "string") char = char.charCodeAt(0);
+			if (keyIsDown(char)) this.#actions[i].callback();
 		}
 	}
 	#clearData() {
