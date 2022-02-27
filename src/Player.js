@@ -27,8 +27,8 @@ class Player {
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
 		// Game UI
-		GameUI.inst.setPlayerMaxHealth(this.#maxHealth);
-		GameUI.inst.setPlayerCurrentHealth(this.#currentHealth);
+		GameUI.inst.setMaxHealth(this.#maxHealth);
+		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
 	
 	// Public Setters
@@ -133,7 +133,7 @@ class Player {
 		if (this.#currentHealth <= 0) this.#die();
 		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
 
-		GameUI.inst.setPlayerCurrentHealth(this.#currentHealth);
+		GameUI.inst.setCurrentHealth(this.#currentHealth);
 		new ParticleSystem({
 			count: 10,
 			lifeTime: 500,

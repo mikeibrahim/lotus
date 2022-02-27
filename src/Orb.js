@@ -30,6 +30,7 @@ class Orb {
 			position: this.#position
 		});
 		Game.inst.orbs.splice(Game.inst.orbs.indexOf(this), 1);
+		GameUI.inst.addCurrentOrbs(1);
 	}
 
 	// Private Methods

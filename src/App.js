@@ -14,7 +14,7 @@ class App {
 
 	// Callbacks
 	init() {
-		this.switchPage("game");
+		this.switchPage("mainMenu");
 	}
 	update() {
 		background(30);

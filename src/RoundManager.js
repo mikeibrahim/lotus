@@ -35,6 +35,8 @@ class RoundManager {
 		// Orbs
 		for (let i = 0; i < round.orbs; i++)
 			Game.inst.orbs.push(new Orb());
+		GameUI.inst.setMaxOrbs(round.orbs);
+		GameUI.inst.setCurrentOrbs(0);
 		// Player
 		Player.inst.resetPosition();
 		Player.inst.setInvincibility(2000);
