@@ -2,6 +2,7 @@ class Game extends Page {
 	// Data
 	static inst;
 	#environment;
+	#character;
 	#player;
 	#playerCamera;
 	#gameUI;
@@ -15,6 +16,7 @@ class Game extends Page {
 		super();
 		Game.inst = this;
 		this.#environment = null;
+		this.#character = null;
 		this.#player = null;
 		this.#playerCamera = null;
 		this.#gameUI = null;
@@ -39,10 +41,16 @@ class Game extends Page {
 			color: color(200, 200, 255)
 		});
 		this.#playerCamera = new PlayerCamera({
-			speed: 2,
+			speed: 4,
 			maxZoom: 500,
 			zoomSpeed: 1
 		});
+		// Character
+		let character = getItem("character") || Characters.getCharacters()[0];
+		console.log(character);
+		this.#character = Characters.getCharacterType(character.name);
+		console.log(this.#character);
+		this.#character.startUp();
 		// Rounds
 		this.#roundManager = new RoundManager();
 		this.#roundManager.loadRound(0);
@@ -51,6 +59,7 @@ class Game extends Page {
 		super.update();
 		this.#playerCamera.update();
 		this.#player.update();
+		this.#character.update();
 		this.#roundManager.update();
 		Game.inst.enemies.forEach(enemy => enemy.update());
 		Game.inst.orbs.forEach(orb => orb.update());
@@ -60,6 +69,7 @@ class Game extends Page {
 	}
 	keyPressed() {
 		super.keyPressed();
+		this.#character.keyPressed();
 	}
 	takeDown() {
 		super.takeDown();

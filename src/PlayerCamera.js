@@ -56,8 +56,6 @@ class PlayerCamera {
 			)
 		);
 		this.#currentZoom += (this.#maxZoom - this.#currentZoom) * this.#zoomSpeed * (deltaTime / 1000);
-		// translate(this.#position.x, this.#position.y, 100);
-		// this.#camera.setPosition(this.#position.x, this.#position.y, this.#currentZoom);
 		this.#camera.ortho(
 			-width / 2 - this.#currentZoom + this.#position.x,
 			width / 2 + this.#currentZoom + this.#position.x,

@@ -12,10 +12,10 @@ class MainMenu extends Page {
 		this.addText({ text: "[L] - Load", spacing: 100, fontSize: 32 });
 		this.addText({ text: "[C] - Character Selection", spacing: 100, fontSize: 32 });
 		this.addText({ text: "[O] - Options", spacing: 200, fontSize: 24 });
-		this.addAction({ char: 'S', callback: this.newGame.bind(this) });
-		this.addAction({ char: 'L', callback: this.loadGame.bind(this) });
-		this.addAction({ char: 'C', callback: this.characterSelection.bind(this) });
-		this.addAction({ char: 'O', callback: this.options.bind(this) });
+		this.addAction({ char: 'S', callback: () => { this.newGame(this) } });
+		this.addAction({ char: 'L', callback: () => { this.loadGame(this) } });
+		this.addAction({ char: 'C', callback: () => { this.characterSelection(this) } });
+		this.addAction({ char: 'O', callback: () => { this.options(this) } });
 	}
 	update() {
 		super.update();

@@ -32,9 +32,10 @@ class Player {
 	}
 	
 	// Public Setters
-	setInvincibility(time) {
-		this.#currentInvincibilityTime = time;
-	}
+	setInvincibility(time) { this.#currentInvincibilityTime = time; }
+	setSizeMultiplier(multiplier) { this.#size *= multiplier; }
+	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
+	setColor(color) { this.#color = color; }
 
 	// Public Getters
 	getPosition() { return this.#position; }
@@ -62,7 +63,7 @@ class Player {
 		this.#invincibility();
 		this.#move();
 		this.#detectEnvironmentCollision();
-		this.#render();
+		this.#renderPlayer();
 	}
 	resetPosition() {
 		this.#position.mult(0);
@@ -118,7 +119,7 @@ class Player {
 		if (this.#currentInvincibilityTime > 0 && this.#currentInvincibilityTime % interval > interval / 3)
 			fill(color(red(this.#color), green(this.#color), blue(this.#color), 100));
 	}
-	#render() {
+	#renderPlayer() {
 		fill(this.#color);
 		stroke(0);
 		strokeWeight(5);
