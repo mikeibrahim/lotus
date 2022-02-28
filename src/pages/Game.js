@@ -29,11 +29,8 @@ class Game extends Page {
 	// Overrides
 	startUp() {
 		super.startUp();
-		// Environment
 		this.#environment = new Environment(2500);
-		// Game UI
 		this.#gameUI = new GameUI();
-		// // Player
 		this.#player = new Player({
 			position: createVector(200, 200),
 			size: 100,
@@ -45,15 +42,19 @@ class Game extends Page {
 			maxZoom: 500,
 			zoomSpeed: 1
 		});
-		// Character
 		let character = getItem("character") || Characters.getCharacters()[0];
-		console.log(character);
 		this.#character = Characters.getCharacterType(character.name);
-		console.log(this.#character);
-		this.#character.startUp();
-		// Rounds
 		this.#roundManager = new RoundManager();
-		this.#roundManager.loadRound(0);
+
+		// Start Ups
+		this.#environment.startUp();
+		this.#gameUI.startUp();
+		this.#player.startUp();
+		this.#playerCamera.startUp();
+		this.#character.startUp();
+		this.#roundManager.startUp();
+
+		this.#roundManager.loadRound(0); // PLACEHOLDER
 	}
 	update() {
 		super.update();

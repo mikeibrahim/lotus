@@ -33,6 +33,9 @@ class PlayerCamera {
 	getCurrentZoom() { return this.#currentZoom; }
 
 	// Public Methods
+	startUp() {
+		
+	}
 	update() {
 		this.#moveToPlayer();
 		this.#cameraShake();

@@ -1,4 +1,4 @@
-class Enemy {
+class Enemy extends Interactable {
 	// Data
 	#damage;
 	#size;
@@ -9,7 +9,8 @@ class Enemy {
 	#position;
 
 	// Constructor
-	constructor({ damage, size, speed, color }) {
+	constructor({ damage, size, position, speed, color }) {
+		super({size: size, position: position});
 		// Data
 		this.#damage = damage || 1;
 		this.#size = size || 100;
@@ -17,7 +18,7 @@ class Enemy {
 		this.#color = color || color(255, 0, 0);
 		// Updated Data
 		this.#velocity = this.#randomVector();
-		this.#position = Environment.inst.getRandomPosition(this.#size);
+		this.#position = position || createVector(0, 0);
 	}
 
 	// Public Getters
@@ -27,6 +28,7 @@ class Enemy {
 				return new Enemy({
 					damage: 1,
 					size: 100,
+					position: Environment.inst.getRandomPosition(100),
 					speed: 300,
 					color: color(255, 0, 0)
 				});
@@ -34,6 +36,7 @@ class Enemy {
 				return new Enemy({
 					damage: 1,
 					size: 75,
+					position: Environment.inst.getRandomPosition(75),
 					speed: 500,
 					color: color(0, 255, 0)
 				});
@@ -41,26 +44,33 @@ class Enemy {
 				return null;
 		}
 	}
-	getPosition() { return this.#position; }
-	getSize() { return this.#size; }
-	getDamage() { return this.#damage; }
+	// getPosition() { return this.#position; }
+	// getSize() { return this.#size; }
+	// getDamage() { return this.#damage; }
 
-	// Public Methods
+	// Callbacks
 	update() {
+		super.update();
 		this.#move();
-		this.#detectPlayerCollision();
+		// this.#detectPlayerCollision();
 		this.#detectWallCollision();
 		this.#render();
+	}
+
+	// Overrides
+	interact() {
+		Player.inst.takeDamage(this.#damage);
 	}
 
 	// Private Methods
 	#randomVector() { return createVector(random(-1, 1), random(-1, 1)).normalize(); }
 	#move() {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
+		super.setPosition(this.#position);
 	}
-	#detectPlayerCollision() {
-		Player.inst.tryCollide(this);
-	}
+	// #detectPlayerCollision() {
+	// 	Player.inst.tryCollide(this);
+	// }
 	#detectWallCollision() {
 		let size = Environment.inst.getSize();
 		// Reflect off walls

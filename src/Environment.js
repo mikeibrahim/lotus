@@ -18,10 +18,16 @@ class Environment {
 		let min = (-this.#size / 2) + (objectSize / 2);
 		let max = (this.#size / 2) - (objectSize / 2);
 		let position = createVector(random(min, max), random(min, max));
+		console.log("getRandomPosition: " + position);
+		console.log("size: " + this.#size);
+		console.log("objectSize: " + objectSize);
 		return position;
 	}
 
 	// Public Methods
+	startUp() {
+	
+	}
 	update() {
 		this.#render();
 	}

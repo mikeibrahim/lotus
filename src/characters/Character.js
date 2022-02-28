@@ -1,4 +1,7 @@
 class Character {
+	// Data
+	static inst;
+
 	constructor() {
 		this.size = 1;
 		this.speed = 1;
@@ -13,6 +16,7 @@ class Character {
 	keyPressed() {
 		if (keyIsDown(' '.charCodeAt(0))) this.activeAbility();
 	}
+	nextRound() {}
 	takeDown() {} // Called once
 	passiveAbility() {} // Every frame
 	activeAbility() {} // Every time user clicks space

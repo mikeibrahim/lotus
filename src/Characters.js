@@ -1,18 +1,12 @@
 class Characters {
 	static getCharacterType(character) {
 		switch (character) {
-			case 'Lotus':
-				return new Lotus();
-			case 'Dandelion':
-				return new Dandelion();
-			case 'Tulip':
-				return new Tulip();
-			case 'Poppy':
-				return new Poppy();
-			case 'Rose':
-				return new Rose();
-			default:
-				return null;
+			case 'Lotus': return new Lotus();
+			case 'Dandelion': return new Dandelion();
+			case 'Tulip': return new Tulip();
+			case 'Poppy': return new Poppy();
+			case 'Rose': return new Rose();
+			default: return null;
 		}
 	}
 	static getCharacters() {
@@ -40,7 +34,7 @@ class Characters {
 			{
 				name: 'Rose',
 				color: '#ff4545',
-				description: '[Ability] Consume 3 orbs in exchange for one life.',
+				description: '[Ability] Consume 3 orbs in exchange for one life. Can be used three times per level.',
 			},
 		]
 	}

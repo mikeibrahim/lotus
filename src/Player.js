@@ -26,9 +26,6 @@ class Player {
 		this.#currentInvincibilityTime = 0;
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
-		// Game UI
-		GameUI.inst.setMaxHealth(this.#maxHealth);
-		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
 	
 	// Public Setters
@@ -59,6 +56,11 @@ class Player {
 	}
 
 	// Public Methods
+	startUp() {
+		// Game UI
+		GameUI.inst.setMaxHealth(this.#maxHealth);
+		GameUI.inst.setCurrentHealth(this.#currentHealth);
+	}
 	update() {
 		this.#invincibility();
 		this.#move();
@@ -68,25 +70,48 @@ class Player {
 	resetPosition() {
 		this.#position.mult(0);
 	}
-	#isTouching(object) {
+	isTouching(object) {
 		let position = object.getPosition();
 		let size = object.getSize();
 		return this.#position.dist(position) < (this.#size / 2) + (size / 2);
 	}
-	tryCollide(collision) {
-		if (!this.#isTouching(collision)) return;
-
-		switch (collision.constructor.name) {
-			case 'Enemy':
-				this.#takeDamage(collision.getDamage());
-				break;
-			case 'Orb':
-				collision.destroy();
-				break;
-			default:
-				break;
-		}
+	heal(amount) {
+		this.#currentHealth = constrain(this.#currentHealth + amount, 0, this.#maxHealth);
+		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
+	takeDamage(damage) {
+		if (this.#currentInvincibilityTime > 0) return; // Player is invincible
+		this.#currentHealth -= damage; // Take damage
+		this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
+		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
+		if (this.#currentHealth <= 0) this.#die();
+		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
+
+		GameUI.inst.setCurrentHealth(this.#currentHealth);
+		new ParticleSystem({
+			count: 10,
+			lifeTime: 500,
+			color: color(red(this.#color), green(this.#color), blue(this.#color), 100),
+			speed: 300,
+			size: this.#size,
+			position: this.#position
+		});
+		PlayerCamera.inst.shake(200, 50);
+	}
+	// tryCollide(collision) {
+	// 	if (!this.#isTouching(collision)) return;
+
+	// 	switch (collision.constructor.name) {
+	// 		case 'Enemy':
+	// 			this.#takeDamage(collision.getDamage());
+	// 			break;
+	// 		case 'Orb':
+	// 			collision.destroy();
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
+	// }
 
 	// Private Methods
 	#invincibility() {
@@ -125,25 +150,6 @@ class Player {
 		strokeWeight(5);
 		this.#invincibilityFill();
 		circle(this.#position.x, this.#position.y, this.#size);
-	}
-	#takeDamage(damage) {
-		if (this.#currentInvincibilityTime > 0) return; // Player is invincible
-		this.#currentHealth -= damage; // Take damage
-		this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
-		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
-		if (this.#currentHealth <= 0) this.#die();
-		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
-
-		GameUI.inst.setCurrentHealth(this.#currentHealth);
-		new ParticleSystem({
-			count: 10,
-			lifeTime: 500,
-			color: color(red(this.#color), green(this.#color), blue(this.#color), 100),
-			speed: 300,
-			size: this.#size,
-			position: this.#position
-		});
-		PlayerCamera.inst.shake(200, 50);
 	}
 	#die() {
 		// TODO: death screen

@@ -1,24 +1,28 @@
-class Orb {
+class Orb extends Interactable {
 	// Data
 	#color;
 	#size;
 	#position;
 
 	// Constructor
-	constructor() {
-		this.#size = 50;
-		this.#position = Environment.inst.getRandomPosition(this.#size);
+	constructor({ size, position }) {
+		super({ size: size, position: position });
+		this.#size = size;
+		this.#position = position;
 		this.#color = color(0, 0, 255);
 	}
 
 	// Public Getters
 	getPosition() { return this.#position; }
-	getSize() { return this.#size; }
 
 	// Public Methods
 	update() {
-		this.#detectPlayerCollision();
+		super.update();
+		// this.#detectPlayerCollision();
 		this.#render();
+	}
+	interact() {
+		this.destroy();
 	}
 	destroy() {
 		new ParticleSystem({
@@ -34,9 +38,9 @@ class Orb {
 	}
 
 	// Private Methods
-	#detectPlayerCollision() {
-		Player.inst.tryCollide(this);
-	}
+	// #detectPlayerCollision() {
+	// 	Player.inst.tryCollide(this);
+	// }
 	#render() {
 		fill(this.#color);
 		stroke(0);

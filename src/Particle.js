@@ -38,7 +38,7 @@ class Particle {
 	}
 	#render() {
 		noStroke();
-		fill(this.#color);
+		fill(red(this.#color), green(this.#color), blue(this.#color), this.#currentLifeTime / this.#lifeTime * 255);
 		circle(this.#position.x, this.#position.y, this.#size * (this.#currentLifeTime / this.#lifeTime));
 	}
 	#deathCheck() {

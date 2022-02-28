@@ -3,16 +3,21 @@ class RoundManager {
 	static inst;
 	#rounds;
 	#currentRound;
+	#orbSize;
 
 	// Constructor
 	constructor() {
 		// Data
 		RoundManager.inst = this;
-		this.#rounds = Rounds.getRounds();
+		this.#rounds = 0;
 		this.#currentRound = 0;
+		this.#orbSize = 50;
 	}
 
 	// Public Methods
+	startUp() {
+		this.#rounds = Rounds.getRounds();
+	}
 	update() {
 		if (Game.inst.orbs.length == 0) this.nextRound();
 	}
@@ -35,12 +40,13 @@ class RoundManager {
 		});
 		// Orbs
 		for (let i = 0; i < round.orbs; i++)
-			Game.inst.orbs.push(new Orb());
+			Game.inst.orbs.push(new Orb({ size: this.#orbSize, position: Environment.inst.getRandomPosition(this.#orbSize) }));
 		GameUI.inst.setMaxOrbs(round.orbs);
 		GameUI.inst.setCurrentOrbs(0);
 		// Player
 		Player.inst.resetPosition();
 		Player.inst.setInvincibility(2000);
+		Character.inst.nextRound();
 		PlayerCamera.inst.zoomIn();
 	}
 	nextRound() {

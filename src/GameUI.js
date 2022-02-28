@@ -26,6 +26,9 @@ class GameUI {
 	setMaxOrbs(orbs) { this.#maxOrbs = orbs; }
 
 	// Public Methods
+	startUp() {
+		
+	}
 	update() {
 		this.#render();
 	}
@@ -50,6 +53,7 @@ class GameUI {
 			width / 2 + zoom + pos.x - buffer,
 			-height / 2 - zoom + pos.y + buffer
 		);
+		textSize(zoom / 15 + 40);
 		textAlign(CENTER);
 		text(
 			`Round: ${this.#currentRound}`,
