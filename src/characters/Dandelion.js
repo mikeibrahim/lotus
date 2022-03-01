@@ -50,7 +50,7 @@ class Dandelion extends Character {
 
 		new ParticleSystem({
 			count: 10,
-			lifeTime: 2000,
+			lifeTime: this.#maxFadeTime,
 			color: color(red(super.getPlayerColor()), green(super.getPlayerColor()), blue(super.getPlayerColor()), 100),
 			speed: 100,
 			size: super.getPlayerSize() * this.#fadeScaleFactor,

@@ -25,6 +25,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Passive] When entering a new area, a lotus will appear. Collect it to gain a life.',
+				roundUnlock: 0,
 			},
 			{
 				name: 'Dandelion',
@@ -32,6 +33,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Ability] Click space to fade into the wind, and then back out. This ability can only be used once per level.',
+				roundUnlock: 5,
 			},
 			{
 				name: 'Tulip',
@@ -39,6 +41,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Passive] Pushes enemies away within a radius',
+				roundUnlock: 10,
 			},
 			{
 				name: 'Poppy',
@@ -46,6 +49,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Passive] Shrinks and slows enemies within a radius',
+				roundUnlock: 15,
 			},
 			{
 				name: 'Rose',
@@ -53,6 +57,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Ability] Consume 3 orbs in exchange for one life. Can be used three times per level.',
+				roundUnlock: 20,
 			},
 		]
 	}
