@@ -1,10 +1,12 @@
-console.clear();
+// console.clear();
 
 let app = new App();
 
 let font = null;
 function preload() {
-	font = loadFont("../misc/roboto.ttf");
+	let path = "../misc/roboto.ttf"
+	font = loadFont(path);
+	console.log("Font loaded: ", font);
 }
 
 function setup() {
