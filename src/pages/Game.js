@@ -53,8 +53,8 @@ class Game extends Page {
 		this.#playerCamera.startUp();
 		this.#character.startUp();
 		this.#roundManager.startUp();
-
-		this.#roundManager.loadRound(0); // PLACEHOLDER
+		let currentRound = getItem("currentRound") || 0;
+		this.#roundManager.loadRound(currentRound);
 	}
 	update() {
 		super.update();

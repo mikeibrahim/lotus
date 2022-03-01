@@ -5,6 +5,7 @@ class Rounds {
 				orbs: 3,
 				enemies: [
 					{ type: 'r', count: 10 },
+					{ type: 'y', count: 10 },
 				]
 			},
 			{

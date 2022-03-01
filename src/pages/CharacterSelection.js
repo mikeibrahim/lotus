@@ -19,13 +19,11 @@ class CharacterSelection extends Page {
 		super.startUp();
 		this.#characters = Characters.getCharacters();
 		this.#currentCharacterIndex = getItem("currentCharacterIndex") || 0;
-		console.log("1",this.#characters);
-		console.log("2",this.#characters[this.#currentCharacterIndex]);
-		console.log("3",this.#characters[this.#currentCharacterIndex].name);
 
 		this.addText({ text: "Character Selection", spacing: 100, fontSize: 42 });
 		this.addText({ id: "character", text: this.#characters[this.#currentCharacterIndex].name, spacing: 150, fontSize: 32 });
-		this.addText({ text: "[S] - Save Character", spacing: 400, fontSize: 24 });
+		this.addText({ id: "characterDescription", text: this.#characters[this.#currentCharacterIndex].description, spacing: 250, fontSize: 24 });
+		this.addText({ text: "[S] - Save Character", spacing: 150, fontSize: 24 });
 		this.addText({ text: "[B] - Back", spacing: 75, fontSize: 24 });
 		this.addAction({ char: LEFT_ARROW, callback: () => { this.#updateCharacterIndex(-1); } });
 		this.addAction({ char: RIGHT_ARROW, callback: () => { this.#updateCharacterIndex(1); } });
@@ -50,7 +48,6 @@ class CharacterSelection extends Page {
 	// Public Methods
 	saveCharacter() {
 		this.takeDown();
-		console.log("Character about to be saved: ", this.#characters[this.#currentCharacterIndex]);
 		storeItem("character", this.#characters[this.#currentCharacterIndex]);
 		storeItem("currentCharacterIndex", this.#currentCharacterIndex);
 		App.inst.switchPage("mainMenu");
@@ -78,6 +75,7 @@ class CharacterSelection extends Page {
 	#renderCharacters() {
 		let character = this.#characters[this.#currentCharacterIndex];
 		this.setText({ id: "character", text: character.name });
+		this.setText({ id: "characterDescription", text: character.description });
 		fill(character.color);
 		circle(0, 0, 150);
 	}

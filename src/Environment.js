@@ -18,9 +18,6 @@ class Environment {
 		let min = (-this.#size / 2) + (objectSize / 2);
 		let max = (this.#size / 2) - (objectSize / 2);
 		let position = createVector(random(min, max), random(min, max));
-		console.log("getRandomPosition: " + position);
-		console.log("size: " + this.#size);
-		console.log("objectSize: " + objectSize);
 		return position;
 	}
 
@@ -35,6 +32,7 @@ class Environment {
 	// Private Methods
 	#render() {
 		fill(0);
+		rectMode(CORNER);
 		rect(-this.#size / 2, -this.#size / 2 - this.#thickness, this.#size, this.#thickness); // top
 		rect(-this.#size / 2, this.#size / 2, this.#size, this.#thickness); // bottom
 		rect(-this.#size / 2 - this.#thickness, -this.#size / 2, this.#thickness, this.#size); // left

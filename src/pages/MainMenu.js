@@ -30,10 +30,12 @@ class MainMenu extends Page {
 	// Public Methods
 	newGame() {
 		this.takeDown();
+		storeItem("currentRound", 0);
 		App.inst.switchPage("game");
 	}
 	loadGame() {
 		this.takeDown();
+		App.inst.switchPage("game");
 	}
 	characterSelection() {
 		this.takeDown();

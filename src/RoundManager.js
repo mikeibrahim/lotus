@@ -32,6 +32,7 @@ class RoundManager {
 		Game.inst.orbs = [];
 		Game.inst.particleSystems = [];
 		this.#currentRound = index;
+		storeItem("currentRound", index);
 		GameUI.inst.setCurrentRound(index);
 		let round = this.#rounds[index];
 		// Enemies

@@ -40,6 +40,14 @@ class Enemy extends Interactable {
 					speed: 500,
 					color: color(0, 255, 0)
 				});
+			case 'y':
+				return new Enemy({
+					damage: 1,
+					size: 500,
+					position: Environment.inst.getRandomPosition(50),
+					speed: 200,
+					color: color(255, 255, 0)
+				});
 			default:
 				return null;
 		}

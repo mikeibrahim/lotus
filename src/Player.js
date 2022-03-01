@@ -98,21 +98,7 @@ class Player {
 		});
 		PlayerCamera.inst.shake(200, 50);
 	}
-	// tryCollide(collision) {
-	// 	if (!this.#isTouching(collision)) return;
-
-	// 	switch (collision.constructor.name) {
-	// 		case 'Enemy':
-	// 			this.#takeDamage(collision.getDamage());
-	// 			break;
-	// 		case 'Orb':
-	// 			collision.destroy();
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-	// }
-
+	
 	// Private Methods
 	#invincibility() {
 		if (this.#currentInvincibilityTime > 0) {

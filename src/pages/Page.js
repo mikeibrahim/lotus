@@ -35,11 +35,13 @@ class Page {
 	#renderText() {
 		textAlign(CENTER, CENTER);
 		fill(255);
+		rectMode(CENTER);
+		textWrap(WORD);
 		let totalSpace = 0;
 		for (let i = 0; i < this.#texts.length; i++) {
 			totalSpace += this.#texts[i].spacing;
 			textSize(this.#texts[i].fontSize);
-			text(this.#texts[i].text, 0, -height / 2 + totalSpace);
+			text(this.#texts[i].text, 0, -height / 2 + totalSpace, width);
 		}
 	}
 	#checkForActions() {
