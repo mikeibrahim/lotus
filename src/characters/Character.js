@@ -1,27 +1,30 @@
 class Character {
 	// Data
 	static inst;
-	#playerSize;
-	#playerSpeed;
+	#playerSizeMultiplier;
+	#playerSpeedMultiplier;
 	#playerColor;
+	#playerSize;
 
 	// Constructor
 	constructor() {
+		this.#playerSizeMultiplier = 1;
+		this.#playerSpeedMultiplier = 1;
 		this.#playerSize = 1;
-		this.#playerSpeed = 1;
 		this.#playerColor = color(0, 0, 0);
 	}
 
 	// Public Getters
-	getPlayerSize() { return this.#playerSize; }
-	getPlayerSpeed() { return this.#playerSpeed; }
+	getPlayerSize() { return this.#playerSizeMultiplier * this.#playerSize; }
+	getPlayerSizeMultiplier() { return this.#playerSizeMultiplier; }
+	getPlayerSpeedMultiplier() { return this.#playerSpeedMultiplier; }
 	getPlayerColor() { return this.#playerColor; }
 
 	// Public Methods
 	startUp(name) {
 		let stats = Characters.getCharacter(name);
-		this.#playerSize = stats.size;
-		this.#playerSpeed = stats.speed;
+		this.#playerSizeMultiplier = stats.size;
+		this.#playerSpeedMultiplier = stats.speed;
 		this.#playerColor = stats.color;
 		this.#setPlayerAttributes();
 	} // Called once
@@ -38,8 +41,9 @@ class Character {
 
 	// Private Methods
 	#setPlayerAttributes() {
-		Player.inst.setSpeedMultiplier(this.#playerSpeed);
-		Player.inst.setSizeMultiplier(this.#playerSize);
+		Player.inst.setSpeedMultiplier(this.#playerSpeedMultiplier);
+		Player.inst.setSizeMultiplier(this.#playerSizeMultiplier);
 		Player.inst.setColor(this.#playerColor);
+		this.#playerSize = Player.inst.getSize();
 	}
 }

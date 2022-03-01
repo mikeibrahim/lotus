@@ -30,6 +30,7 @@ class Player {
 	
 	// Public Setters
 	setInvincibility(time) { this.#currentInvincibilityTime = time; }
+	setSize(size) { this.#size = size; }
 	setSizeMultiplier(multiplier) { this.#size *= multiplier; }
 	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
 	setColor(color) { this.#color = color; }
@@ -81,11 +82,14 @@ class Player {
 	}
 	takeDamage(damage) {
 		if (this.#currentInvincibilityTime > 0) return; // Player is invincible
+
 		this.#currentHealth -= damage; // Take damage
 		this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
 		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
+		
 		if (this.#currentHealth <= 0) this.#die();
 		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
+		
 
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 		new ParticleSystem({
@@ -131,9 +135,9 @@ class Player {
 			fill(color(red(this.#color), green(this.#color), blue(this.#color), 100));
 	}
 	#renderPlayer() {
-		fill(this.#color);
 		stroke(0);
 		strokeWeight(5);
+		fill(this.#color);
 		this.#invincibilityFill();
 		circle(this.#position.x, this.#position.y, this.#size);
 	}

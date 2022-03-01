@@ -30,7 +30,7 @@ class Characters {
 				name: 'Dandelion',
 				color: '#ffeb8a',
 				size: 1,
-				speed: 2,
+				speed: 1,
 				description: '[Ability] Click space to fade into the wind, and then back out. This ability can only be used once per level.',
 			},
 			{
