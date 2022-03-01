@@ -27,7 +27,7 @@ class Confirmation extends Page{
 		console.log("Confirmation.startUp()");
 		super.startUp();
 		this.addText({ id:"confirmationText", text: "Are you sure?", spacing: 100, fontSize: 48 });
-		this.addText({ text: "[Y] - Yes", spacing: 200, fontSize: 32 });
+		this.addText({ text: "[Y] - Yes", spacing: 300, fontSize: 32 });
 		this.addText({ text: "[N] - No", spacing: 100, fontSize: 32 });
 		this.addAction({ char: 'Y', callback: () => {
 			this.takeDown();

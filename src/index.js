@@ -1,19 +1,14 @@
-// console.clear();
-
 let app = new App();
 
-let font = null;
+let font;
+
 function preload() {
-	let path = "../misc/roboto.ttf"
-	font = loadFont(path);
-	console.log("Font loaded: ", font);
+	font = loadFont("assets/fonts/Roboto-Regular.ttf");
 }
 
 function setup() {
 	createCanvas(800, 800, WEBGL);
-	
 	textFont(font);
-
 	app.init();
 }
 function draw() {

@@ -1,8 +1,9 @@
 {
   "include": [
     "*.js",
-    "libraries/*.js",
-	"misc/*.ttf",
+	"*.ttf",
+    "libraries/*js",
+	"assets/fonts/*.ttf",
     "/Users/mike/.vscode/extensions/samplavigne.p5-vscode-1.2.8/p5types/global.d.ts"
   ]
 }
