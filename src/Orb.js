@@ -29,7 +29,7 @@ class Orb extends Interactable {
 			count: 15,
 			lifeTime: 500,
 			color: color(red(this.#color), green(this.#color), blue(this.#color), 200),
-			speed: 200,
+			speed: 300,
 			size: 30,
 			position: this.#position
 		});

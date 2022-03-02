@@ -14,6 +14,7 @@ class Game extends Page {
 	// Constructor
 	constructor() {
 		super();
+		console.log("Game Page");
 		Game.inst = this;
 		this.#environment = null;
 		this.#character = null;
@@ -29,6 +30,29 @@ class Game extends Page {
 	// Overrides
 	startUp() {
 		super.startUp();
+		this.addAction({ char: ESCAPE, callback: () => this.#exitGame() });
+		this.#startGame();
+	}
+	update() {
+		super.update();
+		this.#updateGame();
+	}
+	keyPressed() {
+		super.keyPressed();
+		this.#character.keyPressed();
+	}
+	takeDown() {
+		super.takeDown();
+		this.#environment.takeDown();
+		this.#gameUI.takeDown();
+		this.#player.takeDown();
+		this.#playerCamera.takeDown();
+		this.#character.takeDown();
+		this.#roundManager.takeDown();
+	}
+
+	// Private Methods
+	#startGame() {
 		this.#environment = new Environment(2500);
 		this.#gameUI = new GameUI();
 		this.#player = new Player({
@@ -56,8 +80,7 @@ class Game extends Page {
 		let currentRound = getItem("currentRound") || 0;
 		this.#roundManager.loadRound(currentRound);
 	}
-	update() {
-		super.update();
+	#updateGame() {
 		this.#playerCamera.update();
 		this.#player.update();
 		this.#character.update();
@@ -68,11 +91,8 @@ class Game extends Page {
 		this.#environment.update();
 		this.#gameUI.update();
 	}
-	keyPressed() {
-		super.keyPressed();
-		this.#character.keyPressed();
-	}
-	takeDown() {
-		super.takeDown();
+	#exitGame() {
+		this.takeDown();
+		App.inst.switchPage("mainMenu");
 	}
 }

@@ -18,6 +18,7 @@ class Particle {
 		this.#color = color || color(255, 0, 0);
 		this.#speed = speed || 500;
 		this.#size = size || 50;
+		this.#size = random(this.#size / 2, this.#size);
 		this.#position = position || createVector(0, 0);
 		this.#velocity = velocity || createVector(0, 0);
 		// Updated Data

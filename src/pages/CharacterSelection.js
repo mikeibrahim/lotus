@@ -1,6 +1,7 @@
 class CharacterSelection extends Page {
 	// Data
 	#characters;
+	#characterIndex;
 	#currentCharacterIndex;
 	#leftButton;
 	#rightButton;
@@ -9,7 +10,8 @@ class CharacterSelection extends Page {
 	constructor() {
 		super();
 		this.#characters = [];
-		this.#currentCharacterIndex =0;
+		this.#characterIndex = 0;
+		this.#currentCharacterIndex = 0;
 		this.#leftButton = null;
 		this.#rightButton = null;
 	}
@@ -19,15 +21,16 @@ class CharacterSelection extends Page {
 		super.startUp();
 		this.#characters = Characters.getCharacters();
 		this.#currentCharacterIndex = getItem("currentCharacterIndex") || 0;
+		this.#characterIndex = this.#currentCharacterIndex;
 
 		this.addText({ text: "Character Selection", spacing: 100, fontSize: 42 });
-		this.addText({ id: "character", text: this.#characters[this.#currentCharacterIndex].name, spacing: 150, fontSize: 32 });
-		this.addText({ id: "characterDescription", text: this.#characters[this.#currentCharacterIndex].description, spacing: 250, fontSize: 24 });
-		this.addText({ text: "[S] - Save Character", spacing: 150, fontSize: 24 });
+		this.addText({ id: "character", text: this.#characters[this.#currentCharacterIndex].name, spacing: 130, fontSize: 32 });
+		this.addText({ id: "characterDescription", text: this.#characters[this.#currentCharacterIndex].description, spacing: 300, fontSize: 24 });
+		this.addText({ id: "saveText", text: "[S] - Save Character", spacing: 150, fontSize: 24 });
 		this.addText({ text: "[B] - Back", spacing: 75, fontSize: 24 });
 		this.addAction({ char: LEFT_ARROW, callback: () => { this.#updateCharacterIndex(-1); } });
 		this.addAction({ char: RIGHT_ARROW, callback: () => { this.#updateCharacterIndex(1); } });
-		this.addAction({ char: 'S', callback: () => { this.saveCharacter(); } });
+		this.addAction({ id: "save", char: 'S', callback: () => { this.saveCharacter(); } });
 		this.addAction({ char: 'B', callback: () => { this.back(); } });
 		this.#createButtons();
 		this.#updateCharacterIndex(0);
@@ -48,9 +51,17 @@ class CharacterSelection extends Page {
 	// Public Methods
 	saveCharacter() {
 		this.takeDown();
-		storeItem("character", this.#characters[this.#currentCharacterIndex]);
-		storeItem("currentCharacterIndex", this.#currentCharacterIndex);
-		App.inst.switchPage("mainMenu");
+		App.inst.switchPage("confirmation");
+		Confirmation.inst.setConfirmationText("Are you sure you want to switch to " + this.#characters[this.#currentCharacterIndex].name + "?\n(this will reset your current game)");
+		Confirmation.inst.setYesCallback(() => {
+			storeItem("character", this.#characters[this.#currentCharacterIndex]);
+			storeItem("currentCharacterIndex", this.#currentCharacterIndex);
+			storeItem("currentRound", 0);
+			App.inst.switchPage("mainMenu");
+		});
+		Confirmation.inst.setNoCallback(() => {
+			App.inst.switchPage("characterSelection");
+		});
 	}
 	back() {
 		this.takeDown();
@@ -74,8 +85,8 @@ class CharacterSelection extends Page {
 	}
 	#renderCharacters() {
 		let character = this.#characters[this.#currentCharacterIndex];
-		this.setText({ id: "character", text: character.name });
-		this.setText({ id: "characterDescription", text: character.description });
+		// let active = this.#currentCharacterIndex == this.#characterIndex;
+		// let characterText = character.name + (active ? "\n[current character]" : "");
 		fill(character.color);
 		circle(0, 0, 150);
 	}
@@ -86,5 +97,16 @@ class CharacterSelection extends Page {
 		if (this.#currentCharacterIndex >= this.#characters.length - 1) this.#rightButton.hide();
 		else this.#rightButton.show();
 		this.#currentCharacterIndex = constrain(this.#currentCharacterIndex, 0, this.#characters.length - 1);
+		this.#updateTexts();
+	}
+	#updateTexts() {
+		let active = this.#currentCharacterIndex == this.#characterIndex;
+		let characterText = this.#characters[this.#currentCharacterIndex].name + (active ? "\n[current character]" : "");
+		let characterDescription = this.#characters[this.#currentCharacterIndex].description;
+		let saveText = active ? "" : "[S] - Select Character";
+		this.setText({ id: "character", text: characterText });
+		this.setText({ id: "characterDescription", text: characterDescription });
+		this.setText({ id: "saveText", text: saveText });
+		this.setActionEnabled({ id: "save", enabled: !active });
 	}
 }

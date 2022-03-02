@@ -14,13 +14,18 @@ class RoundManager {
 		this.#orbSize = 50;
 	}
 
-	// Public Methods
+	// Callbacks
 	startUp() {
 		this.#rounds = Rounds.getRounds();
 	}
 	update() {
 		if (Game.inst.orbs.length == 0) this.nextRound();
 	}
+	takeDown() {
+		RoundManager.inst = null;
+	}
+
+	// Public Methods
 	loadRound(index) {
 		// TODO: Win game
 		if (index >= this.#rounds.length) {

@@ -19,8 +19,8 @@ class Character {
 	// Public Getters
 	getPlayerSizeMultiplier() { return this.#playerSizeMultiplier; }
 	getPlayerSpeedMultiplier() { return this.#playerSpeedMultiplier; }
-	getPlayerSize() { return this.#playerSizeMultiplier * this.#playerSize; }
-	getPlayerSpeed() { return this.#playerSpeedMultiplier * this.#playerSpeed; }
+	getPlayerSize() { return this.#playerSize; }
+	getPlayerSpeed() { return this.#playerSpeed; }
 	getPlayerColor() { return this.#playerColor; }
 
 	// Public Methods

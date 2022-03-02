@@ -89,10 +89,10 @@ class LotusPickup extends Interactable {
 	}
 	#destroy() {
 		new ParticleSystem({
-			count: 3,
-			lifeTime: 1000,
+			count: 8,
+			lifeTime: 3000,
 			color: color(red(this.#color), green(this.#color), blue(this.#color), 200),
-			speed: 100,
+			speed: 400,
 			size: this.#size,
 			position: this.#position
 		});

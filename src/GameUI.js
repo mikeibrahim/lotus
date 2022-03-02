@@ -32,6 +32,9 @@ class GameUI {
 	update() {
 		this.#render();
 	}
+	takeDown() {
+		GameUI.inst = null;
+	}
 
 	// Private Methods
 	#render() {

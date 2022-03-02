@@ -8,7 +8,7 @@ class MainMenu extends Page {
 	startUp() {
 		super.startUp();
 		this.addText({ text: "Lotus", spacing: 100, fontSize: 48 });
-		this.addText({ text: "[L] - Load", spacing: 200, fontSize: 32 });
+		this.addText({ text: "[L] - Load Game", spacing: 200, fontSize: 32 });
 		this.addText({ text: "[N] - New Game", spacing: 100, fontSize: 32 });
 		this.addText({ text: "[C] - Character Selection", spacing: 100, fontSize: 32 });
 		this.addText({ text: "[O] - Options", spacing: 200, fontSize: 24 });

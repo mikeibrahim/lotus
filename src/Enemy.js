@@ -21,7 +21,11 @@ class Enemy extends Interactable {
 		this.#position = position || createVector(0, 0);
 	}
 
+	// Public Setters
+	addPosition(vector) { this.#position.add(vector); }
+
 	// Public Getters
+	getPosition() { return this.#position; }
 	static charToEnemy(char) {
 		switch (char) {
 			case 'r':
@@ -52,9 +56,6 @@ class Enemy extends Interactable {
 				return null;
 		}
 	}
-	// getPosition() { return this.#position; }
-	// getSize() { return this.#size; }
-	// getDamage() { return this.#damage; }
 
 	// Callbacks
 	update() {
@@ -88,9 +89,9 @@ class Enemy extends Interactable {
 		else if (this.#position.y + (this.#size / 2) > size / 2) this.#velocity.y = -abs(this.#velocity.y);
 	}
 	#render() {
-		fill(this.#color);
 		stroke(0);
 		strokeWeight(5);
+		fill(this.#color);
 		circle(this.#position.x, this.#position.y, this.#size);
 	}
 }

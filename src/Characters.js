@@ -1,6 +1,5 @@
 class Characters {
 	static getCharacterType(character) {
-		console.log("Getting Character Type");
 		switch (character) {
 			case 'Lotus': return new Lotus();
 			case 'Dandelion': return new Dandelion();
@@ -17,7 +16,6 @@ class Characters {
 		}
 	}
 	static getCharacters() {
-		console.log("Getting Characters");
 		return [
 			{
 				name: 'Lotus',
@@ -30,7 +28,7 @@ class Characters {
 			{
 				name: 'Dandelion',
 				color: '#ffeb8a',
-				size: 1,
+				size: 0.9,
 				speed: 1,
 				description: '[Ability] Click space to fade into the wind, and then back out. This ability can only be used once per level.',
 				roundUnlock: 5,
@@ -56,7 +54,7 @@ class Characters {
 				color: '#ff4545',
 				size: 1,
 				speed: 1,
-				description: '[Ability] Consume 3 orbs in exchange for one life. Can be used three times per level.',
+				description: '[Ability] Consume 1 orb in exchange for 1 life. Can be used three times per level.',
 				roundUnlock: 20,
 			},
 		]

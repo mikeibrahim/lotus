@@ -21,16 +21,30 @@ class Page {
 
 	// Public Methods
 	addText({ id, text, spacing, fontSize }) {
-		this.#texts.push({ id: id || this.#texts.length, text: text, spacing: spacing || 0, fontSize: fontSize || 32 });
+		this.#texts.push({
+			id: id || this.#texts.length,
+			text: text,
+			spacing: spacing || 0,
+			fontSize: fontSize || 32,
+		});
 	}
 	setText({ id, text }) {
 		for (let i = 0; i < this.#texts.length; i++)
 			if (this.#texts[i].id == id) { this.#texts[i].text = text; return; }
 	}
-	addAction({ char, callback }) {
-		this.#actions.push({ char: char, callback: callback });
+	addAction({ id, char, callback, enabled }) {
+		this.#actions.push({
+			id: id || this.#actions.length,
+			char: char,
+			callback: callback,
+			enabled: enabled || true
+		});
 	}
-	
+	setActionEnabled({ id, enabled }) {
+		for (let i = 0; i < this.#actions.length; i++)
+			if (this.#actions[i].id == id) { this.#actions[i].enabled = enabled; return; }
+	}
+
 	// Private Methods
 	#renderText() {
 		textAlign(CENTER, CENTER);
@@ -46,10 +60,9 @@ class Page {
 	}
 	#checkForActions() {
 		for (let i = 0; i < this.#actions.length; i++) {
-			// let key = this.#actions[i].char;
 			let char = this.#actions[i].char;
 			if (typeof char == "string") char = char.charCodeAt(0);
-			if (keyIsDown(char)) this.#actions[i].callback();
+			if (keyIsDown(char) && this.#actions[i].enabled) this.#actions[i].callback();
 		}
 	}
 	#clearData() {

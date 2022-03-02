@@ -24,7 +24,6 @@ class Confirmation extends Page{
 
 	// Overrides
 	startUp() {
-		console.log("Confirmation.startUp()");
 		super.startUp();
 		this.addText({ id:"confirmationText", text: "Are you sure?", spacing: 100, fontSize: 48 });
 		this.addText({ text: "[Y] - Yes", spacing: 300, fontSize: 32 });

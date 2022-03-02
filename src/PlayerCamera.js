@@ -6,7 +6,6 @@ class PlayerCamera {
 	#maxZoom;
 	#zoomSpeed;
 	// Updated Data
-	// #playerPosition;
 	#position;
 	#currentZoom;
 	#shake;
@@ -21,7 +20,6 @@ class PlayerCamera {
 		this.#maxZoom = maxZoom || 2000;
 		this.#zoomSpeed = zoomSpeed || 1;
 		// Updated Data
-		// this.#playerPosition = Player.inst.getPosition();
 		this.#position = createVector(0, 0);
 		this.#currentZoom = this.#maxZoom;
 		this.#shake = 0;
@@ -32,7 +30,7 @@ class PlayerCamera {
 	getPosition() { return this.#position; }
 	getCurrentZoom() { return this.#currentZoom; }
 
-	// Public Methods
+	// Callbacks
 	startUp() {
 		
 	}
@@ -40,6 +38,12 @@ class PlayerCamera {
 		this.#moveToPlayer();
 		this.#cameraShake();
 	}
+	takeDown() {
+		PlayerCamera.inst = null;
+		this.#camera.ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 1000);
+	}
+
+	// Public Methods
 	shake(duration, magnitude) {
 		this.#shake = duration;
 		this.#shakeAmount = magnitude;

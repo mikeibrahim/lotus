@@ -58,7 +58,7 @@ class Player {
 		return keyIsDown(shiftKey) ? 0.5 : 1;
 	}
 
-	// Public Methods
+	// Callbacks
 	startUp() {
 		// Game UI
 		GameUI.inst.setMaxHealth(this.#maxHealth);
@@ -70,6 +70,11 @@ class Player {
 		this.#detectEnvironmentCollision();
 		this.#renderPlayer();
 	}
+	takeDown() {
+		Player.inst = null;
+	}
+
+	// Public Methods
 	resetPosition() {
 		this.#position.mult(0);
 	}

@@ -28,6 +28,9 @@ class Environment {
 	update() {
 		this.#render();
 	}
+	takeDown() {
+		Environment.inst = null;
+	}
 
 	// Private Methods
 	#render() {
