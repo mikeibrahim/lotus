@@ -5,19 +5,22 @@ class Character {
 	#playerSpeedMultiplier;
 	#playerColor;
 	#playerSize;
+	#playerSpeed;
 
 	// Constructor
 	constructor() {
 		this.#playerSizeMultiplier = 1;
 		this.#playerSpeedMultiplier = 1;
 		this.#playerSize = 1;
+		this.#playerSpeed = 1;
 		this.#playerColor = color(0, 0, 0);
 	}
 
 	// Public Getters
-	getPlayerSize() { return this.#playerSizeMultiplier * this.#playerSize; }
 	getPlayerSizeMultiplier() { return this.#playerSizeMultiplier; }
 	getPlayerSpeedMultiplier() { return this.#playerSpeedMultiplier; }
+	getPlayerSize() { return this.#playerSizeMultiplier * this.#playerSize; }
+	getPlayerSpeed() { return this.#playerSpeedMultiplier * this.#playerSpeed; }
 	getPlayerColor() { return this.#playerColor; }
 
 	// Public Methods
@@ -45,5 +48,6 @@ class Character {
 		Player.inst.setSizeMultiplier(this.#playerSizeMultiplier);
 		Player.inst.setColor(this.#playerColor);
 		this.#playerSize = Player.inst.getSize();
+		this.#playerSpeed = Player.inst.getSpeed();
 	}
 }

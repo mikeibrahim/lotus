@@ -14,6 +14,7 @@ class Dandelion extends Character {
 		this.#maxFadeTime = 2000;
 		this.#currentFadeTime = 0;
 		this.#fadeScaleFactor = 2;
+		this.#fadeSpeedFactor = 1.25;
 	}
 
 	// Callbacks
@@ -65,7 +66,7 @@ class Dandelion extends Character {
 		if (this.#currentFadeTime <= 0) this.#currentFadeTime = 0;
 		
 		Player.inst.setSize(super.getPlayerSize() + super.getPlayerSize() * this.#fadeScaleFactor * (this.#currentFadeTime / this.#maxFadeTime));
-		Player.inst.setSpeed(super.getPlayerSpeed() + super.getPlayerSpeed() * this.#fadeScaleFactor * (this.#currentFadeTime / this.#maxFadeTime));
+		Player.inst.setSpeed(super.getPlayerSpeed() + super.getPlayerSpeed() * this.#fadeSpeedFactor * (this.#currentFadeTime / this.#maxFadeTime));
 	}
 	#fadeReset() {
 		this.#faded = false;

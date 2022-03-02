@@ -30,14 +30,16 @@ class Player {
 	
 	// Public Setters
 	setInvincibility(time) { this.#currentInvincibilityTime = time; }
-	setSize(size) { this.#size = size; }
 	setSizeMultiplier(multiplier) { this.#size *= multiplier; }
 	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
+	setSize(size) { this.#size = size; }
+	setSpeed(speed) { this.#speed = speed; }
 	setColor(color) { this.#color = color; }
 
 	// Public Getters
 	getPosition() { return this.#position; }
 	getSize() { return this.#size; }
+	getSpeed() { return this.#speed; }
 	getCurrentHealth() { return this.#currentHealth; }
 	getMaxHealth() { return this.#maxHealth; }
 
