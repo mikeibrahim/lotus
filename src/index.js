@@ -7,7 +7,10 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(800, 800, WEBGL);
+	let canvas = createCanvas(800, 800, WEBGL);
+	canvas.style("display", "block");
+	canvas.style("width", "min(100vh, 100vw)");
+	canvas.style("height", "min(100vh, 100vw)");
 	textFont(font);
 	app.init();
 }
