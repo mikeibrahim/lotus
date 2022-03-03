@@ -50,6 +50,19 @@ class Game extends Page {
 		this.#character.takeDown();
 		this.#roundManager.takeDown();
 	}
+	endGame() {
+		this.takeDown();
+		App.inst.switchPage("confirmation");
+		let roundReached = "Rounds Completed: " + (getItem("currentRound") || 0);
+		Confirmation.inst.setConfirmationText("Game Over\n"+roundReached+"\nRestart?");
+		Confirmation.inst.setYesCallback(() => {
+			App.inst.switchPage("game");
+		});
+		Confirmation.inst.setNoCallback(() => {
+			App.inst.switchPage("mainMenu");
+		});
+		storeItem("currentRound", 0);
+	}
 
 	// Private Methods
 	#startGame() {

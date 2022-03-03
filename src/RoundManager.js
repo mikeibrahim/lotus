@@ -22,7 +22,6 @@ class RoundManager {
 		if (Game.inst.orbs.length == 0) this.nextRound();
 	}
 	takeDown() {
-		RoundManager.inst = null;
 	}
 
 	// Public Methods
@@ -56,6 +55,24 @@ class RoundManager {
 		PlayerCamera.inst.zoomIn();
 	}
 	nextRound() {
+		this.#saveOrbs();
+		this.#saveMaxRound();
 		this.loadRound(this.#currentRound + 1);
+	}
+
+	// Private Methods
+	#saveOrbs() {
+		let currentOrbs = getItem("currentOrbs", 0);
+		let collectedOrbs = Rounds.getRounds()[this.#currentRound].orbs;
+		let totalOrbs = currentOrbs + collectedOrbs;
+		console.log(`Collected ${collectedOrbs} orbs. Total: ${totalOrbs}`);
+		storeItem("currentOrbs", totalOrbs);
+	}
+	#saveMaxRound() {
+		let currentRound = getItem("currentRound") || 0;
+		let maxRound = getItem("maxRound") || 0;
+		if (currentRound > maxRound) storeItem("maxRound", currentRound);
+		console.log(`currentRound: ${currentRound}`);
+		console.log(`Max Round: ${getItem("maxRound")}`);
 	}
 }

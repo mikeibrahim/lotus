@@ -71,16 +71,15 @@ class Player {
 		this.#renderPlayer();
 	}
 	takeDown() {
-		Player.inst = null;
 	}
 
 	// Public Methods
 	resetPosition() {
 		this.#position.mult(0);
 	}
-	isTouching(object) {
-		let position = object.getPosition();
-		let size = object.getSize();
+	isTouching(interactable) {
+		let position = interactable.getPosition();
+		let size = interactable.getSize();
 		return this.#position.dist(position) < (this.#size / 2) + (size / 2);
 	}
 	heal(amount) {
@@ -150,6 +149,7 @@ class Player {
 	}
 	#die() {
 		// TODO: death screen
-		RoundManager.inst.loadRound(0);
+		// RoundManager.inst.loadRound(0);
+		Game.inst.endGame();
 	}
 }

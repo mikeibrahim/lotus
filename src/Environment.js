@@ -15,8 +15,8 @@ class Environment {
 	// Public Getters
 	getSize() { return this.#size; }
 	getRandomPosition(objectSize) {
-		let min = (-this.#size / 2) + (objectSize / 2);
-		let max = (this.#size / 2) - (objectSize / 2);
+		let min = (-this.#size / 2) + objectSize;
+		let max = (this.#size / 2) - objectSize;
 		let position = createVector(random(min, max), random(min, max));
 		return position;
 	}
@@ -29,7 +29,6 @@ class Environment {
 		this.#render();
 	}
 	takeDown() {
-		Environment.inst = null;
 	}
 
 	// Private Methods

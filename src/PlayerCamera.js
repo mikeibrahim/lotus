@@ -39,7 +39,6 @@ class PlayerCamera {
 		this.#cameraShake();
 	}
 	takeDown() {
-		PlayerCamera.inst = null;
 		this.#camera.ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 1000);
 	}
 

@@ -3,6 +3,7 @@ class CharacterSelection extends Page {
 	#characters;
 	#characterIndex;
 	#currentCharacterIndex;
+	#currentCharacterUnlocked;
 	#leftButton;
 	#rightButton;
 
@@ -12,6 +13,7 @@ class CharacterSelection extends Page {
 		this.#characters = [];
 		this.#characterIndex = 0;
 		this.#currentCharacterIndex = 0;
+		this.#currentCharacterIndex = true;
 		this.#leftButton = null;
 		this.#rightButton = null;
 	}
@@ -85,9 +87,7 @@ class CharacterSelection extends Page {
 	}
 	#renderCharacters() {
 		let character = this.#characters[this.#currentCharacterIndex];
-		// let active = this.#currentCharacterIndex == this.#characterIndex;
-		// let characterText = character.name + (active ? "\n[current character]" : "");
-		fill(character.color);
+		fill(red(character.color), green(character.color), blue(character.color), this.#currentCharacterUnlocked ? 255 : 100);
 		circle(0, 0, 150);
 	}
 	#updateCharacterIndex(amount) {
@@ -101,12 +101,20 @@ class CharacterSelection extends Page {
 	}
 	#updateTexts() {
 		let active = this.#currentCharacterIndex == this.#characterIndex;
+		this.#currentCharacterUnlocked = (getItem("maxRound") || 0) >= this.#characters[this.#currentCharacterIndex].roundUnlock;
+		let characterEnabled = !active && this.#currentCharacterUnlocked;
+
 		let characterText = this.#characters[this.#currentCharacterIndex].name + (active ? "\n[current character]" : "");
-		let characterDescription = this.#characters[this.#currentCharacterIndex].description;
-		let saveText = active ? "" : "[S] - Select Character";
+		let characterDescription = this.#currentCharacterUnlocked ?
+			this.#characters[this.#currentCharacterIndex].description :
+			"Unlock this character upon clearing round " + this.#characters[this.#currentCharacterIndex].roundUnlock + ".";
+		let saveText = characterEnabled ? "[S] - Select Character" : "";
 		this.setText({ id: "character", text: characterText });
 		this.setText({ id: "characterDescription", text: characterDescription });
 		this.setText({ id: "saveText", text: saveText });
-		this.setActionEnabled({ id: "save", enabled: !active });
+		console.log("Active: " + active);
+		console.log("unlocked: " + this.#currentCharacterUnlocked);
+		console.log("Enabled: " + characterEnabled);
+		this.setActionEnabled({ id: "save", enabled: characterEnabled });
 	}
 }

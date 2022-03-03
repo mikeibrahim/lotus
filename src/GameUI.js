@@ -33,7 +33,6 @@ class GameUI {
 		this.#render();
 	}
 	takeDown() {
-		GameUI.inst = null;
 	}
 
 	// Private Methods

@@ -8,9 +8,9 @@ class App {
 		this.currentPage = null;
 		this.pages = {
 			"mainMenu": new MainMenu(),
-			"confirmation": new Confirmation(),
-			"game": new Game(),
 			"characterSelection": new CharacterSelection(),
+			"game": new Game(),
+			"confirmation": new Confirmation(),
 		};
 	}
 
@@ -30,6 +30,7 @@ class App {
 	switchPage(page) {
 		this.takeDownCurrentPage();
 		this.currentPage = this.pages[page];
+		console.log("currentOrbs: " + (getItem("currentOrbs") || 0));
 		this.startUpCurrentPage();
 	}
 	takeDownCurrentPage() {

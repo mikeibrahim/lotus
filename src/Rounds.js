@@ -2,34 +2,34 @@ class Rounds {
 	static getRounds() {
 		return [
 			{
-				orbs: 3,
+				orbs: 1,
 				enemies: [
 					{ type: 'r', count: 10 },
 					{ type: 'y', count: 10 },
 				]
 			},
 			{
-				orbs: 3,
+				orbs: 1,
 				enemies: [
 					{ type: 'r', count: 20 },
 					{ type: 'g', count: 20 },
 				]
 			},
 			{
-				orbs: 5,
+				orbs: 1,
 				enemies: [
 					{ type: 'r', count: 10 },
 					{ type: 'g', count: 30 },
 				]
 			},
 			{
-				orbs: 10,
+				orbs: 1,
 				enemies: [
 					{ type: 'g', count: 30 },
 				]
 			},
 			{
-				orbs: 3,
+				orbs: 1,
 				enemies: [
 					{ type: 'r', count: 50 },
 				]

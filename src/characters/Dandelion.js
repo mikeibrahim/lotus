@@ -72,5 +72,6 @@ class Dandelion extends Character {
 		this.#faded = false;
 		this.#currentFadeTime = 0;
 		Player.inst.setSize(super.getPlayerSize());
+		Player.inst.setSpeed(super.getPlayerSpeed());
 	}
 }

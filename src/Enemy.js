@@ -22,7 +22,7 @@ class Enemy extends Interactable {
 	}
 
 	// Public Setters
-	addPosition(vector) { this.#position.add(vector); }
+	setPosition(position) { this.#position = position; }
 
 	// Public Getters
 	getPosition() { return this.#position; }
@@ -61,7 +61,6 @@ class Enemy extends Interactable {
 	update() {
 		super.update();
 		this.#move();
-		// this.#detectPlayerCollision();
 		this.#detectWallCollision();
 		this.#render();
 	}
@@ -75,11 +74,15 @@ class Enemy extends Interactable {
 	#randomVector() { return createVector(random(-1, 1), random(-1, 1)).normalize(); }
 	#move() {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
+		// constrain position
+		this.#constrainPosition();
 		super.setPosition(this.#position);
 	}
-	// #detectPlayerCollision() {
-	// 	Player.inst.tryCollide(this);
-	// }
+	#constrainPosition() {
+		let size = Environment.inst.getSize();
+		this.#position.x = constrain(this.#position.x, -size / 2, size / 2);
+		this.#position.y = constrain(this.#position.y, -size / 2, size / 2);
+	}
 	#detectWallCollision() {
 		let size = Environment.inst.getSize();
 		// Reflect off walls

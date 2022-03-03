@@ -17,3 +17,6 @@ function draw() {
 function keyPressed() {
 	app.keyPressed();
 }
+// function windowResized() {
+// 	resizeCanvas(windowHeight, windowHeight);
+// }
