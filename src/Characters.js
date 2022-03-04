@@ -1,4 +1,5 @@
 class Characters {
+//#region Static Getters
 	static getCharacterType(character) {
 		switch (character) {
 			case 'Lotus': return new Lotus();
@@ -59,4 +60,5 @@ class Characters {
 			},
 		]
 	}
+//#endregion
 }

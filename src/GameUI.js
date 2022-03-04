@@ -1,13 +1,14 @@
 class GameUI {
-	// Data
+//#region Data
 	static inst;
 	#currentRound;
 	#currentHealth;
 	#maxHealth;
 	#currentOrbs;
 	#maxOrbs;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		GameUI.inst = this;
 		this.#currentRound = 0;
@@ -16,16 +17,18 @@ class GameUI {
 		this.#currentOrbs = 0;
 		this.#maxOrbs = 0;
 	}
+//#endregion
 
-	// Public Setters
+//#region Public Setters
 	setCurrentRound(round) { this.#currentRound = round; }
 	setCurrentHealth(health) { this.#currentHealth = health; }
 	setMaxHealth(health) { this.#maxHealth = health; }
 	setCurrentOrbs(orbs) { this.#currentOrbs = orbs; }
 	addCurrentOrbs(orbs) { this.#currentOrbs += orbs; }
 	setMaxOrbs(orbs) { this.#maxOrbs = orbs; }
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	startUp() {
 		
 	}
@@ -34,13 +37,13 @@ class GameUI {
 	}
 	takeDown() {
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#render() {
 		let buffer = 100;
 		let pos = PlayerCamera.inst.getPosition();
 		let zoom = PlayerCamera.inst.getCurrentZoom();
-		// Health count
 		fill(255);
 		textSize(zoom / 15 + 30);
 		textAlign(LEFT);
@@ -63,4 +66,5 @@ class GameUI {
 			-height / 2 - zoom + pos.y + buffer
 		);
 	}
+//#endregion
 }

@@ -1,11 +1,12 @@
 class CharacterSelection extends Page {
-	// Data
+//#region Data
 	#characters;
 	#characterIndex;
 	#currentCharacterIndex;
 	#currentCharacterUnlocked;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
 		this.#characters = [];
@@ -13,8 +14,9 @@ class CharacterSelection extends Page {
 		this.#currentCharacterIndex = 0;
 		this.#currentCharacterIndex = true;
 	}
+//#endregion
 
-	// Overrides
+//#region Overrides
 	startUp() {
 		super.startUp();
 		this.#characters = Characters.getCharacters();
@@ -31,7 +33,6 @@ class CharacterSelection extends Page {
 		this.addAction({ char: RIGHT_ARROW, callback: () => { this.#updateCharacterIndex(1); } });
 		this.addAction({ id: "save", char: 'S', callback: () => { this.saveCharacter(); } });
 		this.addAction({ char: 'B', callback: () => { this.back(); } });
-		this.#createButtons();
 		this.#updateCharacterIndex(0);
 	}
 	update() {
@@ -44,8 +45,9 @@ class CharacterSelection extends Page {
 	takeDown() {
 		super.takeDown();
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	saveCharacter() {
 		this.takeDown();
 		App.inst.switchPage("confirmation");
@@ -64,22 +66,9 @@ class CharacterSelection extends Page {
 		this.takeDown();
 		App.inst.switchPage("mainMenu");
 	}
+//#endregion
 
-	// Private Methods
-	#createButtons() {
-		// this.#leftButton = createButton("<");
-		// this.#rightButton = createButton(">");
-		// this.#leftButton.size(50, 50);
-		// this.#rightButton.size(50, 50);
-		// this.#leftButton.style("font-size", "32px");
-		// this.#rightButton.style("font-size", "32px");
-		// this.#leftButton.style("border-radius", "50%");
-		// this.#rightButton.style("border-radius", "50%");
-		// this.#leftButton.position(width / 2 - 200 - this.#leftButton.width / 2, height / 2 - this.#leftButton.height / 2);
-		// this.#rightButton.position(width / 2 + 200 - this.#rightButton.width / 2, height / 2 - this.#rightButton.height / 2);
-		// this.#leftButton.mousePressed(() => { this.#updateCharacterIndex(-1); });
-		// this.#rightButton.mousePressed(() => { this.#updateCharacterIndex(1); });
-	}
+//#region Private Methods
 	#renderCharacters() {
 
 		let character = this.#characters[this.#currentCharacterIndex];
@@ -111,4 +100,5 @@ class CharacterSelection extends Page {
 		this.setText({ id: "saveText", text: saveText });
 		this.setActionEnabled({ id: "save", enabled: characterEnabled });
 	}
+//#endregion
 }

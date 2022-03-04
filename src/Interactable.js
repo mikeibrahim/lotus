@@ -1,31 +1,38 @@
 class Interactable {
-	// Data
+//#region Data
 	#size;
 	#position;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({size, position}) {
 		this.#size = size;
 		this.#position = position;
 	}
+//#endregion
 
-	// Public Setters
+//#region Public Setters
 	setPosition(position) { this.#position = position; }
+//#endregion
 
-	// Public Getters
+//#region Public Getters
 	getSize() { return this.#size; }
 	getPosition() { return this.#position; }
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	update() {
 		this.#playerInteract();
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	interact() { }
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#playerInteract() {
 		if (Player.inst.isTouching(this)) this.interact();
 	}
+//#endregion
 }

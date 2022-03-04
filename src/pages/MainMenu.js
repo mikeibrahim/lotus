@@ -1,10 +1,11 @@
 class MainMenu extends Page {
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
 	}
+//#endregion
 
-	// Overrides
+//#region Overrides
 	startUp() {
 		super.startUp();
 		this.addText({ text: "Lotus", spacing: 100, fontSize: 48 });
@@ -26,8 +27,9 @@ class MainMenu extends Page {
 	takeDown() {
 		super.takeDown();
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	newGame() {
 		this.takeDown();
 		App.inst.switchPage("confirmation");
@@ -51,4 +53,5 @@ class MainMenu extends Page {
 	options() {
 		this.takeDown();
 	}
+//#endregion
 }

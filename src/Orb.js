@@ -1,21 +1,24 @@
 class Orb extends Interactable {
-	// Data
+//#region Data
 	#color;
 	#size;
 	#position;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ size, position }) {
 		super({ size: size, position: position });
 		this.#size = size;
 		this.#position = position;
 		this.#color = color(0, 0, 255);
 	}
+//#endregion
 
-	// Public Getters
+//#region Public Getters
 	getPosition() { return this.#position; }
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	update() {
 		super.update();
 		this.#render();
@@ -35,12 +38,14 @@ class Orb extends Interactable {
 		Game.inst.orbs.splice(Game.inst.orbs.indexOf(this), 1);
 		GameUI.inst.addCurrentOrbs(1);
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#render() {
 		fill(this.#color);
 		stroke(0);
 		strokeWeight(0);
 		circle(this.#position.x, this.#position.y, this.#size);
 	}
+//#endregion
 }

@@ -1,13 +1,17 @@
 class Page {
+//#region Data
 	#texts;
 	#actions;
+//#endregion
 
+//#endregion Constructor
 	constructor() {
 		this.#texts = [];
 		this.#actions = [];
 	}
+//#endregion
 
-	// Method Stubs
+//#region Method Stubs
 	startUp() { }
 	update() {
 		this.#renderText();
@@ -18,8 +22,9 @@ class Page {
 	takeDown() {
 		this.#clearData();
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	addText({ id, text, spacing, fontSize }) {
 		this.#texts.push({
 			id: id || this.#texts.length,
@@ -44,8 +49,9 @@ class Page {
 		for (let i = 0; i < this.#actions.length; i++)
 			if (this.#actions[i].id == id) { this.#actions[i].enabled = enabled; return; }
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#renderText() {
 		textAlign(CENTER, CENTER);
 		fill(255);
@@ -69,4 +75,5 @@ class Page {
 		this.#texts = [];
 		this.#actions = [];
 	}
+//#endregion
 }

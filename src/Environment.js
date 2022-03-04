@@ -1,18 +1,19 @@
 class Environment {
-	// Data
+//#region Data
 	static inst;
 	#size;
 	#thickness;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor(size) {
-		// Data
 		Environment.inst = this;
 		this.#size = size;
 		this.#thickness = 50;
 	}
+//#endregion
 
-	// Public Getters
+//#region Public Getters
 	getSize() { return this.#size; }
 	getRandomPosition(objectSize) {
 		let min = (-this.#size / 2) + objectSize;
@@ -20,8 +21,9 @@ class Environment {
 		let position = createVector(random(min, max), random(min, max));
 		return position;
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	startUp() {
 	
 	}
@@ -30,8 +32,9 @@ class Environment {
 	}
 	takeDown() {
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#render() {
 		fill(0);
 		rectMode(CORNER);
@@ -40,4 +43,5 @@ class Environment {
 		rect(-this.#size / 2 - this.#thickness, -this.#size / 2, this.#thickness, this.#size); // left
 		rect(this.#size / 2, -this.#size / 2, this.#thickness, this.#size); // right
 	}
+//#endregion
 }

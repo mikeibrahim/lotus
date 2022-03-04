@@ -1,36 +1,36 @@
 class PlayerCamera {
-	// Data
+//#region Data
 	static inst;
 	#camera;
 	#speed;
 	#maxZoom;
 	#zoomSpeed;
-	// Updated Data
 	#position;
 	#currentZoom;
 	#shake;
 	#shakeAmount;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ speed, maxZoom, zoomSpeed }) {
-		// Data
 		PlayerCamera.inst = this;
 		this.#camera = createCamera();
 		this.#speed = speed || 2;
 		this.#maxZoom = maxZoom || 2000;
 		this.#zoomSpeed = zoomSpeed || 1;
-		// Updated Data
 		this.#position = createVector(0, 0);
 		this.#currentZoom = this.#maxZoom;
 		this.#shake = 0;
 		this.#shakeAmount = 0;
 	}
+//#endregion
 
-	// Public Getters 
+//#region Public Getters 
 	getPosition() { return this.#position; }
 	getCurrentZoom() { return this.#currentZoom; }
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	startUp() {
 		
 	}
@@ -41,8 +41,9 @@ class PlayerCamera {
 	takeDown() {
 		this.#camera.ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 1000);
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	shake(duration, magnitude) {
 		this.#shake = duration;
 		this.#shakeAmount = magnitude;
@@ -50,8 +51,9 @@ class PlayerCamera {
 	zoomIn() {
 		this.#currentZoom = -100;
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#moveToPlayer() {
 		let playerPosition = Player.inst.getPosition();
 		let targetDirection = playerPosition.copy().sub(this.#position);
@@ -78,4 +80,5 @@ class PlayerCamera {
 			this.#position.y += random(-this.#shakeAmount, this.#shakeAmount);
 		}
 	}
+//#endregion
 }

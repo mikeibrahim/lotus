@@ -1,39 +1,38 @@
 class ParticleSystem {
-	// Data
+//#region Data
 	#count;
 	#lifeTime;
 	#color;
 	#speed;
 	#size;
 	#position;
-	// Updated Data
 	#particles;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ count, lifeTime, color, speed, size, position }) {
-		// Data
 		this.#count = count || 100;
 		this.#lifeTime = lifeTime || 1000;
 		this.#color = color || color(255, 0, 0);
 		this.#speed = speed || 1500;
 		this.#size = size || 500;
 		this.#position = position || createVector(0, 0);
-		// Updated Data
 		this.#particles = [];
 		this.#createParticles();
 		Game.inst.particleSystems.push(this);
 	}
-	
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	update() {
 		this.#render();
 	}
 	removeParticle(particle) {
 		this.#particles.splice(this.#particles.indexOf(particle), 1);
 	}
+//#endregion
 	
-	// Private Methods
+//#region Private Methods
 	#getRandomVector() {
 		let x = random(-1, 1);
 		let y = random(-1, 1);
@@ -63,4 +62,5 @@ class ParticleSystem {
 	#destroy() {
 		Game.inst.particleSystems.splice(Game.inst.particleSystems.indexOf(this), 1);
 	}
+//#endregion
 }

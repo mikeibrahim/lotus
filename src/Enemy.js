@@ -1,31 +1,26 @@
 class Enemy extends Interactable {
-	// Data
+//#region Data
 	#damage;
 	#size;
 	#speed;
 	#color;
-	// Updated Data
 	#velocity;
 	#position;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ damage, size, position, speed, color }) {
 		super({size: size, position: position});
-		// Data
 		this.#damage = damage || 1;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
 		this.#color = color || color(255, 0, 0);
-		// Updated Data
 		this.#velocity = this.#randomVector();
 		this.#position = position || createVector(0, 0);
 	}
+//#endregion
 
-	// Public Setters
-	setPosition(position) { this.#position = position; }
-
-	// Public Getters
-	getPosition() { return this.#position; }
+//#region Static Getters
 	static charToEnemy(char) {
 		switch (char) {
 			case 'r':
@@ -56,25 +51,35 @@ class Enemy extends Interactable {
 				return null;
 		}
 	}
+//#endregion
 
-	// Callbacks
+//#region Public Setters
+	setPosition(position) { this.#position = position; }
+//#endregion
+
+//#region Public Getters
+	getPosition() { return this.#position; }
+//#endregion	
+
+//#region Callbacks
 	update() {
 		super.update();
 		this.#move();
 		this.#detectWallCollision();
 		this.#render();
 	}
+//#endregion
 
-	// Overrides
+//#region Overrides
 	interact() {
 		Player.inst.takeDamage(this.#damage);
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#randomVector() { return createVector(random(-1, 1), random(-1, 1)).normalize(); }
 	#move() {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
-		// constrain position
 		this.#constrainPosition();
 		super.setPosition(this.#position);
 	}
@@ -97,4 +102,5 @@ class Enemy extends Interactable {
 		fill(this.#color);
 		circle(this.#position.x, this.#position.y, this.#size);
 	}
+//#endregion
 }

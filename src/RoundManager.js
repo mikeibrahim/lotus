@@ -1,20 +1,21 @@
 class RoundManager {
-	// Data
+//#region Data
 	static inst;
 	#rounds;
 	#currentRound;
 	#orbSize;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
-		// Data
 		RoundManager.inst = this;
 		this.#rounds = 0;
 		this.#currentRound = 0;
 		this.#orbSize = 50;
 	}
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	startUp() {
 		this.#rounds = Rounds.getRounds();
 	}
@@ -23,10 +24,10 @@ class RoundManager {
 	}
 	takeDown() {
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	loadRound(index) {
-		// TODO: Win game
 		if (index >= this.#rounds.length) {
 			App.inst.switchPage("confirmation");
 			Confirmation.inst.setConfirmationText("You have completed all the (current) rounds!\nWould you like to play again?");
@@ -39,7 +40,7 @@ class RoundManager {
 			});
 			return;
 		}
-		// Round
+
 		Game.inst.enemies = [];
 		Game.inst.orbs = [];
 		Game.inst.particleSystems = [];
@@ -47,16 +48,16 @@ class RoundManager {
 		storeItem("currentRound", index);
 		GameUI.inst.setCurrentRound(index);
 		let round = this.#rounds[index];
-		// Enemies
+
 		round.enemies.forEach(enemy => {
 			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemy.charToEnemy(enemy.type));
 		});
-		// Orbs
+
 		for (let i = 0; i < round.orbs; i++)
 			Game.inst.orbs.push(new Orb({ size: this.#orbSize, position: Environment.inst.getRandomPosition(this.#orbSize) }));
 		GameUI.inst.setMaxOrbs(round.orbs);
 		GameUI.inst.setCurrentOrbs(0);
-		// Player
+
 		Player.inst.resetPosition();
 		Player.inst.setInvincibility(2000);
 		Character.inst.nextRound();
@@ -67,20 +68,19 @@ class RoundManager {
 		this.#saveMaxRound();
 		this.loadRound(this.#currentRound + 1);
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#saveOrbs() {
 		let currentOrbs = getItem("currentOrbs", 0);
 		let collectedOrbs = Rounds.getRounds()[this.#currentRound].orbs;
 		let totalOrbs = currentOrbs + collectedOrbs;
-		console.log(`Collected ${collectedOrbs} orbs. Total: ${totalOrbs}`);
 		storeItem("currentOrbs", totalOrbs);
 	}
 	#saveMaxRound() {
 		let currentRound = getItem("currentRound") || 0;
 		let maxRound = getItem("maxRound") || 0;
 		if (currentRound > maxRound) storeItem("maxRound", currentRound);
-		console.log(`currentRound: ${currentRound}`);
-		console.log(`Max Round: ${getItem("maxRound")}`);
 	}
+//#endregion
 }

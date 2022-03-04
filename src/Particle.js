@@ -1,5 +1,5 @@
 class Particle {
-	// Data
+//#region Data
 	#particleSystem;
 	#lifeTime;
 	#color;
@@ -7,12 +7,11 @@ class Particle {
 	#size;
 	#position;
 	#velocity;
-	// Updated Data
 	#currentLifeTime;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ particleSystem, lifeTime, color, speed, size, position, velocity }) {
-		// Data
 		this.#particleSystem = particleSystem;
 		this.#lifeTime = lifeTime || 1000;
 		this.#color = color || color(255, 0, 0);
@@ -21,18 +20,19 @@ class Particle {
 		this.#size = random(this.#size / 2, this.#size);
 		this.#position = position || createVector(0, 0);
 		this.#velocity = velocity || createVector(0, 0);
-		// Updated Data
 		this.#currentLifeTime = this.#lifeTime;
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	update() {
 		this.#move();
 		this.#render();
 		this.#deathCheck();
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#move() {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
 		this.#currentLifeTime -= deltaTime;
@@ -48,4 +48,5 @@ class Particle {
 	#destroy() {
 		this.#particleSystem.removeParticle(this);
 	}
+//#endregion
 }

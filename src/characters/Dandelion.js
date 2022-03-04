@@ -1,12 +1,13 @@
 class Dandelion extends Character {
-	// Data
+//#region Data
 	#faded;
 	#maxFadeTime;
 	#currentFadeTime;
 	#fadeScaleFactor;
 	#fadeSpeedFactor;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
 		Character.inst = this;
@@ -16,8 +17,9 @@ class Dandelion extends Character {
 		this.#fadeScaleFactor = 2;
 		this.#fadeSpeedFactor = 1.25;
 	}
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	startUp() {
 		super.startUp("Dandelion");
 	}
@@ -42,8 +44,9 @@ class Dandelion extends Character {
 	takeDown() {
 		super.takeDown();
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#fadeStart() {
 		if (this.#faded) return;
 		this.#faded = true;
@@ -74,4 +77,5 @@ class Dandelion extends Character {
 		Player.inst.setSize(super.getPlayerSize());
 		Player.inst.setSpeed(super.getPlayerSpeed());
 	}
+//#endregion
 }

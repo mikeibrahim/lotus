@@ -1,11 +1,9 @@
 let app = new App();
-
 let font;
 
 function preload() {
 	font = loadFont("assets/fonts/Roboto-Regular.ttf");
 }
-
 function setup() {
 	let canvas = createCanvas(800, 800, WEBGL);
 	canvas.style("display", "block");
@@ -20,6 +18,3 @@ function draw() {
 function keyPressed() {
 	app.keyPressed();
 }
-// function windowResized() {
-// 	resizeCanvas(windowHeight, windowHeight);
-// }

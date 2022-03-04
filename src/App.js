@@ -1,8 +1,9 @@
 class App {
-	// Data
+//#region Data
 	static inst;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		App.inst = this;
 		this.currentPage = null;
@@ -13,8 +14,9 @@ class App {
 			"confirmation": new Confirmation(),
 		};
 	}
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	init() {
 		this.switchPage("mainMenu");
 	}
@@ -25,12 +27,12 @@ class App {
 	keyPressed() {
 		if (this.currentPage) this.currentPage.keyPressed();
 	}
+	//#endregion
 	
-	// Public Methods
+//#region Public Methods
 	switchPage(page) {
 		this.takeDownCurrentPage();
 		this.currentPage = this.pages[page];
-		console.log("currentOrbs: " + (getItem("currentOrbs") || 0));
 		this.startUpCurrentPage();
 	}
 	takeDownCurrentPage() {
@@ -39,4 +41,5 @@ class App {
 	startUpCurrentPage() {
 		if (this.currentPage) this.currentPage.startUp();
 	}
+//#endregion
 }

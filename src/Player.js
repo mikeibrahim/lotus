@@ -1,49 +1,50 @@
 class Player {
-	// Data
+//#region Data
 	static inst;
 	#maxHealth;
 	#size;
 	#speed;
 	#maxInvincibilityTime;
 	#color;
-	// Updated Data
 	#currentHealth;
 	#currentInvincibilityTime;
 	#position;
 	#moveDirection;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ maxHealth, position, size, speed, maxInvincibilityTime, color }) {
-		// Data
 		Player.inst = this;
 		this.#maxHealth = maxHealth || 3;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
 		this.#maxInvincibilityTime = maxInvincibilityTime || 1000;
 		this.#color = color || color(255, 0, 0);
-		// Updated Data
 		this.#currentHealth = this.#maxHealth;
 		this.#currentInvincibilityTime = 0;
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
 	}
+//#endregion
 	
-	// Public Setters
+//#region Public Setters
 	setInvincibility(time) { this.#currentInvincibilityTime = time; }
 	setSizeMultiplier(multiplier) { this.#size *= multiplier; }
 	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
 	setSize(size) { this.#size = size; }
 	setSpeed(speed) { this.#speed = speed; }
 	setColor(color) { this.#color = color; }
+//#endregion
 
-	// Public Getters
+//#region Public Getters
 	getPosition() { return this.#position; }
 	getSize() { return this.#size; }
 	getSpeed() { return this.#speed; }
 	getCurrentHealth() { return this.#currentHealth; }
 	getMaxHealth() { return this.#maxHealth; }
+//#endregion
 
-	// Private Getters
+//#region Private Getters
 	#getInput() {
 		let input = createVector(0, 0);
 		const keys = { w: 87, a: 65, s: 83, d: 68, }
@@ -57,10 +58,10 @@ class Player {
 		let shiftKey = 16;
 		return keyIsDown(shiftKey) ? 0.5 : 1;
 	}
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	startUp() {
-		// Game UI
 		GameUI.inst.setMaxHealth(this.#maxHealth);
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
@@ -72,8 +73,9 @@ class Player {
 	}
 	takeDown() {
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	resetPosition() {
 		this.#position.mult(0);
 	}
@@ -108,8 +110,9 @@ class Player {
 		});
 		PlayerCamera.inst.shake(200, 50);
 	}
+//#endregion
 	
-	// Private Methods
+//#region Private Methods
 	#invincibility() {
 		if (this.#currentInvincibilityTime > 0) {
 			this.#currentInvincibilityTime -= deltaTime;
@@ -148,8 +151,7 @@ class Player {
 		circle(this.#position.x, this.#position.y, this.#size);
 	}
 	#die() {
-		// TODO: death screen
-		// RoundManager.inst.loadRound(0);
 		Game.inst.endGame();
 	}
+//#endregion
 }

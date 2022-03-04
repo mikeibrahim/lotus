@@ -1,11 +1,12 @@
 class Confirmation extends Page{
-	// Data
+//#region Data
 	static inst;
 	#confirmationText;
 	#yesCallback;
 	#noCallback;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
 		Confirmation.inst = this;
@@ -13,16 +14,18 @@ class Confirmation extends Page{
 		this.#yesCallback = () => {};
 		this.#noCallback = () => {};
 	}
+//#endregion
 
-	// Public Setters
+//#region Public Setters
 	setConfirmationText(text) {
 		this.#confirmationText = text;
 		this.setText({ id:"confirmationText", text: this.#confirmationText });
 	}
 	setYesCallback(callback) { this.#yesCallback = callback; }
 	setNoCallback(callback) { this.#noCallback = callback; }
+//#endregion
 
-	// Overrides
+//#region Overrides
 	startUp() {
 		super.startUp();
 		this.addText({ id:"confirmationText", text: "Are you sure?", spacing: 100, fontSize: 48 });
@@ -46,4 +49,5 @@ class Confirmation extends Page{
 	takeDown() {
 		super.takeDown();
 	}
+//#endregion
 }

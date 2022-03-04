@@ -1,5 +1,5 @@
 class Game extends Page {
-	// Data
+//#region Data
 	static inst;
 	#environment;
 	#character;
@@ -10,11 +10,11 @@ class Game extends Page {
 	static enemies;
 	static orbs;
 	static particleSystems;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
-		console.log("Game Page");
 		Game.inst = this;
 		this.#environment = null;
 		this.#character = null;
@@ -26,8 +26,9 @@ class Game extends Page {
 		Game.inst.orbs = [];
 		Game.inst.particleSystems = [];
 	}
+//#endregion
 
-	// Overrides
+//#region Overrides
 	startUp() {
 		super.startUp();
 		this.addAction({ char: ESCAPE, callback: () => this.#exitGame() });
@@ -63,8 +64,9 @@ class Game extends Page {
 		});
 		storeItem("currentRound", 0);
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#startGame() {
 		this.#environment = new Environment(2500);
 		this.#gameUI = new GameUI();
@@ -108,4 +110,5 @@ class Game extends Page {
 		this.takeDown();
 		App.inst.switchPage("mainMenu");
 	}
+//#endregion
 }

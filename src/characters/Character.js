@@ -1,13 +1,14 @@
 class Character {
-	// Data
+//#region Data
 	static inst;
 	#playerSizeMultiplier;
 	#playerSpeedMultiplier;
 	#playerColor;
 	#playerSize;
 	#playerSpeed;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		this.#playerSizeMultiplier = 1;
 		this.#playerSpeedMultiplier = 1;
@@ -15,15 +16,17 @@ class Character {
 		this.#playerSpeed = 1;
 		this.#playerColor = color(0, 0, 0);
 	}
+//#endregion
 
-	// Public Getters
+//#region Public Getters
 	getPlayerSizeMultiplier() { return this.#playerSizeMultiplier; }
 	getPlayerSpeedMultiplier() { return this.#playerSpeedMultiplier; }
 	getPlayerSize() { return this.#playerSize; }
 	getPlayerSpeed() { return this.#playerSpeed; }
 	getPlayerColor() { return this.#playerColor; }
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	startUp(name) {
 		let stats = Characters.getCharacter(name);
 		this.#playerSizeMultiplier = stats.size;
@@ -41,8 +44,9 @@ class Character {
 	takeDown() {} // Called once
 	passiveAbility() {} // Every frame
 	activeAbility() {} // Every time user clicks space
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#setPlayerAttributes() {
 		Player.inst.setSpeedMultiplier(this.#playerSpeedMultiplier);
 		Player.inst.setSizeMultiplier(this.#playerSizeMultiplier);
@@ -50,4 +54,5 @@ class Character {
 		this.#playerSize = Player.inst.getSize();
 		this.#playerSpeed = Player.inst.getSpeed();
 	}
+//#endregion
 }

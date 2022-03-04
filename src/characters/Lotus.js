@@ -1,9 +1,10 @@
 class Lotus extends Character {
-	// Data
+//#region Data
 	#maxPickups;
 	#lotusPickupSize;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
 		Character.inst = this;
@@ -11,8 +12,9 @@ class Lotus extends Character {
 		this.#lotusPickupSize = 75;
 		this.lotusPickups = [];
 	}
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	startUp() {
 		super.startUp("Lotus");
 	}
@@ -37,8 +39,9 @@ class Lotus extends Character {
 	takeDown() {
 		super.takeDown();
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#updateLotusPickups() {
 		this.lotusPickups.forEach(lotusPickup => { lotusPickup.update(); });
 	}
@@ -54,23 +57,26 @@ class Lotus extends Character {
 			}));
 		}
 	}
+//#endregion
 }
 
 class LotusPickup extends Interactable {
-	// Data
+//#region Data
 	#size;
 	#position;
 	#color;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor({ size, position, color }) {
 		super({ size: size, position: position });
 		this.#size = size;
 		this.#position = position;
 		this.#color = color;
 	}
+//#endregion
 
-	// Public Methods
+//#region Public Methods
 	update() {
 		super.update();
 		this.#render();
@@ -79,8 +85,9 @@ class LotusPickup extends Interactable {
 		Player.inst.heal(1);
 		this.#destroy();
 	}
+//#endregion
 
-	// Private Methods
+//#region Private Methods
 	#render() {
 		fill(this.#color);
 		stroke(0);
@@ -98,4 +105,5 @@ class LotusPickup extends Interactable {
 		});
 		Character.inst.lotusPickups.splice(Character.inst.lotusPickups.indexOf(this), 1);
 	}
+//#endregion
 }

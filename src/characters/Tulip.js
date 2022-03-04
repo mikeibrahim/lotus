@@ -1,17 +1,19 @@
 class Tulip extends Character {
-	// Data
+//#region Data
 	#pushSize;
 	#pushAmount;
+//#endregion
 
-	// Constructor
+//#region Constructor
 	constructor() {
 		super();
 		Character.inst = this;
 		this.#pushSize = 300;
 		this.#pushAmount = 150;
 	}
+//#endregion
 
-	// Callbacks
+//#region Callbacks
 	startUp() {
 		super.startUp("Tulip");
 	}
@@ -34,8 +36,9 @@ class Tulip extends Character {
 	takeDown() {
 		super.takeDown();
 	}
+//#endregion
 
-	// Private methods
+//#region Private methods
 	#push() {
 		this.#drawPushCircle();
 		this.#pushEnemies();
@@ -61,4 +64,5 @@ class Tulip extends Character {
 			}
 		});
 	}
+//#endregion
 }
