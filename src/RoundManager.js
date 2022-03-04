@@ -28,7 +28,15 @@ class RoundManager {
 	loadRound(index) {
 		// TODO: Win game
 		if (index >= this.#rounds.length) {
-			this.loadRound(0);
+			App.inst.switchPage("confirmation");
+			Confirmation.inst.setConfirmationText("You have completed all the (current) rounds!\nWould you like to play again?");
+			Confirmation.inst.setYesCallback(() => {
+				storeItem("currentRound", 0);
+				App.inst.switchPage("game");
+			});
+			Confirmation.inst.setNoCallback(() => {
+				App.inst.switchPage("mainMenu");
+			});
 			return;
 		}
 		// Round

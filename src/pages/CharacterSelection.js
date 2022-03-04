@@ -23,7 +23,7 @@ class CharacterSelection extends Page {
 
 		this.addText({ text: "Character Selection", spacing: 100, fontSize: 42 });
 		this.addText({ id: "character", text: this.#characters[this.#currentCharacterIndex].name, spacing: 150, fontSize: 32 });
-		this.addText({ text: "<             >", spacing: 150, fontSize: 32 });
+		this.addText({ id: "arrows", text: "<            >", spacing: 150, fontSize: 32 });
 		this.addText({ id: "characterDescription", text: this.#characters[this.#currentCharacterIndex].description, spacing: 150, fontSize: 24 });
 		this.addText({ id: "saveText", text: "[S] - Save Character", spacing: 150, fontSize: 24 });
 		this.addText({ text: "[B] - Back", spacing: 50, fontSize: 24 });
@@ -90,6 +90,9 @@ class CharacterSelection extends Page {
 	#updateCharacterIndex(amount) {
 		this.#currentCharacterIndex += amount;
 		this.#currentCharacterIndex = constrain(this.#currentCharacterIndex, 0, this.#characters.length - 1);
+		if (this.#currentCharacterIndex == 0) this.setText({ id: "arrows", text: "             >" });
+		else if (this.#currentCharacterIndex == this.#characters.length - 1) this.setText({ id: "arrows", text: "<             " });
+		else this.setText({ id: "arrows", text: "<            >" });
 		this.#updateTexts();
 	}
 	#updateTexts() {
@@ -102,12 +105,10 @@ class CharacterSelection extends Page {
 			this.#characters[this.#currentCharacterIndex].description :
 			"Unlock this character upon clearing round " + this.#characters[this.#currentCharacterIndex].roundUnlock + ".";
 		let saveText = characterEnabled ? "[S] - Select Character" : "";
+		
 		this.setText({ id: "character", text: characterText });
 		this.setText({ id: "characterDescription", text: characterDescription });
 		this.setText({ id: "saveText", text: saveText });
-		console.log("Active: " + active);
-		console.log("unlocked: " + this.#currentCharacterUnlocked);
-		console.log("Enabled: " + characterEnabled);
 		this.setActionEnabled({ id: "save", enabled: characterEnabled });
 	}
 }

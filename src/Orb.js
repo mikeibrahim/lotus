@@ -18,7 +18,6 @@ class Orb extends Interactable {
 	// Public Methods
 	update() {
 		super.update();
-		// this.#detectPlayerCollision();
 		this.#render();
 	}
 	interact() {
@@ -38,9 +37,6 @@ class Orb extends Interactable {
 	}
 
 	// Private Methods
-	// #detectPlayerCollision() {
-	// 	Player.inst.tryCollide(this);
-	// }
 	#render() {
 		fill(this.#color);
 		stroke(0);
