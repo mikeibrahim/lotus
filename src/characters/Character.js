@@ -27,8 +27,8 @@ class Character {
 //#endregion
 
 //#region Public Methods
-	startUp(name) {
-		let stats = Characters.getCharacter(name);
+	startUp(characterType) {
+		let stats = Characters.getCharacters()[characterType];
 		this.#playerSizeMultiplier = stats.size;
 		this.#playerSpeedMultiplier = stats.speed;
 		this.#playerColor = stats.color;

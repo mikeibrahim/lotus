@@ -16,7 +16,7 @@ class Lotus extends Character {
 
 //#region Callbacks
 	startUp() {
-		super.startUp("Lotus");
+		super.startUp(Characters.LOTUS);
 	}
 	update() {
 		super.update();

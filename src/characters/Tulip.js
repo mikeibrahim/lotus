@@ -15,7 +15,7 @@ class Tulip extends Character {
 
 //#region Callbacks
 	startUp() {
-		super.startUp("Tulip");
+		super.startUp(Characters.TULIP);
 	}
 	update() {
 		super.update();

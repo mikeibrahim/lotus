@@ -1,24 +1,31 @@
 class Characters {
-//#region Static Getters
-	static getCharacterType(character) {
-		switch (character) {
-			case 'Lotus': return new Lotus();
-			case 'Dandelion': return new Dandelion();
-			case 'Tulip': return new Tulip();
-			case 'Poppy': return new Poppy();
-			case 'Rose': return new Rose();
-			default: return null;
-		}
-	}
-	static getCharacter(name) {
-		let characters = this.getCharacters();
-		for (let i = 0; i < characters.length; i++) {
-			if (characters[i].name === name) return characters[i];
+	static LOTUS = 0;
+	static DANDELION = 1;
+	static TULIP = 2;
+	static POPPY = 3;
+	static ROSE = 4;
+
+	//#region Static Getters
+	static getCharacterObject(characterType) {
+		switch (characterType) {
+			case this.LOTUS:
+				return new Lotus();
+			case this.DANDELION:
+				return new Dandelion();
+			case this.TULIP:
+				return new null;
+			case this.POPPY:
+				return new null;
+			case this.ROSE:
+				return new null;
+			default:
+				return new null;
 		}
 	}
 	static getCharacters() {
 		return [
 			{
+				characterType: this.LOTUS,
 				name: 'Lotus',
 				color: '#c9deff',
 				size: 1,
@@ -27,14 +34,16 @@ class Characters {
 				roundUnlock: 0,
 			},
 			{
+				characterType: this.DANDELION,
 				name: 'Dandelion',
 				color: '#ffeb8a',
 				size: 0.9,
 				speed: 1,
 				description: '[Ability] Click space to fade into the wind, and then back out. This ability can only be used once per level.',
-				roundUnlock: 5,
+				roundUnlock: 0,
 			},
 			{
+				characterType: this.TULIP,
 				name: 'Tulip',
 				color: '#ffc285',
 				size: 1,
@@ -43,6 +52,7 @@ class Characters {
 				roundUnlock: 10,
 			},
 			{
+				characterType: null,
 				name: 'Poppy',
 				color: '#ff8ff2',
 				size: 1,
@@ -51,6 +61,7 @@ class Characters {
 				roundUnlock: 15,
 			},
 			{
+				characterType: null,
 				name: 'Rose',
 				color: '#ff4545',
 				size: 1,
@@ -59,6 +70,6 @@ class Characters {
 				roundUnlock: 20,
 			},
 		]
-	}
-//#endregion
+	};
+	//#endregion
 }

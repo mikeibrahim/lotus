@@ -81,8 +81,8 @@ class Game extends Page {
 			maxZoom: 500,
 			zoomSpeed: 1
 		});
-		let character = getItem("character") || Characters.getCharacters()[0];
-		this.#character = Characters.getCharacterType(character.name);
+		let characterType = getItem("characterType") || Characters.getCharacters()[0].characterType;
+		this.#character = Characters.getCharacterObject(characterType);
 		this.#roundManager = new RoundManager();
 
 		// Start Ups

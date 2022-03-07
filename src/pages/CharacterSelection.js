@@ -1,6 +1,7 @@
 class CharacterSelection extends Page {
 //#region Data
 	#characters;
+	#maxRound;
 	#characterIndex;
 	#currentCharacterIndex;
 	#currentCharacterUnlocked;
@@ -10,6 +11,7 @@ class CharacterSelection extends Page {
 	constructor() {
 		super();
 		this.#characters = [];
+		this.#maxRound = 0;
 		this.#characterIndex = 0;
 		this.#currentCharacterIndex = 0;
 		this.#currentCharacterIndex = true;
@@ -20,6 +22,7 @@ class CharacterSelection extends Page {
 	startUp() {
 		super.startUp();
 		this.#characters = Characters.getCharacters();
+		this.#maxRound = getItem("maxRound") || 0;
 		this.#currentCharacterIndex = getItem("currentCharacterIndex") || 0;
 		this.#characterIndex = this.#currentCharacterIndex;
 
@@ -29,11 +32,11 @@ class CharacterSelection extends Page {
 		this.addText({ id: "characterDescription", text: this.#characters[this.#currentCharacterIndex].description, spacing: 150, fontSize: 24 });
 		this.addText({ id: "saveText", text: "[S] - Save Character", spacing: 150, fontSize: 24 });
 		this.addText({ text: "[B] - Back", spacing: 50, fontSize: 24 });
-		this.addAction({ char: LEFT_ARROW, callback: () => { this.#updateCharacterIndex(-1); } });
-		this.addAction({ char: RIGHT_ARROW, callback: () => { this.#updateCharacterIndex(1); } });
+		this.addAction({ char: LEFT_ARROW, callback: () => { this.#focusCharacter(-1); } });
+		this.addAction({ char: RIGHT_ARROW, callback: () => { this.#focusCharacter(1); } });
 		this.addAction({ id: "save", char: 'S', callback: () => { this.saveCharacter(); } });
 		this.addAction({ char: 'B', callback: () => { this.back(); } });
-		this.#updateCharacterIndex(0);
+		this.#focusCharacter(0);
 	}
 	update() {
 		super.update();
@@ -53,7 +56,7 @@ class CharacterSelection extends Page {
 		App.inst.switchPage("confirmation");
 		Confirmation.inst.setConfirmationText("Are you sure you want to switch to " + this.#characters[this.#currentCharacterIndex].name + "?\n(this will reset your current game)");
 		Confirmation.inst.setYesCallback(() => {
-			storeItem("character", this.#characters[this.#currentCharacterIndex]);
+			storeItem("characterType", this.#characters[this.#currentCharacterIndex].characterType);
 			storeItem("currentCharacterIndex", this.#currentCharacterIndex);
 			storeItem("currentRound", 0);
 			App.inst.switchPage("mainMenu");
@@ -70,23 +73,25 @@ class CharacterSelection extends Page {
 
 //#region Private Methods
 	#renderCharacters() {
-
 		let character = this.#characters[this.#currentCharacterIndex];
 		fill(red(character.color), green(character.color), blue(character.color), this.#currentCharacterUnlocked ? 255 : 100);
 		ellipseMode(CENTER);
 		ellipse(-5, 0, 150,150);
 	}
-	#updateCharacterIndex(amount) {
-		this.#currentCharacterIndex += amount;
-		this.#currentCharacterIndex = constrain(this.#currentCharacterIndex, 0, this.#characters.length - 1);
+	#focusCharacter(direction) {
+		this.#currentCharacterIndex = constrain(this.#currentCharacterIndex + direction, 0, this.#characters.length - 1);
+		this.#updateArrows();
+		this.#updateCharacterTexts();
+		this.#updateCharacterLevel();
+	}
+	#updateArrows() {
 		if (this.#currentCharacterIndex == 0) this.setText({ id: "arrows", text: "             >" });
 		else if (this.#currentCharacterIndex == this.#characters.length - 1) this.setText({ id: "arrows", text: "<             " });
 		else this.setText({ id: "arrows", text: "<            >" });
-		this.#updateTexts();
 	}
-	#updateTexts() {
+	#updateCharacterTexts() {
 		let active = this.#currentCharacterIndex == this.#characterIndex;
-		this.#currentCharacterUnlocked = (getItem("maxRound") || 0) >= this.#characters[this.#currentCharacterIndex].roundUnlock;
+		this.#currentCharacterUnlocked = this.#maxRound >= this.#characters[this.#currentCharacterIndex].roundUnlock;
 		let characterEnabled = !active && this.#currentCharacterUnlocked;
 
 		let characterText = this.#characters[this.#currentCharacterIndex].name + (active ? "\n[current character]" : "");
@@ -99,6 +104,9 @@ class CharacterSelection extends Page {
 		this.setText({ id: "characterDescription", text: characterDescription });
 		this.setText({ id: "saveText", text: saveText });
 		this.setActionEnabled({ id: "save", enabled: characterEnabled });
+	}
+	#updateCharacterLevel() {
+		let characterLevel = this.#characters[this.#currentCharacterIndex].level;
 	}
 //#endregion
 }

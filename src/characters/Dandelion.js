@@ -21,7 +21,7 @@ class Dandelion extends Character {
 
 //#region Callbacks
 	startUp() {
-		super.startUp("Dandelion");
+		super.startUp(Characters.DANDELION);
 	}
 	update() {
 		super.update();

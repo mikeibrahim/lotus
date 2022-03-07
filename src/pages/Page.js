@@ -25,17 +25,22 @@ class Page {
 //#endregion
 
 //#region Public Methods
-	addText({ id, text, spacing, fontSize }) {
+	addText({ id, text, spacing, fontSize, enabled }) {
 		this.#texts.push({
 			id: id || this.#texts.length,
 			text: text,
 			spacing: spacing || 0,
 			fontSize: fontSize || 32,
+			enabled: enabled || true
 		});
 	}
 	setText({ id, text }) {
 		for (let i = 0; i < this.#texts.length; i++)
 			if (this.#texts[i].id == id) { this.#texts[i].text = text; return; }
+	}
+	setTextEnabled({ id, enabled }) {
+		for (let i = 0; i < this.#texts.length; i++)
+			if (this.#texts[i].id == id) { this.#texts[i].enabled = enabled; return; }
 	}
 	addAction({ id, char, callback, enabled }) {
 		this.#actions.push({
@@ -54,14 +59,15 @@ class Page {
 //#region Private Methods
 	#renderText() {
 		textAlign(CENTER, CENTER);
-		fill(255);
 		rectMode(CENTER);
 		textWrap(WORD);
 		let totalSpace = 0;
 		for (let i = 0; i < this.#texts.length; i++) {
-			totalSpace += this.#texts[i].spacing;
-			textSize(this.#texts[i].fontSize);
-			text(this.#texts[i].text, 0, -height / 2 + totalSpace, width);
+			let textObj = this.#texts[i];
+			totalSpace += textObj.spacing;
+			fill(textObj.enabled ? 255 : 100);
+			textSize(textObj.fontSize);
+			text(textObj.text, 0, -height / 2 + totalSpace, width);
 		}
 	}
 	#checkForActions() {
