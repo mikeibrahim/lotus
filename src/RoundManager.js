@@ -4,6 +4,7 @@ class RoundManager {
 	#rounds;
 	#currentRound;
 	#orbSize;
+	#heartSize;
 //#endregion
 
 //#region Constructor
@@ -12,6 +13,7 @@ class RoundManager {
 		this.#rounds = 0;
 		this.#currentRound = 0;
 		this.#orbSize = 50;
+		this.#heartSize = 50;
 	}
 //#endregion
 
@@ -46,6 +48,7 @@ class RoundManager {
 		
 		Game.inst.enemies = [];
 		Game.inst.orbs = [];
+		Game.inst.hearts = [];
 		Game.inst.particleSystems = [];
 		let round = this.#rounds[index];
 		round.enemies.forEach(enemy => {
@@ -53,6 +56,8 @@ class RoundManager {
 		});
 		for (let i = 0; i < round.orbs; i++)
 			Game.inst.orbs.push(new Orb({ size: this.#orbSize, position: Environment.inst.getRandomPosition(this.#orbSize) }));
+		for (let i = 0; i < round.hearts; i++)
+			Game.inst.hearts.push(new Heart({ size: this.#heartSize, position: Environment.inst.getRandomPosition(this.#heartSize) }));
 		
 		Player.inst.resetPosition();
 		Player.inst.setInvincibility(2000);

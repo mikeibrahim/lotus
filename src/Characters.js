@@ -47,7 +47,7 @@ class Characters {
 				color: '#ffeb8a',
 				description: '[Ability] Click space to fade into the wind, and then back out. This ability can only be used once per level.',
 				upgradeCosts: [15, 35, 60],
-				roundUnlock: 0,
+				roundUnlock: 5,
 			},
 			{
 				characterType: this.TULIP,
@@ -55,7 +55,7 @@ class Characters {
 				color: '#ffc285',
 				description: '[Passive] Pushes enemies away within a radius',
 				upgradeCosts: [25, 40, 75],
-				roundUnlock: 0,
+				roundUnlock: 10,
 			},
 			{
 				characterType: null,

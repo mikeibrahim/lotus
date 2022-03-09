@@ -9,6 +9,7 @@ class Game extends Page {
 	#roundManager;
 	static enemies;
 	static orbs;
+	static hearts;
 	static particleSystems;
 //#endregion
 
@@ -24,6 +25,7 @@ class Game extends Page {
 		this.#roundManager = null;
 		Game.inst.enemies = [];
 		Game.inst.orbs = [];
+		Game.inst.hearts = [];
 		Game.inst.particleSystems = [];
 	}
 //#endregion
@@ -86,11 +88,11 @@ class Game extends Page {
 		this.#roundManager = new RoundManager();
 
 		// Start Ups
-		let currentRound = getItem("currentRound") || 0;
-		if (currentRound == 0) storeItem("currentHealth", this.#character.getMaxHealth());
 		this.#environment.startUp();
 		this.#gameUI.startUp();
 		this.#character.startUp();
+		let currentRound = getItem("currentRound") || 0;
+		if (currentRound == 0) storeItem("currentHealth", this.#character.getMaxHealth());
 		this.#player.startUp();
 		this.#playerCamera.startUp();
 		this.#roundManager.startUp();
@@ -104,6 +106,7 @@ class Game extends Page {
 		this.#roundManager.update();
 		Game.inst.enemies.forEach(enemy => enemy.update());
 		Game.inst.orbs.forEach(orb => orb.update());
+		Game.inst.hearts.forEach(heart => heart.update());
 		Game.inst.particleSystems.forEach(particleSystem => particleSystem.update());
 		this.#gameUI.update();
 	}

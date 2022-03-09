@@ -10,12 +10,8 @@ class Orb extends Interactable {
 		super({ size: size, position: position });
 		this.#size = size;
 		this.#position = position;
-		this.#color = color(0, 0, 255);
+		this.#color = color(50, 50, 230);
 	}
-//#endregion
-
-//#region Public Getters
-	getPosition() { return this.#position; }
 //#endregion
 
 //#region Public Methods
