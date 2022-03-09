@@ -36,7 +36,7 @@ class Environment {
 
 //#region Private Methods
 	#render() {
-		fill(0);
+		fill(200);
 		rectMode(CORNER);
 		rect(-this.#size / 2, -this.#size / 2 - this.#thickness, this.#size, this.#thickness); // top
 		rect(-this.#size / 2, this.#size / 2, this.#size, this.#thickness); // bottom

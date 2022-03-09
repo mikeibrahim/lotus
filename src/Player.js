@@ -85,7 +85,7 @@ class Player {
 		return this.#position.dist(position) < (this.#size / 2) + (size / 2);
 	}
 	heal(amount) {
-		this.#currentHealth = constrain(this.#currentHealth + amount, 0, this.#maxHealth);
+		this.#currentHealth += amount;
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
 	takeDamage(damage) {

@@ -22,6 +22,15 @@ class Characters {
 				return new null;
 		}
 	}
+	static getCharacterLevel(characterType) {
+		let characterLevels = getItem('characterLevels') || {};
+		return characterLevels[characterType] || 0;
+	}
+	static setCharacterLevel(characterType, level) {
+		let characterLevels = getItem('characterLevels') || {};
+		characterLevels[characterType] = level;
+		storeItem('characterLevels', characterLevels);
+	}
 	static getCharacters() {
 		return [
 			{
@@ -31,6 +40,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Passive] When entering a new area, a lotus will appear. Collect it to gain a life.',
+				upgradeCosts: [10, 20, 50],
 				roundUnlock: 0,
 			},
 			{
@@ -40,6 +50,7 @@ class Characters {
 				size: 0.9,
 				speed: 1,
 				description: '[Ability] Click space to fade into the wind, and then back out. This ability can only be used once per level.',
+				upgradeCosts: [20, 30, 60],
 				roundUnlock: 0,
 			},
 			{
@@ -49,6 +60,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Passive] Pushes enemies away within a radius',
+				upgradeCosts: [30, 40, 70],
 				roundUnlock: 10,
 			},
 			{
@@ -58,6 +70,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Passive] Shrinks and slows enemies within a radius',
+				upgradeCosts: [40, 50, 80],
 				roundUnlock: 15,
 			},
 			{
@@ -67,6 +80,7 @@ class Characters {
 				size: 1,
 				speed: 1,
 				description: '[Ability] Consume 1 orb in exchange for 1 life. Can be used three times per level.',
+				upgradeCosts: [50, 60, 90],
 				roundUnlock: 20,
 			},
 		]

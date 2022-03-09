@@ -96,6 +96,7 @@ class Game extends Page {
 		this.#roundManager.loadRound(currentRound);
 	}
 	#updateGame() {
+		this.#environment.update();
 		this.#playerCamera.update();
 		this.#player.update();
 		this.#character.update();
@@ -103,7 +104,6 @@ class Game extends Page {
 		Game.inst.enemies.forEach(enemy => enemy.update());
 		Game.inst.orbs.forEach(orb => orb.update());
 		Game.inst.particleSystems.forEach(particleSystem => particleSystem.update());
-		this.#environment.update();
 		this.#gameUI.update();
 	}
 	#exitGame() {
