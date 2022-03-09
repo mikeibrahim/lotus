@@ -72,6 +72,7 @@ class Enemy extends Interactable {
 
 //#region Overrides
 	interact() {
+		super.interact();
 		Player.inst.takeDamage(this.#damage);
 	}
 //#endregion

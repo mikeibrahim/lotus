@@ -66,6 +66,7 @@ class RoundManager {
 		GameUI.inst.setCurrentRound(index);
 		GameUI.inst.setMaxOrbs(round.orbs);
 		GameUI.inst.setCurrentOrbs(0);
+		App.inst.changeBackground(10, 0.5);
 	}
 	nextRound() {
 		this.#saveOrbs();

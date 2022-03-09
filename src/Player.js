@@ -90,6 +90,7 @@ class Player {
 	heal(amount) {
 		this.#currentHealth += amount;
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
+		App.inst.changeBackground(45, 1);
 	}
 	takeDamage(damage) {
 		if (this.#currentInvincibilityTime > 0) return; // Player is invincible
@@ -111,6 +112,7 @@ class Player {
 			position: this.#position
 		});
 		PlayerCamera.inst.shake(200, 50);
+		App.inst.changeBackground(20, 0.5);
 	}
 //#endregion
 	

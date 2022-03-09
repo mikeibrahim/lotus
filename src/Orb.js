@@ -20,6 +20,7 @@ class Orb extends Interactable {
 		this.#render();
 	}
 	interact() {
+		super.interact();
 		this.destroy();
 	}
 	destroy() {

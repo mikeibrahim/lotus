@@ -104,6 +104,7 @@ class LotusPickup extends Interactable {
 		this.#render();
 	}
 	interact() {
+		super.interact();
 		Player.inst.heal(this.#heal);
 		this.#destroy();
 	}

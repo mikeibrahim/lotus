@@ -27,7 +27,7 @@ class Interactable {
 //#endregion
 
 //#region Public Methods
-	interact() { }
+	interact() {}
 //#endregion
 
 //#region Private Methods
