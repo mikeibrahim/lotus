@@ -1,6 +1,8 @@
 class Character {
 //#region Data
 	static inst;
+	#level;
+	#playerMaxHealth;
 	#playerSizeMultiplier;
 	#playerSpeedMultiplier;
 	#playerColor;
@@ -10,6 +12,8 @@ class Character {
 
 //#region Constructor
 	constructor() {
+		this.#level = 0;
+		this.#playerMaxHealth = 1;
 		this.#playerSizeMultiplier = 1;
 		this.#playerSpeedMultiplier = 1;
 		this.#playerSize = 1;
@@ -19,6 +23,7 @@ class Character {
 //#endregion
 
 //#region Public Getters
+	getMaxHealth() { return this.#playerMaxHealth; }
 	getPlayerSizeMultiplier() { return this.#playerSizeMultiplier; }
 	getPlayerSpeedMultiplier() { return this.#playerSpeedMultiplier; }
 	getPlayerSize() { return this.#playerSize; }
@@ -27,10 +32,11 @@ class Character {
 //#endregion
 
 //#region Public Methods
-	startUp(characterType) {
+	startUp({characterType, maxHealth, sizeMultiplier, speedMultiplier}) {
+		this.#playerMaxHealth = maxHealth;
+		this.#playerSizeMultiplier = sizeMultiplier;
+		this.#playerSpeedMultiplier = speedMultiplier;
 		let stats = Characters.getCharacters()[characterType];
-		this.#playerSizeMultiplier = stats.size;
-		this.#playerSpeedMultiplier = stats.speed;
 		this.#playerColor = stats.color;
 		this.#setPlayerAttributes();
 	} // Called once
@@ -48,6 +54,7 @@ class Character {
 
 //#region Private Methods
 	#setPlayerAttributes() {
+		Player.inst.setMaxHealth(this.#playerMaxHealth);
 		Player.inst.setSpeedMultiplier(this.#playerSpeedMultiplier);
 		Player.inst.setSizeMultiplier(this.#playerSizeMultiplier);
 		Player.inst.setColor(this.#playerColor);

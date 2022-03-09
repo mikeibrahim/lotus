@@ -1,27 +1,44 @@
 class Dandelion extends Character {
 //#region Data
-	#faded;
+	#characterType;
+	#maxHealth;
+	#speedMultiplier;
+	#sizeMultiplier;
 	#maxFadeTime;
-	#currentFadeTime;
 	#fadeScaleFactor;
 	#fadeSpeedFactor;
+	#currentFadeTime;
+	#faded;
 //#endregion
 
 //#region Constructor
 	constructor() {
 		super();
 		Character.inst = this;
-		this.#faded = false;
-		this.#maxFadeTime = 2000;
+		this.#characterType = Characters.DANDELION;
+		this.#maxHealth = [1, 2, 4, 5];
+		this.#speedMultiplier = [1, 1.2, 1.3, 3.4];
+		this.#sizeMultiplier = [1, 0.9, 0.8, 0.7];
+		this.#maxFadeTime = [1500, 2000, 2500, 3000];
+		this.#fadeScaleFactor = [2, 2.5, 3, 3.5];
+		this.#fadeSpeedFactor = [1.25, 1.5, 1.75, 2];
 		this.#currentFadeTime = 0;
-		this.#fadeScaleFactor = 2;
-		this.#fadeSpeedFactor = 1.25;
+		this.#faded = false;
 	}
 //#endregion
 
 //#region Callbacks
 	startUp() {
-		super.startUp(Characters.DANDELION);
+		let level = Characters.getCharacterLevel(this.#characterType);
+		super.startUp({
+			characterType: this.#characterType,
+			maxHealth: this.#maxHealth[level],
+			sizeMultiplier: this.#sizeMultiplier[level],
+			speedMultiplier: this.#speedMultiplier[level],
+		});
+		this.#maxFadeTime = this.#maxFadeTime[level];
+		this.#fadeScaleFactor = this.#fadeScaleFactor[level];
+		this.#fadeSpeedFactor = this.#fadeSpeedFactor[level];
 	}
 	update() {
 		super.update();

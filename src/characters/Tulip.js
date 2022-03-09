@@ -1,5 +1,9 @@
 class Tulip extends Character {
 //#region Data
+	#characterType;
+	#maxHealth;
+	#sizeMultiplier;
+	#speedMultiplier;
 	#pushSize;
 	#pushAmount;
 //#endregion
@@ -8,14 +12,26 @@ class Tulip extends Character {
 	constructor() {
 		super();
 		Character.inst = this;
-		this.#pushSize = 300;
-		this.#pushAmount = 150;
+		this.#characterType = Characters.TULIP;
+		this.#maxHealth = [1, 1, 2, 3];
+		this.#sizeMultiplier = [1, 1, 1, 1];
+		this.#speedMultiplier = [1, 1, 1.2, 1.2];
+		this.#pushSize = [250, 300, 350, 400];
+		this.#pushAmount = [150, 160, 170, 180];
 	}
 //#endregion
 
 //#region Callbacks
 	startUp() {
-		super.startUp(Characters.TULIP);
+		let level = Characters.getCharacterLevel(this.#characterType);
+		super.startUp({
+			characterType: this.#characterType,
+			maxHealth: this.#maxHealth[level],
+			sizeMultiplier: this.#sizeMultiplier[level],
+			speedMultiplier: this.#speedMultiplier[level],
+		});
+		this.#pushSize = this.#pushSize[level];
+		this.#pushAmount = this.#pushAmount[level];
 	}
 	update() {
 		super.update();

@@ -13,14 +13,15 @@ class Player {
 //#endregion
 
 //#region Constructor
-	constructor({ maxHealth, position, size, speed, maxInvincibilityTime, color }) {
+	constructor({ position, size, speed, maxInvincibilityTime, color }) {
 		Player.inst = this;
-		this.#maxHealth = maxHealth || 3;
+		// this.#maxHealth = maxHealth || 3;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
 		this.#maxInvincibilityTime = maxInvincibilityTime || 1000;
 		this.#color = color || color(255, 0, 0);
-		this.#currentHealth = this.#maxHealth;
+		this.#maxHealth = 0;
+		this.#currentHealth = 0;
 		this.#currentInvincibilityTime = 0;
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
@@ -31,6 +32,7 @@ class Player {
 	setInvincibility(time) { this.#currentInvincibilityTime = time; }
 	setSizeMultiplier(multiplier) { this.#size *= multiplier; }
 	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
+	setMaxHealth(maxHealth) { this.#maxHealth = maxHealth; }
 	setSize(size) { this.#size = size; }
 	setSpeed(speed) { this.#speed = speed; }
 	setColor(color) { this.#color = color; }
@@ -62,6 +64,7 @@ class Player {
 
 //#region Callbacks
 	startUp() {
+		this.#currentHealth = getItem("currentHealth") || this.#maxHealth;
 		GameUI.inst.setMaxHealth(this.#maxHealth);
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
@@ -92,7 +95,6 @@ class Player {
 		if (this.#currentInvincibilityTime > 0) return; // Player is invincible
 
 		this.#currentHealth -= damage; // Take damage
-		this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
 		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
 		
 		if (this.#currentHealth <= 0) this.#die();

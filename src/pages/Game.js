@@ -86,20 +86,21 @@ class Game extends Page {
 		this.#roundManager = new RoundManager();
 
 		// Start Ups
+		let currentRound = getItem("currentRound") || 0;
+		if (currentRound == 0) storeItem("currentHealth", this.#character.getMaxHealth());
 		this.#environment.startUp();
 		this.#gameUI.startUp();
+		this.#character.startUp();
 		this.#player.startUp();
 		this.#playerCamera.startUp();
-		this.#character.startUp();
 		this.#roundManager.startUp();
-		let currentRound = getItem("currentRound") || 0;
 		this.#roundManager.loadRound(currentRound);
 	}
 	#updateGame() {
 		this.#environment.update();
 		this.#playerCamera.update();
-		this.#player.update();
 		this.#character.update();
+		this.#player.update();
 		this.#roundManager.update();
 		Game.inst.enemies.forEach(enemy => enemy.update());
 		Game.inst.orbs.forEach(orb => orb.update());
