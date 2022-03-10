@@ -101,8 +101,8 @@ class Game extends Page {
 	#updateGame() {
 		this.#environment.update();
 		this.#playerCamera.update();
-		this.#character.update();
 		this.#player.update();
+		this.#character.update();
 		this.#roundManager.update();
 		Game.inst.enemies.forEach(enemy => enemy.update());
 		Game.inst.orbs.forEach(orb => orb.update());

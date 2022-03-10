@@ -32,9 +32,17 @@ class Tulip extends Character {
 		});
 		this.#pushSize = this.#pushSize[level];
 		this.#pushAmount = this.#pushAmount[level];
+		this.field = new Field({
+			size: this.#pushSize + this.getPlayerSize(),
+			color: super.getPlayerColor(),
+			parent: this,
+			targetsCallback: () => Game.inst.enemies,
+			interactionCallback: this.#interaction,
+		});
 	}
 	update() {
 		super.update();
+		this.field.update();
 	}
 	keyPressed() {
 		super.keyPressed();
@@ -44,7 +52,7 @@ class Tulip extends Character {
 	}
 	passiveAbility() {
 		super.passiveAbility();
-		this.#push();
+		// this.#push();
 	}
 	activeAbility() {
 		super.activeAbility();
@@ -55,30 +63,34 @@ class Tulip extends Character {
 //#endregion
 
 //#region Private methods
-	#push() {
-		this.#drawPushCircle();
-		this.#pushEnemies();
+	#interaction(target) {
+		target.setSpeedMultiplier(0);
+		// console.log("interacted with " + target);
 	}
-	#drawPushCircle() {
-		noStroke();
-		fill(red(super.getPlayerColor()), green(super.getPlayerColor()), blue(super.getPlayerColor()), 100);
-		let position = Player.inst.getPosition();
-		circle(position.x, position.y, this.#pushSize + super.getPlayerSize());
-	}
-	#pushEnemies() {
-		Game.inst.enemies.forEach(enemy => {
-			let enemyPosition = enemy.getPosition();
-			let playerPosition = Player.inst.getPosition();
-			let distance = dist(enemyPosition.x, enemyPosition.y, playerPosition.x, playerPosition.y);
-			let enemySize = enemy.getSize();
-			let characterSize = super.getPlayerSize() + this.#pushSize;
-			if (distance < characterSize / 2 + enemySize / 2) { // Push enemy
-				let pushVector = p5.Vector.sub(enemyPosition, playerPosition);
-				pushVector.normalize();
-				pushVector.mult(this.#pushAmount * deltaTime / 1000);
-				enemy.setPosition(p5.Vector.add(enemyPosition, pushVector));
-			}
-		});
-	}
+	// #push() {
+	// 	this.#drawPushCircle();
+	// 	this.#pushEnemies();
+	// }
+	// #drawPushCircle() {
+	// 	noStroke();
+	// 	fill(red(super.getPlayerColor()), green(super.getPlayerColor()), blue(super.getPlayerColor()), 100);
+	// 	let position = Player.inst.getPosition();
+	// 	circle(position.x, position.y, this.#pushSize + super.getPlayerSize());
+	// }
+	// #pushEnemies() {
+	// 	Game.inst.enemies.forEach(enemy => {
+	// 		let enemyPosition = enemy.getPosition();
+	// 		let playerPosition = Player.inst.getPosition();
+	// 		let distance = dist(enemyPosition.x, enemyPosition.y, playerPosition.x, playerPosition.y);
+	// 		let enemySize = enemy.getSize();
+	// 		let characterSize = super.getPlayerSize() + this.#pushSize;
+	// 		if (distance < characterSize / 2 + enemySize / 2) { // Push enemy
+	// 			let pushVector = p5.Vector.sub(enemyPosition, playerPosition);
+	// 			pushVector.normalize();
+	// 			pushVector.mult(this.#pushAmount * deltaTime / 1000);
+	// 			enemy.setPosition(p5.Vector.add(enemyPosition, pushVector));
+	// 		}
+	// 	});
+	// }
 //#endregion
 }

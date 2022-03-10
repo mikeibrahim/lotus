@@ -43,7 +43,7 @@ class App {
 	
 //#region Public Methods
 	switchPage(page) {
-		this.changeBackground(35, 0.5);
+		this.changeBackground(40, 0.5);
 		this.takeDownCurrentPage();
 		this.currentPage = this.pages[page];
 		this.startUpCurrentPage();

@@ -55,6 +55,7 @@ class Enemy extends Interactable {
 
 //#region Public Setters
 	setPosition(position) { this.#position = position; }
+	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
 //#endregion
 
 //#region Public Getters

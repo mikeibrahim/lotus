@@ -1,7 +1,6 @@
 class Character {
 //#region Data
 	static inst;
-	#level;
 	#playerMaxHealth;
 	#playerSizeMultiplier;
 	#playerSpeedMultiplier;
@@ -12,7 +11,6 @@ class Character {
 
 //#region Constructor
 	constructor() {
-		this.#level = 0;
 		this.#playerMaxHealth = 1;
 		this.#playerSizeMultiplier = 1;
 		this.#playerSpeedMultiplier = 1;
@@ -29,6 +27,7 @@ class Character {
 	getPlayerSize() { return this.#playerSize; }
 	getPlayerSpeed() { return this.#playerSpeed; }
 	getPlayerColor() { return this.#playerColor; }
+	getPosition() { return Player.inst.getPosition(); }
 //#endregion
 
 //#region Public Methods
