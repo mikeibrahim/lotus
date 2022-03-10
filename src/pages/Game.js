@@ -54,7 +54,6 @@ class Game extends Page {
 		this.#roundManager.takeDown();
 	}
 	endGame() {
-		this.takeDown();
 		App.inst.switchPage("confirmation");
 		let roundReached = "Rounds Completed: " + (getItem("currentRound") || 0);
 		Confirmation.inst.setConfirmationText("Game Over\n"+roundReached+"\nRestart?");
@@ -111,7 +110,6 @@ class Game extends Page {
 		this.#gameUI.update();
 	}
 	#exitGame() {
-		this.takeDown();
 		App.inst.switchPage("mainMenu");
 	}
 //#endregion

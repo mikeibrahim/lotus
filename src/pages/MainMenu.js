@@ -32,7 +32,6 @@ class MainMenu extends Page {
 
 //#region Public Methods
 	newGame() {
-		this.takeDown();
 		let currentRound = getItem("currentRound") || 0;
 		if (currentRound > 0) {
 			App.inst.switchPage("confirmation");
@@ -49,15 +48,13 @@ class MainMenu extends Page {
 		}
 	}
 	loadGame() {
-		this.takeDown();
 		App.inst.switchPage("game");
 	}
 	characterSelection() {
-		this.takeDown();
 		App.inst.switchPage("characterSelection");
 	}
 	options() {
-		this.takeDown();
+		App.inst.switchPage("options");
 	}
 //#endregion
 

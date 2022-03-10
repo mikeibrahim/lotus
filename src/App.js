@@ -15,8 +15,9 @@ class App {
 		this.currentPage = null;
 		this.pages = {
 			"mainMenu": new MainMenu(),
-			"characterSelection": new CharacterSelection(),
 			"game": new Game(),
+			"characterSelection": new CharacterSelection(),
+			"options": new Options(),
 			"confirmation": new Confirmation(),
 		};
 	}

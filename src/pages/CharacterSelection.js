@@ -64,7 +64,6 @@ class CharacterSelection extends Page {
 
 //#region Private Methods
 	#saveCharacter() {
-		this.takeDown();
 		App.inst.switchPage("confirmation");
 		Confirmation.inst.setConfirmationText("Are you sure you want to switch to " + this.#characters[this.#currentCharacterIndex].name + "?\n(this will reset your current game)");
 		Confirmation.inst.setYesCallback(() => {
@@ -78,7 +77,6 @@ class CharacterSelection extends Page {
 		});
 	}
 	#back() {
-		this.takeDown();
 		App.inst.switchPage("mainMenu");
 	}
 	#renderCharacters() {

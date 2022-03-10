@@ -40,14 +40,5 @@ class Confirmation extends Page{
 			this.#noCallback();
 		} });
 	}
-	update() {
-		super.update();
-	}
-	keyPressed() {
-		super.keyPressed();
-	}
-	takeDown() {
-		super.takeDown();
-	}
 //#endregion
 }
