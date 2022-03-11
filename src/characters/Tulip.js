@@ -32,12 +32,13 @@ class Tulip extends Character {
 		});
 		this.#pushSize = this.#pushSize[level];
 		this.#pushAmount = this.#pushAmount[level];
+		console.log(this.#pushAmount);
 		this.field = new Field({
 			size: this.#pushSize + this.getPlayerSize(),
 			color: super.getPlayerColor(),
-			parent: this,
+			parentPositionCallback: () => Player.inst.getPosition(),
 			targetsCallback: () => Game.inst.enemies,
-			interactionCallback: this.#interaction,
+			interactionCallback: (target) => this.#interaction(target),
 		});
 	}
 	update() {
@@ -64,8 +65,12 @@ class Tulip extends Character {
 
 //#region Private methods
 	#interaction(target) {
-		target.setSpeedMultiplier(0);
-		// console.log("interacted with " + target);
+		let targetPosition = target.getPosition();
+		let playerPosition = Player.inst.getPosition();
+		let pushVector = p5.Vector.sub(targetPosition, playerPosition);
+		pushVector.normalize();
+		pushVector.mult(this.#pushAmount * deltaTime / 1000);
+		target.setPosition(p5.Vector.add(targetPosition, pushVector));
 	}
 	// #push() {
 	// 	this.#drawPushCircle();

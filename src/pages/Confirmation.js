@@ -32,11 +32,9 @@ class Confirmation extends Page{
 		this.addText({ text: "[Y] - Yes", spacing: 300, fontSize: 32 });
 		this.addText({ text: "[N] - No", spacing: 100, fontSize: 32 });
 		this.addAction({ char: 'Y', callback: () => {
-			this.takeDown();
 			this.#yesCallback();
 		} });
 		this.addAction({ char: 'N', callback: () => {
-			this.takeDown();
 			this.#noCallback();
 		} });
 	}

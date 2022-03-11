@@ -27,7 +27,6 @@ class Character {
 	getPlayerSize() { return this.#playerSize; }
 	getPlayerSpeed() { return this.#playerSpeed; }
 	getPlayerColor() { return this.#playerColor; }
-	getPosition() { return Player.inst.getPosition(); }
 //#endregion
 
 //#region Public Methods

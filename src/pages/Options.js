@@ -26,8 +26,11 @@ class Options extends Page {
 		App.inst.switchPage("confirmation");
 		Confirmation.inst.setConfirmationText("Are you sure you want to reset your data?\n(this will delete all your progress)");
 		Confirmation.inst.setYesCallback(() => {
-			clearStorage();
-			App.inst.switchPage("mainMenu");
+			Confirmation.inst.setConfirmationText("Are you SURE???");
+			Confirmation.inst.setYesCallback(() => {
+				clearStorage();
+				App.inst.switchPage("mainMenu");
+			});
 		});
 		Confirmation.inst.setNoCallback(() => {
 			App.inst.switchPage("options");

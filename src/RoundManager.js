@@ -32,7 +32,7 @@ class RoundManager {
 	loadRound(index) {
 		if (index >= this.#rounds.length) {
 			App.inst.switchPage("confirmation");
-			Confirmation.inst.setConfirmationText("You have completed all the (current) rounds!\nWould you like to play again?");
+			Confirmation.inst.setConfirmationText("You have completed all the (current) rounds!\nRestart?");
 			Confirmation.inst.setYesCallback(() => {
 				storeItem("currentRound", 0);
 				App.inst.switchPage("game");
