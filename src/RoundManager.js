@@ -52,7 +52,7 @@ class RoundManager {
 		Game.inst.particleSystems = [];
 		let round = this.#rounds[index];
 		round.enemies.forEach(enemy => {
-			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemy.charToEnemy(enemy.type));
+			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemies.getEnemy(enemy.enemyType));
 		});
 		for (let i = 0; i < round.orbs; i++)
 			Game.inst.orbs.push(new Orb({ size: this.#orbSize, position: Environment.inst.getRandomPosition(this.#orbSize) }));

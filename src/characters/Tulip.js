@@ -36,8 +36,8 @@ class Tulip extends Character {
 		this.field = new Field({
 			size: this.#pushSize + this.getPlayerSize(),
 			color: super.getPlayerColor(),
-			parentPositionCallback: () => Player.inst.getPosition(),
-			targetsCallback: () => Game.inst.enemies,
+			parent: () => Player.inst,
+			targets: () => Game.inst.enemies,
 			interactionCallback: (target) => this.#interaction(target),
 		});
 	}
@@ -72,30 +72,5 @@ class Tulip extends Character {
 		pushVector.mult(this.#pushAmount * deltaTime / 1000);
 		target.setPosition(p5.Vector.add(targetPosition, pushVector));
 	}
-	// #push() {
-	// 	this.#drawPushCircle();
-	// 	this.#pushEnemies();
-	// }
-	// #drawPushCircle() {
-	// 	noStroke();
-	// 	fill(red(super.getPlayerColor()), green(super.getPlayerColor()), blue(super.getPlayerColor()), 100);
-	// 	let position = Player.inst.getPosition();
-	// 	circle(position.x, position.y, this.#pushSize + super.getPlayerSize());
-	// }
-	// #pushEnemies() {
-	// 	Game.inst.enemies.forEach(enemy => {
-	// 		let enemyPosition = enemy.getPosition();
-	// 		let playerPosition = Player.inst.getPosition();
-	// 		let distance = dist(enemyPosition.x, enemyPosition.y, playerPosition.x, playerPosition.y);
-	// 		let enemySize = enemy.getSize();
-	// 		let characterSize = super.getPlayerSize() + this.#pushSize;
-	// 		if (distance < characterSize / 2 + enemySize / 2) { // Push enemy
-	// 			let pushVector = p5.Vector.sub(enemyPosition, playerPosition);
-	// 			pushVector.normalize();
-	// 			pushVector.mult(this.#pushAmount * deltaTime / 1000);
-	// 			enemy.setPosition(p5.Vector.add(enemyPosition, pushVector));
-	// 		}
-	// 	});
-	// }
 //#endregion
 }

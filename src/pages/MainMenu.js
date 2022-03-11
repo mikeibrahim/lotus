@@ -13,10 +13,10 @@ class MainMenu extends Page {
 		this.addText({ text: "[N] - New Game", spacing: 100, fontSize: 32 });
 		this.addText({ text: "[C] - Character Selection", spacing: 100, fontSize: 32 });
 		this.addText({ text: "[O] - Options", spacing: 200, fontSize: 24 });
-		this.addAction({ char: 'N', callback: () => this.newGame() });
-		this.addAction({ id:"loadGame",char: 'L', callback: () => this.loadGame() });
-		this.addAction({ char: 'C', callback: () => this.characterSelection() });
-		this.addAction({ char: 'O', callback: () => this.options() });
+		this.addAction({ char: 'N', callback: () => this.#newGame() });
+		this.addAction({ id:"loadGame",char: 'L', callback: () => this.#loadGame() });
+		this.addAction({ char: 'C', callback: () => this.#characterSelection() });
+		this.addAction({ char: 'O', callback: () => this.#options() });
 		this.#checkLoadedGame();
 	}
 	update() {
@@ -30,35 +30,32 @@ class MainMenu extends Page {
 	}
 //#endregion
 
-//#region Public Methods
-	newGame() {
+//#region Private Methods
+	#newGame() {
 		let currentRound = getItem("currentRound") || 0;
 		if (currentRound > 0) {
 			App.inst.switchPage("confirmation");
 			Confirmation.inst.setConfirmationText("Are you sure you want to start a new game?\n(your current round is " + currentRound + ")");
 			Confirmation.inst.setYesCallback(() => {
 				storeItem("currentRound", 0);
-				App.inst.switchPage("game");
+				App.inst.switchPage("difficulty");
 			});
 			Confirmation.inst.setNoCallback(() => {
 				App.inst.switchPage("mainMenu");
 			});
 		} else {
-			App.inst.switchPage("game");
+			App.inst.switchPage("difficulty");
 		}
 	}
-	loadGame() {
+	#loadGame() {
 		App.inst.switchPage("game");
 	}
-	characterSelection() {
+	#characterSelection() {
 		App.inst.switchPage("characterSelection");
 	}
-	options() {
+	#options() {
 		App.inst.switchPage("options");
 	}
-//#endregion
-
-//#region Private Methods
 	#checkLoadedGame() {
 		let currentRound = getItem("currentRound") || 0;
 		if (currentRound <= 0) {

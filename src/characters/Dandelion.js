@@ -17,7 +17,7 @@ class Dandelion extends Character {
 		Character.inst = this;
 		this.#characterType = Characters.DANDELION;
 		this.#maxHealth = [1, 2, 4, 5];
-		this.#speedMultiplier = [1, 1.2, 1.3, 3.4];
+		this.#speedMultiplier = [1, 1.2, 1.3, 1.4];
 		this.#sizeMultiplier = [1, 0.9, 0.8, 0.7];
 		this.#maxFadeTime = [1500, 2000, 2500, 3000];
 		this.#fadeScaleFactor = [2, 2.5, 3, 3.5];

@@ -16,6 +16,7 @@ class App {
 		this.pages = {
 			"mainMenu": new MainMenu(),
 			"game": new Game(),
+			"difficulty": new Difficulty(),
 			"characterSelection": new CharacterSelection(),
 			"options": new Options(),
 			"confirmation": new Confirmation(),

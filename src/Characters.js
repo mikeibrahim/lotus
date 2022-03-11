@@ -1,24 +1,27 @@
 class Characters {
+	//#region Data
 	static LOTUS = 0;
 	static DANDELION = 1;
 	static TULIP = 2;
 	static POPPY = 3;
 	static ROSE = 4;
+	//#endregion
 
 	//#region Static Getters
 	static getCharacterObject(characterType) {
 		switch (characterType) {
-			case this.LOTUS:
+			case Characters.LOTUS:
 				return new Lotus();
-			case this.DANDELION:
+			case Characters.DANDELION:
 				return new Dandelion();
-			case this.TULIP:
+			case Characters.TULIP:
 				return new Tulip();
-			case this.POPPY:
+			case Characters.POPPY:
 				return null;
-			case this.ROSE:
+			case Characters.ROSE:
 				return null;
 			default:
+				console.error('Character type not found');
 				return null;
 		}
 	}
@@ -34,7 +37,7 @@ class Characters {
 	static getCharacters() {
 		return [
 			{
-				characterType: this.LOTUS,
+				characterType: Characters.LOTUS,
 				name: 'Lotus',
 				color: '#c9deff',
 				description: '[Passive] When entering a new area, a lotus will appear. Collect it to gain a life. Upgrades may increase the size & number of lotuses that appear.',
@@ -42,7 +45,7 @@ class Characters {
 				roundUnlock: 0,
 			},
 			{
-				characterType: this.DANDELION,
+				characterType: Characters.DANDELION,
 				name: 'Dandelion',
 				color: '#ffeb8a',
 				description: '[Ability] Temporarily become invincible with increased speed. Can only be used once per level. Upgrades may increase the duration & effectiveness of the ability.',
@@ -50,7 +53,7 @@ class Characters {
 				roundUnlock: 5,
 			},
 			{
-				characterType: this.TULIP,
+				characterType: Characters.TULIP,
 				name: 'Tulip',
 				color: '#ffc285',
 				description: '[Passive] Pushes enemies away within a radius. Upgrades may increase the radius & amount of push.',

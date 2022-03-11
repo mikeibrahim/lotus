@@ -1,84 +1,85 @@
 class Enemy extends Interactable {
-//#region Data
+	//#region Data
 	#damage;
 	#size;
 	#speed;
 	#color;
 	#velocity;
 	#position;
-//#endregion
+	//#endregion
 
-//#region Constructor
+	//#region Constructor
 	constructor({ damage, size, position, speed, color }) {
-		super({size: size, position: position});
+		super({ size: size, position: position });
 		this.#damage = damage || 1;
 		this.#size = size || 100;
 		this.#speed = speed || 500;
+		this.#speed = Difficulty.enemySpeedScale(this.#speed);
 		this.#color = color || color(255, 0, 0);
 		this.#velocity = this.#randomVector();
 		this.#position = position || createVector(0, 0);
 	}
-//#endregion
+	//#endregion
 
-//#region Static Getters
-	static charToEnemy(char) {
-		switch (char) {
-			case 'r':
-				return new Enemy({
-					damage: 1,
-					size: 100,
-					position: Environment.inst.getRandomPosition(100),
-					speed: 300,
-					color: color(255, 0, 0)
-				});
-			case 'g':
-				return new Enemy({
-					damage: 1,
-					size: 75,
-					position: Environment.inst.getRandomPosition(75),
-					speed: 500,
-					color: color(0, 255, 0)
-				});
-			case 'y':
-				return new Enemy({
-					damage: 1,
-					size: 500,
-					position: Environment.inst.getRandomPosition(50),
-					speed: 200,
-					color: color(255, 255, 0)
-				});
-			default:
-				return null;
-		}
-	}
-//#endregion
+	//#region Static Getters
+	// static charToEnemy(char) {
+	// 	switch (char) {
+	// 		case 'r':
+	// 			return new Enemy({
+	// 				damage: 1,
+	// 				size: 100,
+	// 				position: Environment.inst.getRandomPosition(100),
+	// 				speed: 300,
+	// 				color: color(255, 0, 0)
+	// 			});
+	// 		case 'g':
+	// 			return new Enemy({
+	// 				damage: 1,
+	// 				size: 75,
+	// 				position: Environment.inst.getRandomPosition(75),
+	// 				speed: 500,
+	// 				color: color(0, 255, 0)
+	// 			});
+	// 		case 'y':
+	// 			return new Enemy({
+	// 				damage: 1,
+	// 				size: 500,
+	// 				position: Environment.inst.getRandomPosition(50),
+	// 				speed: 200,
+	// 				color: color(255, 255, 0)
+	// 			});
+	// 		default:
+	// 			return null;
+	// 	}
+	// }
+	//#endregion
 
-//#region Public Setters
+	//#region Public Setters
 	setPosition(position) { this.#position = position; }
 	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
-//#endregion
+	//#endregion
 
-//#region Public Getters
+	//#region Public Getters
 	getPosition() { return this.#position; }
-//#endregion	
+	//#endregion	
 
-//#region Callbacks
+	//#region Callbacks
 	update() {
 		super.update();
 		this.#move();
 		this.#detectWallCollision();
 		this.#render();
 	}
-//#endregion
+	//#endregion
 
-//#region Overrides
+	//#region Overrides
 	interact() {
 		super.interact();
 		Player.inst.takeDamage(this.#damage);
 	}
-//#endregion
+	//#endregion
 
-//#region Private Methods
+	//#region Private Methods
 	#randomVector() { return createVector(random(-1, 1), random(-1, 1)).normalize(); }
 	#move() {
 		this.#position.add(this.#velocity.copy().mult(this.#speed * (deltaTime / 1000)));
@@ -104,5 +105,5 @@ class Enemy extends Interactable {
 		fill(this.#color);
 		circle(this.#position.x, this.#position.y, this.#size);
 	}
-//#endregion
+	//#endregion
 }
