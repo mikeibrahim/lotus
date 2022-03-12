@@ -125,6 +125,7 @@ class Rounds {
 					{ enemyType: Enemies.ORANGE, count: 10 },
 				]
 			},
+			// 15
 			{
 				orbs: 10,
 				hearts: 2,
@@ -132,6 +133,49 @@ class Rounds {
 					{ enemyType: Enemies.RED, count: 30 },
 					{ enemyType: Enemies.YELLOW, count: 15 },
 					{ enemyType: Enemies.ORANGE, count: 35 },
+				]
+			},
+			{
+				orbs: 4,
+				hearts: 0,
+				enemies: [
+					{ enemyType: Enemies.YELLOW, count: 10 },
+					{ enemyType: Enemies.PINK, count: 15 },
+				]
+			},
+			{
+				orbs: 2,
+				hearts: 0,
+				enemies: [
+					{ enemyType: Enemies.PINK, count: 35 },
+				]
+			},
+			{
+				orbs: 6,
+				hearts: 0,
+				enemies: [
+					{ enemyType: Enemies.RED, count: 35 },
+					{ enemyType: Enemies.GREEN, count: 35 },
+					{ enemyType: Enemies.PINK, count: 10 },
+				]
+			},
+			{
+				orbs: 5,
+				hearts: 1,
+				enemies: [
+					{ enemyType: Enemies.RED, count: 35 },
+					{ enemyType: Enemies.ORANGE, count: 35 },
+					{ enemyType: Enemies.PINK, count: 10 },
+				]
+			},
+			// 20
+			{
+				orbs: 10,
+				hearts: 2,
+				enemies: [
+					{ enemyType: Enemies.YELLOW, count: 15 },
+					{ enemyType: Enemies.ORANGE, count: 20 },
+					{ enemyType: Enemies.PINK, count: 20 },
 				]
 			},
 		];

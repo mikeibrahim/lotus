@@ -4,8 +4,9 @@ class Tulip extends Character {
 	#maxHealth;
 	#sizeMultiplier;
 	#speedMultiplier;
-	#pushSize;
+	#fieldSize;
 	#pushAmount;
+	#field;
 //#endregion
 
 //#region Constructor
@@ -16,8 +17,9 @@ class Tulip extends Character {
 		this.#maxHealth = [1, 1, 1, 2];
 		this.#sizeMultiplier = [1, 1, 1, 1];
 		this.#speedMultiplier = [1, 1, 1.2, 1.2];
-		this.#pushSize = [250, 300, 350, 400];
+		this.#fieldSize = [250, 300, 350, 400];
 		this.#pushAmount = [150, 160, 170, 180];
+		this.Field = null;
 	}
 //#endregion
 
@@ -30,10 +32,10 @@ class Tulip extends Character {
 			sizeMultiplier: this.#sizeMultiplier[level],
 			speedMultiplier: this.#speedMultiplier[level],
 		});
-		this.#pushSize = this.#pushSize[level];
+		this.#fieldSize = this.#fieldSize[level];
 		this.#pushAmount = this.#pushAmount[level];
-		this.field = new Field({
-			size: this.#pushSize + this.getPlayerSize(),
+		this.#field = new Field({
+			size: this.#fieldSize + this.getPlayerSize(),
 			color: super.getPlayerColor(),
 			parent: Player.inst,
 			targets: () => Game.inst.enemies,
@@ -42,7 +44,7 @@ class Tulip extends Character {
 	}
 	update() {
 		super.update();
-		this.field.update();
+		this.#field.update();
 	}
 //#endregion
 

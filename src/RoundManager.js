@@ -55,9 +55,9 @@ class RoundManager {
 			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemies.getEnemy(enemy.enemyType));
 		});
 		for (let i = 0; i < round.orbs; i++)
-			Game.inst.orbs.push(new Orb({ size: this.#orbSize, position: Environment.inst.getRandomPosition(this.#orbSize) }));
+			Game.inst.orbs.push(new Orb({ size: this.#orbSize }));
 		for (let i = 0; i < round.hearts; i++)
-			Game.inst.hearts.push(new Heart({ size: this.#heartSize, position: Environment.inst.getRandomPosition(this.#heartSize) }));
+			Game.inst.hearts.push(new Heart({ size: this.#heartSize }));
 		
 		Player.inst.resetPosition();
 		Player.inst.setInvincibility(2000);

@@ -75,17 +75,8 @@ class Game extends Page {
 	#startGame() {
 		this.#environment = new Environment(2500);
 		this.#gameUI = new GameUI();
-		this.#player = new Player({
-			position: createVector(200, 200),
-			size: 100,
-			speed: 500,
-			color: color(200, 200, 255)
-		});
-		this.#playerCamera = new PlayerCamera({
-			speed: 10,
-			maxZoom: 500,
-			zoomSpeed: 1
-		});
+		this.#player = new Player();
+		this.#playerCamera = new PlayerCamera();
 		let characterType = getItem("characterType") || Characters.getCharacters()[0].characterType;
 		this.#character = Characters.getCharacterObject(characterType);
 		this.#roundManager = new RoundManager();

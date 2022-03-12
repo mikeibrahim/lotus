@@ -17,7 +17,7 @@ class Characters {
 			case Characters.TULIP:
 				return new Tulip();
 			case Characters.POPPY:
-				return null;
+				return new Poppy();
 			case Characters.ROSE:
 				return null;
 			default:
@@ -61,7 +61,7 @@ class Characters {
 				roundUnlock: 10,
 			},
 			{
-				characterType: null,
+				characterType: Characters.POPPY,
 				name: 'Poppy',
 				color: '#ff8ff2',
 				description: '[Passive] Shrinks & slows enemies within a radius. Upgrades may increase the radius & amount of slow.',

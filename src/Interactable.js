@@ -5,9 +5,9 @@ class Interactable {
 //#endregion
 
 //#region Constructor
-	constructor({size, position}) {
+	constructor({size}) {
 		this.#size = size;
-		this.#position = position;
+		this.#position = Environment.inst.getRandomPosition(this.#size);
 	}
 //#endregion
 

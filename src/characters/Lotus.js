@@ -60,7 +60,6 @@ class Lotus extends Character {
 			this.lotusPickups.push(new LotusPickup({
 				size: this.#lotusPickupSize,
 				heal: this.#lotusPickupHeal,
-				position: Environment.inst.getRandomPosition(this.#lotusPickupSize),
 				color: super.getPlayerColor(),
 			}));
 		}
@@ -77,11 +76,11 @@ class LotusPickup extends Interactable {
 //#endregion
 
 //#region Constructor
-	constructor({ size, heal, position, color }) {
-		super({ size: size, position: position });
+	constructor({ size, heal, color }) {
+		super({ size: size });
 		this.#size = size;
 		this.#heal = heal;
-		this.#position = position;
+		this.#position = super.getPosition();
 		this.#color = color;
 	}
 //#endregion

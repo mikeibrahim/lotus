@@ -1,12 +1,13 @@
 class Player {
 //#region Data
 	static inst;
-	#maxHealth;
 	#size;
+	#currentSize;
 	#speed;
-	#maxInvincibilityTime;
 	#color;
+	#maxHealth;
 	#currentHealth;
+	#maxInvincibilityTime;
 	#currentInvincibilityTime;
 	#position;
 	#moveDirection;
@@ -14,17 +15,17 @@ class Player {
 //#endregion
 
 //#region Constructor
-	constructor({ position, size, speed, maxInvincibilityTime, color }) {
+	constructor() {
 		Player.inst = this;
-		// this.#maxHealth = maxHealth || 3;
-		this.#size = size || 100;
-		this.#speed = speed || 500;
-		this.#maxInvincibilityTime = maxInvincibilityTime || 1000;
-		this.#color = color || color(255, 0, 0);
+		this.#size = 100;
+		this.#currentSize = this.#size;
+		this.#speed = 500;
 		this.#maxHealth = 0;
 		this.#currentHealth = 0;
+		this.#color = color(255, 0, 0);
+		this.#maxInvincibilityTime = 1000;
 		this.#currentInvincibilityTime = 0;
-		this.#position = position || createVector(0, 0);
+		this.#position = createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
 		this.#mouseToggle = false;
 	}
@@ -42,7 +43,8 @@ class Player {
 
 //#region Public Getters
 	getPosition() { return this.#position; }
-	getSize() { return this.#size; }
+	getMaxSize() { return this.#size; }
+	getSize() { return this.#currentSize; }
 	getSpeed() { return this.#speed; }
 	getCurrentHealth() { return this.#currentHealth; }
 	getMaxHealth() { return this.#maxHealth; }
@@ -52,7 +54,7 @@ class Player {
 //#region Private Getters
 	#getInput() {
 		let input = createVector(0, 0);
-		if (Options.inst.getKeyboardControls()) {
+		if (App.inst.getKeyboardControls()) {
 			const keys = { w: 87, a: 65, s: 83, d: 68, }
 			if (keyIsDown(keys.w)) input.y--;
 			if (keyIsDown(keys.a)) input.x--;
@@ -84,6 +86,7 @@ class Player {
 	}
 	update() {
 		this.#invincibility();
+		this.#updateSize();
 		this.#move();
 		this.#detectEnvironmentCollision();
 		this.#renderPlayer();
@@ -141,13 +144,16 @@ class Player {
 	}
 	#detectEnvironmentCollision() {
 		let size = Environment.inst.getSize();
-		let min = (-size / 2) + (this.#size / 2);
-		let max = (size / 2) - (this.#size / 2);
+		let min = (-size / 2) + (this.#currentSize / 2);
+		let max = (size / 2) - (this.#currentSize / 2);
 		this.#position.x = constrain(this.#position.x, min, max);
 		this.#position.y = constrain(this.#position.y, min, max);
 	}
 	#updateMoveDirection() {
 		this.#moveDirection = this.#getInput();
+	}
+	#updateSize() {
+		this.#currentSize = lerp(this.#currentSize, this.#size, 10 * (deltaTime / 1000));
 	}
 	#move() {
 		this.#updateMoveDirection();
@@ -167,7 +173,7 @@ class Player {
 		strokeWeight(5);
 		fill(this.#color);
 		this.#invincibilityFill();
-		circle(this.#position.x, this.#position.y, this.#size);
+		circle(this.#position.x, this.#position.y, this.#currentSize);
 	}
 	#die() {
 		Game.inst.endGame();

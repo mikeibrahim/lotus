@@ -12,12 +12,12 @@ class PlayerCamera {
 //#endregion
 
 //#region Constructor
-	constructor({ speed, maxZoom, zoomSpeed }) {
+	constructor() {
 		PlayerCamera.inst = this;
 		this.#camera = createCamera();
-		this.#speed = speed || 2;
-		this.#maxZoom = maxZoom || 2000;
-		this.#zoomSpeed = zoomSpeed || 1;
+		this.#speed = 10;
+		this.#maxZoom = 500;
+		this.#zoomSpeed = 1;
 		this.#position = createVector(0, 0);
 		this.#currentZoom = this.#maxZoom;
 		this.#shake = 0;
@@ -56,7 +56,7 @@ class PlayerCamera {
 //#region Private Methods
 	#moveToPlayer() {
 		let playerPosition = Player.inst.getPosition();
-		if (Options.inst.getKeyboardControls()) {
+		if (App.inst.getKeyboardControls()) {
 			let targetDirection = playerPosition.copy().sub(this.#position);
 			targetDirection.normalize();
 			this.#position.add(p5.Vector.mult(targetDirection, playerPosition.dist(this.#position) * this.#speed * (deltaTime / 1000)));

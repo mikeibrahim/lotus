@@ -59,7 +59,7 @@ class Character {
 		Player.inst.setSpeedMultiplier(this.#playerSpeedMultiplier);
 		Player.inst.setSizeMultiplier(this.#playerSizeMultiplier);
 		Player.inst.setColor(this.#playerColor);
-		this.#playerSize = Player.inst.getSize();
+		this.#playerSize = Player.inst.getMaxSize();
 		this.#playerSpeed = Player.inst.getSpeed();
 	}
 //#endregion

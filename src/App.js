@@ -6,6 +6,7 @@ class App {
 	#currentBackgroundColor;
 	#backgroundColorTime;
 	#currentBackgroundColorTime;
+	#keyboardControls;
 	//#endregion
 
 	//#region Constructor
@@ -23,7 +24,12 @@ class App {
 	}
 	//#endregion
 
+	//#region Public Setters
+	setKeyboardControls(value) { this.#keyboardControls = value; }
+	//#endregion
+
 	//#region Public Getters
+	getKeyboardControls() { return this.#keyboardControls; }
 	//#endregion
 
 	//#region Callbacks
@@ -35,6 +41,7 @@ class App {
 		this.#backgroundColorTime = 1;
 		this.#currentBackgroundColorTime = 0;
 		this.changeBackground(40, 0.5);
+		this.#keyboardControls = getItem("keyboardControls");
 	}
 	update() {
 		this.#updateBackground();

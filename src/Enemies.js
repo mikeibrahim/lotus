@@ -4,6 +4,7 @@ class Enemies {
 	static GREEN = 1;
 	static YELLOW = 2;
 	static ORANGE = 3;
+	static PINK = 4;
 	//#endregion
 
 	//#region Static Getters
@@ -17,6 +18,8 @@ class Enemies {
 				return new YellowEnemy();
 			case Enemies.ORANGE:
 				return new OrangeEnemy();
+			case Enemies.PINK:
+				return new PinkEnemy();
 			default:
 				console.error('Enemy type not found');
 				return null;
@@ -40,13 +43,19 @@ class Enemies {
 				enemyType: Enemies.YELLOW,
 				name: 'Yellow',
 				color: '#ffff00',
-				description: 'A big yellow enemy that deals 1 damage.',
+				description: 'A big yellow enemy that deals 2 damage.',
 			},
 			{
 				enemyType: Enemies.ORANGE,
 				name: 'Orange',
 				color: '#ffa500',
-				description: 'An enemy that slows you down.',
+				description: 'An orange enemy that slows you down. Deals 1 damage.',
+			},
+			{
+				enemyType: Enemies.PINK,
+				name: 'Pink',
+				color: '#ff00ff',
+				description: 'A pink enemy that makes you larger. Deals 2 damage.',
 			},
 		];
 	}
@@ -58,7 +67,6 @@ class RedEnemy extends Enemy {
 		super({
 			damage: 1,
 			size: 100,
-			position: Environment.inst.getRandomPosition(100),
 			speed: 300,
 			color: color(255, 0, 0)
 		});
@@ -70,7 +78,6 @@ class GreenEnemy extends Enemy {
 		super({
 			damage: 1,
 			size: 75,
-			position: Environment.inst.getRandomPosition(75),
 			speed: 500,
 			color: color(0, 255, 0)
 		});
@@ -80,9 +87,8 @@ class GreenEnemy extends Enemy {
 class YellowEnemy extends Enemy {
 	constructor() {
 		super({
-			damage: 1,
+			damage: 2,
 			size: 500,
-			position: Environment.inst.getRandomPosition(50),
 			speed: 200,
 			color: color(255, 255, 0)
 		});
@@ -95,7 +101,6 @@ class OrangeEnemy extends Enemy {
 		super({
 			damage: 1,
 			size: 100,
-			position: Environment.inst.getRandomPosition(100),
 			speed: 300,
 			color: color(255, 165, 0)
 		});
@@ -113,6 +118,33 @@ class OrangeEnemy extends Enemy {
 		super.update();
 		this.#field.update();
 	}
-	#onCollisionEnter(target) { target.setSpeedMultiplier(7 / 10); }
-	#onCollisionExit(target) { target.setSpeedMultiplier(10 / 7); }
+	#onCollisionEnter(target) { target.setSpeedMultiplier(8.5 / 10); }
+	#onCollisionExit(target) { target.setSpeedMultiplier(10 / 8.5); }
+}
+
+class PinkEnemy extends Enemy {
+	#field;
+	constructor() {
+		super({
+			damage: 2,
+			size: 50,
+			speed: 350,
+			color: color(255, 0, 255)
+		});
+		let fieldSize = 350 + super.getSize();
+		this.#field = new Field({
+			size: fieldSize,
+			color: color(255, 0, 255),
+			parent: this,
+			targets: () => [Player.inst],
+			onCollisionEnter: (target) => { this.#onCollisionEnter(target); },
+			onCollisionExit: (target) => { this.#onCollisionExit(target); },
+		});
+	}
+	update() {
+		super.update();
+		this.#field.update();
+	}
+	#onCollisionEnter(target) { target.setSizeMultiplier(10/ 7); }
+	#onCollisionExit(target) { target.setSizeMultiplier(7 / 10); }
 }

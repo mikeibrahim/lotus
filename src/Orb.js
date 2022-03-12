@@ -6,10 +6,10 @@ class Orb extends Interactable {
 //#endregion
 
 //#region Constructor
-	constructor({ size, position }) {
-		super({ size: size, position: position });
+	constructor({ size }) {
+		super({ size: size });
 		this.#size = size;
-		this.#position = position;
+		this.#position = super.getPosition();
 		this.#color = color(50, 50, 230);
 	}
 //#endregion
