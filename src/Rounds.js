@@ -8,7 +8,6 @@ class Rounds {
 				hearts: 0,
 				enemies: [
 					{ enemyType: Enemies.RED, count: 10 },
-					{ enemyType: Enemies.ORANGE, count: 10 },
 				]
 			},
 			{
@@ -90,6 +89,49 @@ class Rounds {
 					{ enemyType: Enemies.RED, count: 25 },
 					{ enemyType: Enemies.GREEN, count: 10 },
 					{ enemyType: Enemies.YELLOW, count: 20 },
+				]
+			},
+			{
+				orbs: 5,
+				hearts: 0,
+				enemies: [
+					{ enemyType: Enemies.RED, count: 20 },
+					{ enemyType: Enemies.GREEN, count: 20 },
+					{ enemyType: Enemies.ORANGE, count: 10 },
+				]
+			},
+			{
+				orbs: 6,
+				hearts: 0,
+				enemies: [
+					{ enemyType: Enemies.GREEN, count: 5 },
+					{ enemyType: Enemies.YELLOW, count: 15 },
+					{ enemyType: Enemies.ORANGE, count: 25 },
+				]
+			},
+			{
+				orbs: 3,
+				hearts: 0,
+				enemies: [
+					{ enemyType: Enemies.ORANGE, count: 45 },
+				]
+			},
+			{
+				orbs: 7,
+				hearts: 1,
+				enemies: [
+					{ enemyType: Enemies.RED, count: 40 },
+					{ enemyType: Enemies.GREEN, count: 20 },
+					{ enemyType: Enemies.ORANGE, count: 10 },
+				]
+			},
+			{
+				orbs: 10,
+				hearts: 2,
+				enemies: [
+					{ enemyType: Enemies.RED, count: 30 },
+					{ enemyType: Enemies.YELLOW, count: 15 },
+					{ enemyType: Enemies.ORANGE, count: 35 },
 				]
 			},
 		];
