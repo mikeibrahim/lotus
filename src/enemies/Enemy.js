@@ -61,6 +61,7 @@ class Enemy extends Interactable {
 
 	//#region Public Getters
 	getPosition() { return this.#position; }
+	getSize() { return this.#size; }
 	//#endregion	
 
 	//#region Callbacks

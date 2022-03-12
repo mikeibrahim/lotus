@@ -56,13 +56,13 @@ class PlayerCamera {
 //#region Private Methods
 	#moveToPlayer() {
 		let playerPosition = Player.inst.getPosition();
-		let targetDirection = playerPosition.copy().sub(this.#position);
-		targetDirection.normalize();
-		this.#position.add( // Go to target direction
-			targetDirection.copy().mult( // Multiply by distance
-				playerPosition.dist(this.#position) * this.#speed * (deltaTime / 1000) // Multiply by speed & deltaTime
-			)
-		);
+		if (Options.inst.getKeyboardControls()) {
+			let targetDirection = playerPosition.copy().sub(this.#position);
+			targetDirection.normalize();
+			this.#position.add(p5.Vector.mult(targetDirection, playerPosition.dist(this.#position) * this.#speed * (deltaTime / 1000)));
+		} else {
+			this.#position = playerPosition.copy();
+		}
 		this.#currentZoom += (this.#maxZoom - this.#currentZoom) * this.#zoomSpeed * (deltaTime / 1000);
 		this.#camera.ortho(
 			-width / 2 - this.#currentZoom + this.#position.x,

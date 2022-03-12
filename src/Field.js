@@ -4,16 +4,22 @@ class Field {
 	#color;
 	#parent;
 	#targets;
-	#interactionCallback;
+	#onCollision;
+	#onCollisionEnter;
+	#onCollisionExit;
+	#targetsInside;
 //#endregion
 
 //#region  Constructor
-	constructor({size, color, parent, targets, interactionCallback}) {
+	constructor({size, color, parent, targets, onCollision, onCollisionEnter, onCollisionExit}) {
 		this.#size = size;
 		this.#color = color;
 		this.#parent = parent;
 		this.#targets = targets;
-		this.#interactionCallback = interactionCallback;
+		this.#onCollision = onCollision || function() {};
+		this.#onCollisionEnter = onCollisionEnter || function() {};
+		this.#onCollisionExit = onCollisionExit || function() {};
+		this.#targetsInside = [];
 	}
 //#endregion
 
@@ -39,8 +45,19 @@ class Field {
 			let targetPosition = target.getPosition();
 			let parentPosition = this.#parent.getPosition();
 			let distance = dist(targetPosition.x, targetPosition.y, parentPosition.x, parentPosition.y);
-			if (distance < this.#size / 2 + target.getSize() / 2) {
-				this.#interactionCallback(target);
+			let isInside = distance < this.#size / 2 + target.getSize() / 2;
+			if (target instanceof Player && target.isInvincible()) isInside = false; // Don't affect the player if they're invincible
+			if (isInside) {
+				if (!this.#targetsInside.includes(target)) {
+					this.#onCollisionEnter(target);
+					this.#targetsInside.push(target);
+				}
+				this.#onCollision(target);
+			} else {
+				if (this.#targetsInside.includes(target)) {
+					this.#onCollisionExit(target);
+					this.#targetsInside.splice(this.#targetsInside.indexOf(target), 1);
+				}
 			}
 		}
 	}

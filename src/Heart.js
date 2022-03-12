@@ -34,7 +34,6 @@ class Heart extends Interactable {
 				size: this.#size,
 				position: this.#position
 			});
-			console.log(this.#size);
 			Game.inst.hearts.splice(Game.inst.hearts.indexOf(this), 1);
 			Player.inst.heal(this.#heal);
 		}

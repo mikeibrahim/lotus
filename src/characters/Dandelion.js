@@ -58,9 +58,6 @@ class Dandelion extends Character {
 		super.activeAbility();
 		this.#fadeStart();
 	}
-	takeDown() {
-		super.takeDown();
-	}
 //#endregion
 
 //#region Private Methods
@@ -80,8 +77,7 @@ class Dandelion extends Character {
 		});
 	}
 	#fade() {
-		if (!this.#faded) return;
-
+		if (this.#currentFadeTime <= 0) return;
 		this.#currentFadeTime -= deltaTime;
 		if (this.#currentFadeTime <= 0) this.#currentFadeTime = 0;
 		
@@ -91,8 +87,6 @@ class Dandelion extends Character {
 	#fadeReset() {
 		this.#faded = false;
 		this.#currentFadeTime = 0;
-		Player.inst.setSize(super.getPlayerSize());
-		Player.inst.setSpeed(super.getPlayerSpeed());
 	}
 //#endregion
 }

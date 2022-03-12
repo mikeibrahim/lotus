@@ -44,7 +44,10 @@ class Character {
 	keyPressed() {
 		if (keyIsDown(' '.charCodeAt(0))) this.activeAbility();
 	}
-	nextRound() {}
+	nextRound() {
+		Player.inst.setSize(this.getPlayerSize());
+		Player.inst.setSpeed(this.getPlayerSpeed());
+	}
 	takeDown() {} // Called once
 	passiveAbility() {} // Every frame
 	activeAbility() {} // Every time user clicks space

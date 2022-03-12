@@ -13,7 +13,7 @@ class Tulip extends Character {
 		super();
 		Character.inst = this;
 		this.#characterType = Characters.TULIP;
-		this.#maxHealth = [1, 1, 2, 2];
+		this.#maxHealth = [1, 1, 1, 2];
 		this.#sizeMultiplier = [1, 1, 1, 1];
 		this.#speedMultiplier = [1, 1, 1.2, 1.2];
 		this.#pushSize = [250, 300, 350, 400];
@@ -37,33 +37,17 @@ class Tulip extends Character {
 			color: super.getPlayerColor(),
 			parent: Player.inst,
 			targets: () => Game.inst.enemies,
-			interactionCallback: (target) => this.#interaction(target),
+			onCollision: (target) => this.#onCollision(target),
 		});
 	}
 	update() {
 		super.update();
 		this.field.update();
 	}
-	keyPressed() {
-		super.keyPressed();
-	}
-	nextRound() {
-		super.nextRound();
-	}
-	passiveAbility() {
-		super.passiveAbility();
-		// this.#push();
-	}
-	activeAbility() {
-		super.activeAbility();
-	}
-	takeDown() {
-		super.takeDown();
-	}
 //#endregion
 
 //#region Private methods
-	#interaction(target) {
+	#onCollision(target) {
 		let targetPosition = target.getPosition();
 		let playerPosition = Player.inst.getPosition();
 		let pushVector = p5.Vector.sub(targetPosition, playerPosition);

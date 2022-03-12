@@ -18,3 +18,6 @@ function draw() {
 function keyPressed() {
 	app.keyPressed();
 }
+function mousePressed() {
+	app.mousePressed();
+}

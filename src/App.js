@@ -1,15 +1,14 @@
 class App {
-//#region Data
+	//#region Data
 	static inst;
 	#backgroundColor;
 	#targetBackgroundColor;
 	#currentBackgroundColor;
 	#backgroundColorTime;
 	#currentBackgroundColorTime;
+	//#endregion
 
-//#endregion
-
-//#region Constructor
+	//#region Constructor
 	constructor() {
 		App.inst = this;
 		this.currentPage = null;
@@ -22,9 +21,12 @@ class App {
 			"confirmation": new Confirmation(),
 		};
 	}
-//#endregion
+	//#endregion
 
-//#region Callbacks
+	//#region Public Getters
+	//#endregion
+
+	//#region Callbacks
 	init() {
 		this.switchPage("mainMenu");
 		this.#backgroundColor = 30;
@@ -41,9 +43,12 @@ class App {
 	keyPressed() {
 		if (this.currentPage) this.currentPage.keyPressed();
 	}
-//#endregion
-	
-//#region Public Methods
+	mousePressed() {
+		if (this.currentPage) this.currentPage.mousePressed();
+	}
+	//#endregion
+
+	//#region Public Methods
 	switchPage(page) {
 		this.changeBackground(40, 0.5);
 		this.takeDownCurrentPage();
@@ -62,9 +67,9 @@ class App {
 		this.#backgroundColorTime = duration;
 		this.#currentBackgroundColorTime = duration;
 	}
-//#endregion
+	//#endregion
 
-//#region Private Methods
+	//#region Private Methods
 	#updateBackground() {
 		if (this.#currentBackgroundColorTime > 0) {
 			this.#currentBackgroundColorTime -= deltaTime / 1000;
@@ -72,5 +77,5 @@ class App {
 		}
 		background(this.#currentBackgroundColor);
 	}
-//#endregion
+	//#endregion
 }

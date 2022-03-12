@@ -44,6 +44,10 @@ class Game extends Page {
 		super.keyPressed();
 		this.#character.keyPressed();
 	}
+	mousePressed() {
+		super.mousePressed();
+		Player.inst.mousePressed();
+	}
 	takeDown() {
 		super.takeDown();
 		this.#environment.takeDown();
@@ -78,7 +82,7 @@ class Game extends Page {
 			color: color(200, 200, 255)
 		});
 		this.#playerCamera = new PlayerCamera({
-			speed: 4,
+			speed: 10,
 			maxZoom: 500,
 			zoomSpeed: 1
 		});
@@ -99,9 +103,9 @@ class Game extends Page {
 	}
 	#updateGame() {
 		this.#environment.update();
-		this.#playerCamera.update();
 		this.#player.update();
 		this.#character.update();
+		this.#playerCamera.update();
 		this.#roundManager.update();
 		Game.inst.enemies.forEach(enemy => enemy.update());
 		Game.inst.orbs.forEach(orb => orb.update());

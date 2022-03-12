@@ -14,9 +14,9 @@ class Lotus extends Character {
 		super();
 		Character.inst = this;
 		this.#characterType = Characters.LOTUS;
-		this.#maxHealth = [1, 1, 2, 3];
+		this.#maxHealth = [1, 1, 1, 1];
 		this.#speedMultiplier = [1, 1.2, 1.3, 1.4];
-		this.#sizeMultiplier = [1, 1, 1, 1];
+		this.#sizeMultiplier = [1, 1, 1.2, 1.2];
 		this.#maxPickups = [1, 1, 2, 2];
 		this.#lotusPickupSize = [75, 120, 120, 200];
 		this.#lotusPickupHeal = [1, 1, 1, 1];
@@ -41,22 +41,10 @@ class Lotus extends Character {
 		super.update();
 		this.#updateLotusPickups();
 	}
-	keyPressed() {
-		super.keyPressed();
-	}
 	nextRound() {
 		super.nextRound();
 		this.#destroyLotusPickups();
 		this.#createLotusPickups();
-	}
-	passiveAbility() {
-		super.passiveAbility();
-	}
-	activeAbility() {
-		super.activeAbility();
-	}
-	takeDown() {
-		super.takeDown();
 	}
 //#endregion
 

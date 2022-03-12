@@ -1,6 +1,7 @@
 class Options extends Page {
 	//#region Data
 	static inst;
+	#keyboardControls;
 	//#endregion
 
 	//#region Constructor
@@ -10,14 +11,22 @@ class Options extends Page {
 	}
 	//#endregion
 
+	//#region Public Getters
+	getKeyboardControls() { return this.#keyboardControls; }
+	//#endregion
+
 	//#region Overrides
 	startUp() {
 		super.startUp();
 		this.addText({ text: "Options", spacing: 100, fontSize: 48 });
 		this.addText({ text: "[R] - Reset Data", spacing: 300, fontSize: 32 });
-		this.addText({ text: "[B] - Back", spacing: 300, fontSize: 24 });
+		this.addText({ id: "controls", text: "[T] - Toggle Controls [WASD]", spacing: 100, fontSize: 32 });
+		this.addText({ text: "[B] - Back", spacing: 200, fontSize: 24 });
 		this.addAction({ char: 'R', callback: () => this.#resetData() });
+		this.addAction({ char: 'T', callback: () => this.#toggleMovement() });
 		this.addAction({ char: 'B', callback: () => this.#back() });
+		this.#keyboardControls = getItem("keyboardControls");
+		if (!this.#keyboardControls) { this.setText({ id: "controls", text: "[T] - Toggle Controls [Mouse]", spacing: 100, fontSize: 32 }); }
 	}
 	//#endregion
 
@@ -35,6 +44,17 @@ class Options extends Page {
 		Confirmation.inst.setNoCallback(() => {
 			App.inst.switchPage("options");
 		});
+	}
+	#toggleMovement() {
+		if (this.#keyboardControls) {
+			this.#keyboardControls = false;
+			storeItem("keyboardControls", false);
+			this.setText({ id: "controls", text: "[T] - Toggle Controls [Mouse]" });
+		} else {
+			this.#keyboardControls = true;
+			storeItem("keyboardControls", true);
+			this.setText({ id: "controls", text: "[T] - Toggle Controls [WASD]" });
+		}
 	}
 	#back() {
 		App.inst.switchPage("mainMenu")

@@ -19,6 +19,7 @@ class Page {
 	keyPressed() {
 		this.#checkForActions();
 	}
+	mousePressed() { }
 	takeDown() {
 		this.#clearData();
 	}

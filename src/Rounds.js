@@ -8,6 +8,7 @@ class Rounds {
 				hearts: 0,
 				enemies: [
 					{ enemyType: Enemies.RED, count: 10 },
+					{ enemyType: Enemies.ORANGE, count: 10 },
 				]
 			},
 			{

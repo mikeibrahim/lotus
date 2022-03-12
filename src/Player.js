@@ -10,6 +10,7 @@ class Player {
 	#currentInvincibilityTime;
 	#position;
 	#moveDirection;
+	#mouseToggle;
 //#endregion
 
 //#region Constructor
@@ -25,6 +26,7 @@ class Player {
 		this.#currentInvincibilityTime = 0;
 		this.#position = position || createVector(0, 0);
 		this.#moveDirection = createVector(0, 0);
+		this.#mouseToggle = false;
 	}
 //#endregion
 	
@@ -44,16 +46,28 @@ class Player {
 	getSpeed() { return this.#speed; }
 	getCurrentHealth() { return this.#currentHealth; }
 	getMaxHealth() { return this.#maxHealth; }
+	isInvincible() { return this.#currentInvincibilityTime > 0; }
 //#endregion
 
 //#region Private Getters
 	#getInput() {
 		let input = createVector(0, 0);
-		const keys = { w: 87, a: 65, s: 83, d: 68, }
-		if (keyIsDown(keys.w)) input.y--;
-		if (keyIsDown(keys.a)) input.x--;
-		if (keyIsDown(keys.s)) input.y++;
-		if (keyIsDown(keys.d)) input.x++;
+		if (Options.inst.getKeyboardControls()) {
+			const keys = { w: 87, a: 65, s: 83, d: 68, }
+			if (keyIsDown(keys.w)) input.y--;
+			if (keyIsDown(keys.a)) input.x--;
+			if (keyIsDown(keys.s)) input.y++;
+			if (keyIsDown(keys.d)) input.x++;
+			input.normalize()
+		} else {
+			if (this.#mouseToggle) {
+				let mouse = createVector(mouseX, mouseY);
+				let centerScreen = createVector(width / 2, height / 2);
+				input = p5.Vector.sub(mouse, centerScreen);
+				let magnitude = Math.min(centerScreen.dist(mouse) / 150, 1);
+				input.normalize().mult(magnitude);
+			}
+		}
 		return input;
 	}
 	#getShiftMultiplier() {
@@ -73,6 +87,9 @@ class Player {
 		this.#move();
 		this.#detectEnvironmentCollision();
 		this.#renderPlayer();
+	}
+	mousePressed() {
+		this.#mouseToggle = !this.#mouseToggle;
 	}
 	takeDown() {
 	}
@@ -130,9 +147,7 @@ class Player {
 		this.#position.y = constrain(this.#position.y, min, max);
 	}
 	#updateMoveDirection() {
-		let input = this.#getInput();
-		this.#moveDirection = input;
-		this.#moveDirection.normalize();
+		this.#moveDirection = this.#getInput();
 	}
 	#move() {
 		this.#updateMoveDirection();
