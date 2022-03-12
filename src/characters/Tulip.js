@@ -13,7 +13,7 @@ class Tulip extends Character {
 		super();
 		Character.inst = this;
 		this.#characterType = Characters.TULIP;
-		this.#maxHealth = [1, 1, 2, 3];
+		this.#maxHealth = [1, 1, 2, 2];
 		this.#sizeMultiplier = [1, 1, 1, 1];
 		this.#speedMultiplier = [1, 1, 1.2, 1.2];
 		this.#pushSize = [250, 300, 350, 400];
@@ -32,11 +32,10 @@ class Tulip extends Character {
 		});
 		this.#pushSize = this.#pushSize[level];
 		this.#pushAmount = this.#pushAmount[level];
-		console.log(this.#pushAmount);
 		this.field = new Field({
 			size: this.#pushSize + this.getPlayerSize(),
 			color: super.getPlayerColor(),
-			parent: () => Player.inst,
+			parent: Player.inst,
 			targets: () => Game.inst.enemies,
 			interactionCallback: (target) => this.#interaction(target),
 		});

@@ -58,7 +58,7 @@ class Characters {
 				color: '#ffc285',
 				description: '[Passive] Pushes enemies away within a radius. Upgrades may increase the radius & amount of push.',
 				upgradeCosts: [25, 40, 75],
-				roundUnlock: 10,
+				roundUnlock: 0,
 			},
 			{
 				characterType: null,
