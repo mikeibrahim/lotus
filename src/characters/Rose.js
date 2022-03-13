@@ -48,7 +48,7 @@ class Rose extends Character {
 			lifeTime: this.#pedalLifeTime,
 			invincibilityTime: this.#invincibilityTime,
 		}));
-		Game.inst.orbs.push(new Orb());
+		Game.inst.addOrn(new Orb());
 	}
 	#destroyPedals() {
 		this.pedals = [];
@@ -66,7 +66,7 @@ class Pedal extends Interactable {
 
 	//#region Constructor
 	constructor({ size, speed, color, lifeTime, invincibilityTime }) {
-		super({ targets: () => Game.inst.enemies.concat(Game.inst.orbs), size: size, speed: speed, color: color });
+		super({ targets: () => Game.inst.getEnemies().concat(Game.inst.getOrbs()), size: size, speed: speed, color: color });
 		super.setPosition(Player.inst.getPosition());
 		super.setVelocity(Player.inst.getVelocity().copy().normalize());
 		this.#lifeTime = lifeTime;

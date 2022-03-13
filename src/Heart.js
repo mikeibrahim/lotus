@@ -28,7 +28,7 @@ class Heart extends Interactable {
 			size: super.getSize(),
 			position: super.getPosition()
 		});
-		Game.inst.hearts.splice(Game.inst.hearts.indexOf(this), 1);
+		Game.inst.removeHeart(this);
 	}
 	//#endregion
 

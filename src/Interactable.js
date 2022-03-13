@@ -43,6 +43,7 @@ class Interactable {
 	getTarget() { return this.#targets; }
 	getSize() { return this.#size; }
 	getCurrentSize() { return this.#currentSize; }
+	getTargetSize() { return this.#targetSize; }
 	getSpeed() { return this.#speed; }
 	getCurrentSpeed() { return this.#currentSpeed; }
 	getColor() { return this.#color; }

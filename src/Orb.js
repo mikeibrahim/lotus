@@ -22,7 +22,7 @@ class Orb extends Interactable {
 			size: super.getSize(),
 			position: super.getPosition()
 		});
-		Game.inst.orbs.splice(Game.inst.orbs.indexOf(this), 1);
+		Game.inst.removeOrb(this);
 		GameUI.inst.addCurrentOrbs(1);
 	}
 	//#endregion

@@ -17,11 +17,8 @@ class RoundManager {
 	startUp() {
 		this.#rounds = Rounds.getRounds();
 	}
-	update() {
-		if (Game.inst.orbs.length == 0) this.nextRound();
-	}
-	takeDown() {
-	}
+	update() { }
+	takeDown() { }
 //#endregion
 
 //#region Public Methods
@@ -42,18 +39,16 @@ class RoundManager {
 		this.#currentRound = index;
 		storeItem("currentRound", index);
 		
-		Game.inst.enemies = [];
-		Game.inst.orbs = [];
-		Game.inst.hearts = [];
-		Game.inst.particleSystems = [];
+		Game.inst.clearObjects();
 		let round = this.#rounds[index];
 		round.enemies.forEach(enemy => {
-			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemies.getEnemy(enemy.enemyType));
+			for (let j = 0; j < enemy.count; j++)
+				Game.inst.addEnemy(Enemies.getEnemy(enemy.enemyType));
 		});
 		for (let i = 0; i < round.orbs; i++)
-			Game.inst.orbs.push(new Orb());
+			Game.inst.addOrb(new Orb());
 		for (let i = 0; i < round.hearts; i++)
-			Game.inst.hearts.push(new Heart());
+			Game.inst.addHeart(new Heart());
 		
 		Player.inst.setPosition(createVector(0, 0));
 		Player.inst.setInvincibility(2000);

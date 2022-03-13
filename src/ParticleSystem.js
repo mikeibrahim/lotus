@@ -19,7 +19,7 @@ class ParticleSystem {
 		this.#position = position || createVector(0, 0);
 		this.#particles = [];
 		this.#createParticles();
-		Game.inst.particleSystems.push(this);
+		Game.inst.addParticleSystem(this);
 	}
 //#endregion
 
@@ -60,7 +60,7 @@ class ParticleSystem {
 		});
 	}
 	#destroy() {
-		Game.inst.particleSystems.splice(Game.inst.particleSystems.indexOf(this), 1);
+		Game.inst.removeParticleSystem(this);
 	}
 //#endregion
 }

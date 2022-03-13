@@ -22,7 +22,7 @@ class Poppy extends Character {
 			size: this.#fieldSize,
 			color: super.getColor(),
 			parent: this,
-			targets: () => Game.inst.enemies,
+			targets: () => Game.inst.getEnemies(),
 			onCollisionEnter: this.#onCollisionEnter.bind(this),
 			onCollisionExit: this.#onCollisionExit.bind(this),
 		});
@@ -38,11 +38,11 @@ class Poppy extends Character {
 
 	//#region Private methods
 	#onCollisionEnter(target) {
-		target.setTargetSize(target.getCurrentSize() * this.#sizekMultiplier);
+		target.setTargetSize(target.getTargetSize() * this.#sizekMultiplier);
 		target.setCurrentSpeed(target.getCurrentSpeed() * this.#speedMultiplier);
 	}
 	#onCollisionExit(target) {
-		target.setTargetSize(target.getCurrentSize() / this.#sizekMultiplier);
+		target.setTargetSize(target.getTargetSize() / this.#sizekMultiplier);
 		target.setCurrentSpeed(target.getCurrentSpeed() / this.#speedMultiplier);
 	}
 	//#endregion

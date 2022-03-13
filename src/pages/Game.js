@@ -1,24 +1,43 @@
 class Game extends Page {
-//#region Data
+	//#region Data
 	static inst;
-	static enemies;
-	static orbs;
-	static hearts;
-	static particleSystems;
-//#endregion
+	#enemies;
+	#orbs;
+	#hearts;
+	#particleSystems;
+	//#endregion
 
-//#region Constructor
+	//#region Constructor
 	constructor() {
 		super();
 		Game.inst = this;
-		Game.inst.enemies = [];
-		Game.inst.orbs = [];
-		Game.inst.hearts = [];
-		Game.inst.particleSystems = [];
+		this.#enemies = [];
+		this.#orbs = [];
+		this.#hearts = [];
+		this.#particleSystems = [];
 	}
-//#endregion
+	//#endregion
 
-//#region Overrides
+	//#region Public Setters
+	addEnemy(enemy) { this.#enemies.push(enemy); }
+	removeEnemy(enemy) { this.#enemies.splice(this.#enemies.indexOf(enemy), 1); }
+	addOrb(orb) { this.#orbs.push(orb); }
+	removeOrb(orb) {
+		this.#orbs.splice(this.#orbs.indexOf(orb), 1);
+		if (this.#orbs.length == 0) RoundManager.inst.nextRound();
+	}
+	addParticleSystem(particleSystem) { this.#particleSystems.push(particleSystem); }
+	removeParticleSystem(particleSystem) { this.#particleSystems.splice(this.#particleSystems.indexOf(particleSystem), 1); }
+	addHeart(heart) { this.#hearts.push(heart); }
+	removeHeart(heart) { this.#hearts.splice(this.#hearts.indexOf(heart), 1); }
+	//#endregion
+
+	//#region Public Getters
+	getEnemies() { return this.#enemies; }
+	getOrbs() { return this.#orbs; }
+	//#endregion
+
+	//#region Overrides
 	startUp() {
 		super.startUp();
 		this.addAction({ char: ESCAPE, callback: () => this.#exitGame() });
@@ -47,7 +66,7 @@ class Game extends Page {
 	endGame() {
 		App.inst.switchPage("confirmation");
 		let roundReached = "Rounds Completed: " + (getItem("currentRound") || 0);
-		Confirmation.inst.setConfirmationText("Game Over\n"+roundReached+"\nRestart?");
+		Confirmation.inst.setConfirmationText("Game Over\n" + roundReached + "\nRestart?");
 		Confirmation.inst.setYesCallback(() => {
 			App.inst.switchPage("game");
 		});
@@ -56,9 +75,18 @@ class Game extends Page {
 		});
 		storeItem("currentRound", 0);
 	}
-//#endregion
+	//#endregion
 
-//#region Private Methods
+	//#region Public Methods
+	clearObjects() {
+		this.#enemies = [];
+		this.#orbs = [];
+		this.#hearts = [];
+		this.#particleSystems = [];
+	}
+	//#endregion
+
+	//#region Private Methods
 	#startGame() {
 		new Environment(2500);
 		// Player.inst = new Player();
@@ -80,17 +108,17 @@ class Game extends Page {
 	}
 	#updateGame() {
 		Environment.inst.update();
-		Game.inst.enemies.forEach(enemy => enemy.update());
+		this.#enemies.forEach(enemy => enemy.update());
 		Player.inst.update();
 		RoundManager.inst.update();
 		PlayerCamera.inst.update();
-		Game.inst.orbs.forEach(orb => orb.update());
-		Game.inst.hearts.forEach(heart => heart.update());
-		Game.inst.particleSystems.forEach(particleSystem => particleSystem.update());
+		this.#orbs.forEach(orb => orb.update());
+		this.#hearts.forEach(heart => heart.update());
+		this.#particleSystems.forEach(particleSystem => particleSystem.update());
 		GameUI.inst.update();
 	}
 	#exitGame() {
 		App.inst.switchPage("mainMenu");
 	}
-//#endregion
+	//#endregion
 }

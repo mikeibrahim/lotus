@@ -20,7 +20,7 @@ class Tulip extends Character {
 			size: this.#fieldSize,
 			color: super.getColor(),
 			parent: this,
-			targets: () => Game.inst.enemies,
+			targets: () => Game.inst.getEnemies(),
 			onCollision: this.#onCollision.bind(this),
 		});
 	}
