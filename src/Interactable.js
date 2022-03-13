@@ -2,11 +2,12 @@ class Interactable {
 	//#region Data
 	#targets;
 	#size;
-	#speed;
-	#color;
-	#currentSize;
 	#targetSize;
+	#currentSize;
+	#speed;
+	#targetSpeed;
 	#currentSpeed;
+	#color;
 	#currentColor;
 	#position;
 	#velocity;
@@ -16,9 +17,10 @@ class Interactable {
 	constructor({ targets, size, speed, color }) {
 		this.#targets = targets;
 		this.#size = size;
-		this.#currentSize = size;
 		this.#targetSize = size;
+		this.#currentSize = size;
 		this.#speed = speed;
+		this.#targetSpeed = speed;
 		this.#currentSpeed = speed;
 		this.#color = color;
 		this.#currentColor = color;
@@ -29,9 +31,10 @@ class Interactable {
 
 	//#region Public Setters
 	setSize(size) { this.#size = size; }
-	setCurrentSize(size) { this.#currentSize = size; }
 	setTargetSize(size) { this.#targetSize = size; }
+	setCurrentSize(size) { this.#currentSize = size; }
 	setSpeed(speed) { this.#speed = speed; }
+	setTargetSpeed(speed) { this.#targetSpeed = speed; }
 	setCurrentSpeed(speed) { this.#currentSpeed = speed; }
 	setColor(color) { this.#color = color; }
 	setCurrentColor(color) { this.#currentColor = color; }
@@ -45,6 +48,7 @@ class Interactable {
 	getCurrentSize() { return this.#currentSize; }
 	getTargetSize() { return this.#targetSize; }
 	getSpeed() { return this.#speed; }
+	getTargetSpeed() { return this.#targetSpeed; }
 	getCurrentSpeed() { return this.#currentSpeed; }
 	getColor() { return this.#color; }
 	getPosition() { return this.#position; }
@@ -55,6 +59,7 @@ class Interactable {
 	update() {
 		this.#checkCollision();
 		this.#updateSize();
+		this.#updateSpeed();
 		this.#move();
 		this.#render();
 	}
@@ -85,9 +90,8 @@ class Interactable {
 			if (this.isTouching(target)) this.onCollision(target);
 		});
 	}
-	#updateSize() {
-		this.#currentSize = lerp(this.#currentSize, this.#targetSize, 5 * deltaTime / 1000);
-	}
+	#updateSize() { this.#currentSize = lerp(this.#currentSize, this.#targetSize, 5 * deltaTime / 1000); }
+	#updateSpeed() { this.#currentSpeed = lerp(this.#currentSpeed, this.#targetSpeed, 50 * deltaTime / 1000); }
 	#move() {
 		if (this.#currentSpeed <= 0) return;
 		this.#position.add(p5.Vector.mult(this.#velocity, this.#currentSpeed * (deltaTime / 1000)));

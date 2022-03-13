@@ -23,7 +23,6 @@ class Orb extends Interactable {
 			position: super.getPosition()
 		});
 		Game.inst.removeOrb(this);
-		GameUI.inst.addCurrentOrbs(1);
 	}
 	//#endregion
 }

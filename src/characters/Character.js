@@ -16,6 +16,8 @@ class Character extends Player {
 	}
 	nextRound() {
 		super.setTargetSize(super.getSize());
+		super.setTargetSpeed(super.getSpeed());
+		super.setCurrentSize(super.getSize());
 		super.setCurrentSpeed(super.getSpeed());
 	}
 	takeDown() { } // Called once

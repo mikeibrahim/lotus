@@ -37,14 +37,15 @@ class GameUI {
 
 	}
 	update() {
-		this.#render();
+		this.#renderTexts();
+		this.#renderOrbIndicators();
 	}
 	takeDown() {
 	}
 	//#endregion
 
 	//#region Private Methods
-	#render() {
+	#renderTexts() {
 		let buffer = 100;
 		let pos = PlayerCamera.inst.getPosition();
 		let zoom = PlayerCamera.inst.getCurrentZoom();
@@ -69,6 +70,24 @@ class GameUI {
 			pos.x,
 			-height / 2 - zoom + pos.y + buffer
 		);
+	}
+	#renderOrbIndicators() {
+		let radius = 300;
+		let pos = PlayerCamera.inst.getPosition();
+		Game.inst.getOrbs().forEach(orb => {
+			let orbPos = orb.getPosition();
+			let dir = p5.Vector.sub(orbPos, pos);
+			let dist = dir.mag();
+			let angle = dir.heading();
+			let x = min(radius, dist) * cos(angle);
+			let y = min(radius, dist) * sin(angle);
+			let color = orb.getColor();
+			let size = orb.getSize();
+			fill(red(color), green(color), blue(color), max(((width / 3) / dist) * 255), 150);
+			stroke(0);
+			strokeWeight(0);
+			circle(x + pos.x, y + pos.y, size);
+		});
 	}
 	//#endregion
 }

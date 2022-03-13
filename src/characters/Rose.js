@@ -4,6 +4,7 @@ class Rose extends Character {
 	#pedalSpeed;
 	#pedalLifeTime;
 	#invincibilityTime;
+	#pedals;
 	//#endregion
 
 	//#region Constructor
@@ -19,14 +20,18 @@ class Rose extends Character {
 		this.#pedalSpeed = [800, 900, 1000, 1100][level];
 		this.#pedalLifeTime = [2000, 3000, 3000, 4000][level];
 		this.#invincibilityTime = [1500, 1750, 2000, 2250][level];
-		this.pedals = [];
+		this.#pedals = [];
 	}
+	//#endregion
+
+	//#region Public Getters
+	removePedal(pedal) { this.#pedals.splice(this.#pedals.indexOf(pedal), 1); }
 	//#endregion
 
 	//#region Callbacks
 	update() {
 		super.update();
-		this.pedals.forEach(pedal => { pedal.update(); });
+		this.#pedals.forEach(pedal => { pedal.update(); });
 	}
 	nextRound() {
 		super.nextRound();
@@ -39,19 +44,18 @@ class Rose extends Character {
 
 	//#region Private Methods
 	#createPedal() {
-		if (GameUI.inst.getCurrentOrbs() < 1) return;
-		GameUI.inst.addCurrentOrbs(-1);
-		this.pedals.push(new Pedal({
+		if (GameUI.inst.getCurrentOrbs() == 0) return;
+		this.#pedals.push(new Pedal({
 			size: this.#pedalSize,
 			speed: this.#pedalSpeed,
 			color: super.getColor(),
 			lifeTime: this.#pedalLifeTime,
 			invincibilityTime: this.#invincibilityTime,
 		}));
-		Game.inst.addOrn(new Orb());
+		Game.inst.addOrb(new Orb());
 	}
 	#destroyPedals() {
-		this.pedals = [];
+		this.#pedals = [];
 	}
 	//#endregion
 }
@@ -116,7 +120,7 @@ class Pedal extends Interactable {
 			size: super.getSize(),
 			position: super.getPosition()
 		});
-		Player.inst.pedals.splice(Player.inst.pedals.indexOf(this), 1);
+		Player.inst.removePedal(this);
 	}
 	//#endregion
 }

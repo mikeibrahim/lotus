@@ -118,8 +118,8 @@ class OrangeEnemy extends Enemy {
 		super.update();
 		this.#field.update();
 	}
-	#onCollisionEnter(target) { target.setSpeedMultiplier(8.5 / 10); }
-	#onCollisionExit(target) { target.setSpeedMultiplier(10 / 8.5); }
+	#onCollisionEnter(target) { target.setTargetSpeed(target.getTargetSpeed() * 0.8); }
+	#onCollisionExit(target) { target.setTargetSpeed(target.getTargetSpeed() / 0.8); }
 }
 
 class PinkEnemy extends Enemy {

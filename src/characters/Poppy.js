@@ -39,11 +39,11 @@ class Poppy extends Character {
 	//#region Private methods
 	#onCollisionEnter(target) {
 		target.setTargetSize(target.getTargetSize() * this.#sizekMultiplier);
-		target.setCurrentSpeed(target.getCurrentSpeed() * this.#speedMultiplier);
+		target.setTargetSpeed(target.getTargetSpeed() * this.#speedMultiplier);
 	}
 	#onCollisionExit(target) {
 		target.setTargetSize(target.getTargetSize() / this.#sizekMultiplier);
-		target.setCurrentSpeed(target.getCurrentSpeed() / this.#speedMultiplier);
+		target.setTargetSpeed(target.getTargetSpeed() / this.#speedMultiplier);
 	}
 	//#endregion
 }

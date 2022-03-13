@@ -61,7 +61,7 @@ class Dandelion extends Character {
 		if (this.#currentFadeTime <= 0) this.#currentFadeTime = 0;
 		
 		Player.inst.setTargetSize(super.getSize() + super.getSize() * this.#fadeSizeMultiplier * (this.#currentFadeTime / this.#maxFadeTime));
-		Player.inst.setCurrentSpeed(super.getSpeed() + super.getSpeed() * this.#fadeSpeedMultiplier * (this.#currentFadeTime / this.#maxFadeTime));
+		Player.inst.setTargetSpeed(super.getSpeed() + super.getSpeed() * this.#fadeSpeedMultiplier * (this.#currentFadeTime / this.#maxFadeTime));
 	}
 	#fadeReset() {
 		this.#faded = false;

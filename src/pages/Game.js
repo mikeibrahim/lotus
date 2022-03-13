@@ -21,9 +21,10 @@ class Game extends Page {
 	//#region Public Setters
 	addEnemy(enemy) { this.#enemies.push(enemy); }
 	removeEnemy(enemy) { this.#enemies.splice(this.#enemies.indexOf(enemy), 1); }
-	addOrb(orb) { this.#orbs.push(orb); }
+	addOrb(orb) { this.#orbs.push(orb); GameUI.inst.addCurrentOrbs(-1); }
 	removeOrb(orb) {
 		this.#orbs.splice(this.#orbs.indexOf(orb), 1);
+		GameUI.inst.addCurrentOrbs(1);
 		if (this.#orbs.length == 0) RoundManager.inst.nextRound();
 	}
 	addParticleSystem(particleSystem) { this.#particleSystems.push(particleSystem); }
@@ -83,6 +84,7 @@ class Game extends Page {
 		this.#orbs = [];
 		this.#hearts = [];
 		this.#particleSystems = [];
+		GameUI.inst.setCurrentOrbs(0);
 	}
 	//#endregion
 
