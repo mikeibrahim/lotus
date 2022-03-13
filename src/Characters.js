@@ -72,7 +72,7 @@ class Characters {
 				characterType: Characters.ROSE,
 				name: 'Rose',
 				color: color('#ff4545'),
-				description: '[Ability] Launch a pedal to collect orbs and teleport to enemies. Consumes one orb. Upgrades increase duration & effectiveness.',
+				description: '[Ability] Launch a petal to collect orbs and teleport to enemies. Consumes one orb. Upgrades increase duration & effectiveness.',
 				upgradeCosts: [50, 60, 90],
 				roundUnlock: 20,
 			},

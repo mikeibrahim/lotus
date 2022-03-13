@@ -25,13 +25,13 @@ class Rose extends Character {
 	//#endregion
 
 	//#region Public Getters
-	removePedal(pedal) { this.#pedals.splice(this.#pedals.indexOf(pedal), 1); }
+	removePedal(petal) { this.#pedals.splice(this.#pedals.indexOf(petal), 1); }
 	//#endregion
 
 	//#region Callbacks
 	update() {
 		super.update();
-		this.#pedals.forEach(pedal => { pedal.update(); });
+		this.#pedals.forEach(petal => { petal.update(); });
 	}
 	nextRound() {
 		super.nextRound();
@@ -45,7 +45,7 @@ class Rose extends Character {
 	//#region Private Methods
 	#createPedal() {
 		if (GameUI.inst.getCurrentOrbs() == 0) return;
-		this.#pedals.push(new Pedal({
+		this.#pedals.push(new Petal({
 			size: this.#pedalSize,
 			speed: this.#pedalSpeed,
 			color: super.getColor(),
@@ -60,7 +60,7 @@ class Rose extends Character {
 	//#endregion
 }
 
-class Pedal extends Interactable {
+class Petal extends Interactable {
 	//#region Data
 	#lifeTime;
 	#currentLifeTime;
