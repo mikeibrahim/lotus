@@ -72,21 +72,28 @@ class GameUI {
 		);
 	}
 	#renderOrbIndicators() {
-		let radius = 300;
+		if (Difficulty.inst.getDifficulty() != "easy") return;
+		let radius = 200;
 		let pos = PlayerCamera.inst.getPosition();
 		Game.inst.getOrbs().forEach(orb => {
 			let orbPos = orb.getPosition();
 			let dir = p5.Vector.sub(orbPos, pos);
 			let dist = dir.mag();
+			if (dist < radius) return;
+			radius += (30 * dist) / width;
 			let angle = dir.heading();
 			let x = min(radius, dist) * cos(angle);
 			let y = min(radius, dist) * sin(angle);
 			let color = orb.getColor();
 			let size = orb.getSize();
-			fill(red(color), green(color), blue(color), max(((width / 3) / dist) * 255), 150);
+			fill(red(color), green(color), blue(color), max((width / dist) * 255, 150));
 			stroke(0);
 			strokeWeight(0);
-			circle(x + pos.x, y + pos.y, size);
+			push();
+			translate(x + pos.x, y + pos.y);
+			rotate(angle - PI / 2);
+			triangle( -size / 2, -size / 2, 0, 0, size / 2, -size / 2);
+			pop();
 		});
 	}
 	//#endregion

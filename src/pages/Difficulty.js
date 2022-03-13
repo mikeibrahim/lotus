@@ -1,14 +1,23 @@
 class Difficulty extends Page {
+	//#region Data
+	static inst;
+	#difficulty;
+	//#endregion
+
 	//#region Constructor
 	constructor() {
 		super();
+		Difficulty.inst = this;
 	}
 	//#endregion
 
-	//#region Static Methods
-	static enemySpeedScale(speed) {
-		let difficulty = getItem("difficulty");
-		switch (difficulty) {
+	//#region Public Setters
+	applyDifficulty() { this.#difficulty = getItem("difficulty") || "easy"; }
+	//#endregion
+
+	//#region Public Methods
+	enemySpeedScale(speed) {
+		switch (this.#difficulty) {
 			case "easy":
 				return speed;
 			case "hard":
@@ -17,14 +26,13 @@ class Difficulty extends Page {
 				return speed * 1.5;
 		}
 	}
-	static getDifficulty() {
-		return getItem("difficulty");
-	}
+	getDifficulty() { return this.#difficulty; }
 	//#endregion
 
 	//#region Overrides
 	startUp() {
 		super.startUp();
+		console.log(this.#difficulty);
 		this.addText({ text: "Select Difficulty", spacing: 100, fontSize: 48 });
 		this.addText({ text: "[E] - Easy", spacing: 200, fontSize: 32 });
 		this.addText({ text: "[H] - Hard", spacing: 100, fontSize: 32 });
@@ -39,13 +47,16 @@ class Difficulty extends Page {
 
 	//#region Private Methods
 	#easy() {
-		storeItem("difficulty", "easy");
+		this.#difficulty = "easy";
+		storeItem("difficulty", this.#difficulty);
 	}
 	#hard() {
-		storeItem("difficulty", "hard");
+		this.#difficulty = "hard";
+		storeItem("difficulty", this.#difficulty);
 	}
 	#dareDevil() {
-		storeItem("difficulty", "daredevil");
+		this.#difficulty = "daredevil";
+		storeItem("difficulty", this.#difficulty);
 	}
 	#startGame() {
 		App.inst.switchPage("game");

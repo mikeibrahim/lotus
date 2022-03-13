@@ -90,6 +90,7 @@ class Game extends Page {
 
 	//#region Private Methods
 	#startGame() {
+		Difficulty.inst.applyDifficulty();
 		new Environment(2500);
 		// Player.inst = new Player();
 		new GameUI();

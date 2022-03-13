@@ -5,7 +5,7 @@ class Enemy extends Interactable {
 
 	//#region Constructor
 	constructor({ damage, size, speed, color }) {
-		super({ targets: () => [Player.inst], size: size, speed: Difficulty.enemySpeedScale(speed), color: color });
+		super({ targets: () => [Player.inst], size: size, speed: Difficulty.inst.enemySpeedScale(speed), color: color });
 		this.#damage = damage;
 	}
 	//#endregion

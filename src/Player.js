@@ -81,7 +81,7 @@ class Player extends Interactable {
 	//#region Public Methods
 	heal(amount) {
 		this.#currentHealth += amount;
-		if (Difficulty.getDifficulty() == "daredevil") this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
+		if (Difficulty.inst.getDifficulty() == "daredevil") this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 		App.inst.changeBackground(45, 1);
 	}
