@@ -1,42 +1,27 @@
 class Lotus extends Character {
-//#region Data
-	#characterType;
-	#maxHealth;
-	#speedMultiplier;
-	#sizeMultiplier;
+	//#region Data
 	#maxPickups;
 	#lotusPickupSize;
 	#lotusPickupHeal;
-//#endregion
+	//#endregion
 
-//#region Constructor
+	//#region Constructor
 	constructor() {
-		super();
-		Character.inst = this;
-		this.#characterType = Characters.LOTUS;
-		this.#maxHealth = [1, 1, 1, 1];
-		this.#speedMultiplier = [1, 1.2, 1.3, 1.4];
-		this.#sizeMultiplier = [1, 1, 1.2, 1.2];
-		this.#maxPickups = [1, 1, 2, 2];
-		this.#lotusPickupSize = [75, 120, 120, 200];
-		this.#lotusPickupHeal = [1, 1, 1, 1];
+		let characterType = Characters.LOTUS;
+		let level = Characters.getCharacterLevel(characterType);
+		let maxHealth = [1, 1, 2, 2][level];
+		let speed = [500, 550, 600, 650][level];
+		let size = [100, 100, 120, 120][level];
+		super({ characterType: characterType, maxHealth: maxHealth, size: size, speed: speed });
+		Player.inst = this;
+		this.#maxPickups = [1, 1, 2, 2][level];
+		this.#lotusPickupSize = [75, 120, 120, 200][level];
+		this.#lotusPickupHeal = [1, 1, 1, 1][level];
 		this.lotusPickups = [];
 	}
-//#endregion
+	//#endregion
 
-//#region Callbacks
-	startUp() {
-		let level = Characters.getCharacterLevel(this.#characterType);
-		super.startUp({
-			characterType: this.#characterType,
-			maxHealth: this.#maxHealth[level],
-			sizeMultiplier: this.#sizeMultiplier[level],
-			speedMultiplier: this.#speedMultiplier[level],
-		});
-		this.#maxPickups = this.#maxPickups[level];
-		this.#lotusPickupSize = this.#lotusPickupSize[level];
-		this.#lotusPickupHeal = this.#lotusPickupHeal[level];
-	}
+	//#region Callbacks
 	update() {
 		super.update();
 		this.#updateLotusPickups();
@@ -46,9 +31,9 @@ class Lotus extends Character {
 		this.#destroyLotusPickups();
 		this.#createLotusPickups();
 	}
-//#endregion
+	//#endregion
 
-//#region Private Methods
+	//#region Private Methods
 	#updateLotusPickups() {
 		this.lotusPickups.forEach(lotusPickup => { lotusPickup.update(); });
 	}
@@ -59,61 +44,48 @@ class Lotus extends Character {
 		for (let i = 0; i < this.#maxPickups; i++) {
 			this.lotusPickups.push(new LotusPickup({
 				size: this.#lotusPickupSize,
+				color: super.getColor(),
 				heal: this.#lotusPickupHeal,
-				color: super.getPlayerColor(),
 			}));
 		}
 	}
-//#endregion
+	//#endregion
 }
 
 class LotusPickup extends Interactable {
-//#region Data
-	#size;
+	//#region Data
 	#heal;
-	#position;
-	#color;
-//#endregion
+	//#endregion
 
-//#region Constructor
-	constructor({ size, heal, color }) {
-		super({ size: size });
-		this.#size = size;
+	//#region Constructor
+	constructor({ size, color, heal }) {
+		super({ targets: () => [Player.inst], size: size, speed: 0, color: color });
 		this.#heal = heal;
-		this.#position = super.getPosition();
-		this.#color = color;
 	}
-//#endregion
+	//#endregion
 
-//#region Public Methods
+	//#region Public Methods
 	update() {
 		super.update();
-		this.#render();
+		super.pulsate({speed: 0.2, opacity: 0.8});
 	}
-	interact() {
-		super.interact();
-		Player.inst.heal(this.#heal);
+	onCollision(target) {
+		target.heal(this.#heal);
 		this.#destroy();
 	}
-//#endregion
+	//#endregion
 
-//#region Private Methods
-	#render() {
-		fill(this.#color);
-		stroke(0);
-		strokeWeight(0);
-		circle(this.#position.x, this.#position.y, this.#size);
-	}
+	//#region Private Methods
 	#destroy() {
 		new ParticleSystem({
 			count: 8,
 			lifeTime: 3000,
-			color: color(red(this.#color), green(this.#color), blue(this.#color), 200),
+			color: color(red(super.getColor()), green(super.getColor()), blue(super.getColor()), 200),
 			speed: 400,
-			size: this.#size,
-			position: this.#position
+			size: super.getSize(),
+			position: super.getPosition()
 		});
-		Character.inst.lotusPickups.splice(Character.inst.lotusPickups.indexOf(this), 1);
+		Player.inst.lotusPickups.splice(Player.inst.lotusPickups.indexOf(this), 1);
 	}
-//#endregion
+	//#endregion
 }

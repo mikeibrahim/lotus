@@ -14,8 +14,11 @@ class Difficulty extends Page {
 			case "hard":
 				return speed * 1.5;
 			case "daredevil":
-				return speed * 3;
+				return speed * 1.5;
 		}
+	}
+	static getDifficulty() {
+		return getItem("difficulty");
 	}
 	//#endregion
 

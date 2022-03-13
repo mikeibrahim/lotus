@@ -1,48 +1,29 @@
 class Orb extends Interactable {
-//#region Data
-	#color;
-	#size;
-	#position;
-//#endregion
-
-//#region Constructor
-	constructor({ size }) {
-		super({ size: size });
-		this.#size = size;
-		this.#position = super.getPosition();
-		this.#color = color(50, 50, 230);
+	//#region Constructor
+	constructor() {
+		super({ targets: () => [Player.inst], size: 50, speed: 0, color: color(50, 50, 230) });
 	}
-//#endregion
+	//#endregion
 
-//#region Public Methods
+	//#region Public Methods
 	update() {
 		super.update();
-		this.#render();
+		super.pulsate({ speed: 0.2, opacity: 0.8 });
 	}
-	interact() {
-		super.interact();
+	onCollision(target) {
 		this.destroy();
 	}
 	destroy() {
 		new ParticleSystem({
 			count: 15,
 			lifeTime: 500,
-			color: color(red(this.#color), green(this.#color), blue(this.#color), 200),
+			color: color(red(super.getColor()), green(super.getColor()), blue(super.getColor()), 200),
 			speed: 300,
-			size: 30,
-			position: this.#position
+			size: super.getSize(),
+			position: super.getPosition()
 		});
 		Game.inst.orbs.splice(Game.inst.orbs.indexOf(this), 1);
 		GameUI.inst.addCurrentOrbs(1);
 	}
-//#endregion
-
-//#region Private Methods
-	#render() {
-		fill(this.#color);
-		stroke(0);
-		strokeWeight(0);
-		circle(this.#position.x, this.#position.y, this.#size);
-	}
-//#endregion
+	//#endregion
 }

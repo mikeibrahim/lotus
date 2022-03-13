@@ -3,8 +3,6 @@ class RoundManager {
 	static inst;
 	#rounds;
 	#currentRound;
-	#orbSize;
-	#heartSize;
 //#endregion
 
 //#region Constructor
@@ -12,8 +10,6 @@ class RoundManager {
 		RoundManager.inst = this;
 		this.#rounds = 0;
 		this.#currentRound = 0;
-		this.#orbSize = 50;
-		this.#heartSize = 50;
 	}
 //#endregion
 
@@ -55,11 +51,11 @@ class RoundManager {
 			for (let j = 0; j < enemy.count; j++) Game.inst.enemies.push(Enemies.getEnemy(enemy.enemyType));
 		});
 		for (let i = 0; i < round.orbs; i++)
-			Game.inst.orbs.push(new Orb({ size: this.#orbSize }));
+			Game.inst.orbs.push(new Orb());
 		for (let i = 0; i < round.hearts; i++)
-			Game.inst.hearts.push(new Heart({ size: this.#heartSize }));
+			Game.inst.hearts.push(new Heart());
 		
-		Player.inst.resetPosition();
+		Player.inst.setPosition(createVector(0, 0));
 		Player.inst.setInvincibility(2000);
 		Character.inst.nextRound();
 		PlayerCamera.inst.zoomIn();

@@ -1,12 +1,6 @@
 class Game extends Page {
 //#region Data
 	static inst;
-	#environment;
-	#character;
-	#player;
-	#playerCamera;
-	#gameUI;
-	#roundManager;
 	static enemies;
 	static orbs;
 	static hearts;
@@ -17,12 +11,6 @@ class Game extends Page {
 	constructor() {
 		super();
 		Game.inst = this;
-		this.#environment = null;
-		this.#character = null;
-		this.#player = null;
-		this.#playerCamera = null;
-		this.#gameUI = null;
-		this.#roundManager = null;
 		Game.inst.enemies = [];
 		Game.inst.orbs = [];
 		Game.inst.hearts = [];
@@ -42,7 +30,7 @@ class Game extends Page {
 	}
 	keyPressed() {
 		super.keyPressed();
-		this.#character.keyPressed();
+		Player.inst.keyPressed();
 	}
 	mousePressed() {
 		super.mousePressed();
@@ -50,12 +38,11 @@ class Game extends Page {
 	}
 	takeDown() {
 		super.takeDown();
-		this.#environment.takeDown();
-		this.#gameUI.takeDown();
-		this.#player.takeDown();
-		this.#playerCamera.takeDown();
-		this.#character.takeDown();
-		this.#roundManager.takeDown();
+		Environment.inst.takeDown();
+		GameUI.inst.takeDown();
+		PlayerCamera.inst.takeDown();
+		Player.inst.takeDown();
+		RoundManager.inst.takeDown();
 	}
 	endGame() {
 		App.inst.switchPage("confirmation");
@@ -73,36 +60,34 @@ class Game extends Page {
 
 //#region Private Methods
 	#startGame() {
-		this.#environment = new Environment(2500);
-		this.#gameUI = new GameUI();
-		this.#player = new Player();
-		this.#playerCamera = new PlayerCamera();
-		let characterType = getItem("characterType") || Characters.getCharacters()[0].characterType;
-		this.#character = Characters.getCharacterObject(characterType);
-		this.#roundManager = new RoundManager();
+		new Environment(2500);
+		// Player.inst = new Player();
+		new GameUI();
+		new PlayerCamera();
+		let characterType = getItem("characterType") || Characters.LOTUS;
+		Characters.getCharacterObject(characterType);
+		new RoundManager();
 
 		// Start Ups
-		this.#environment.startUp();
-		this.#gameUI.startUp();
-		this.#character.startUp();
+		Environment.inst.startUp();
+		GameUI.inst.startUp();
 		let currentRound = getItem("currentRound") || 0;
-		if (currentRound == 0) storeItem("currentHealth", this.#character.getMaxHealth());
-		this.#player.startUp();
-		this.#playerCamera.startUp();
-		this.#roundManager.startUp();
-		this.#roundManager.loadRound(currentRound);
+		if (currentRound == 0) storeItem("currentHealth", Player.inst.getMaxHealth());
+		Player.inst.startUp();
+		PlayerCamera.inst.startUp();
+		RoundManager.inst.startUp();
+		RoundManager.inst.loadRound(currentRound);
 	}
 	#updateGame() {
-		this.#environment.update();
-		this.#player.update();
-		this.#character.update();
-		this.#playerCamera.update();
-		this.#roundManager.update();
+		Environment.inst.update();
 		Game.inst.enemies.forEach(enemy => enemy.update());
+		Player.inst.update();
+		RoundManager.inst.update();
+		PlayerCamera.inst.update();
 		Game.inst.orbs.forEach(orb => orb.update());
 		Game.inst.hearts.forEach(heart => heart.update());
 		Game.inst.particleSystems.forEach(particleSystem => particleSystem.update());
-		this.#gameUI.update();
+		GameUI.inst.update();
 	}
 	#exitGame() {
 		App.inst.switchPage("mainMenu");

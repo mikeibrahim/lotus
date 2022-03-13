@@ -1,61 +1,46 @@
 class Tulip extends Character {
-//#region Data
-	#characterType;
-	#maxHealth;
-	#sizeMultiplier;
-	#speedMultiplier;
+	//#region Data
 	#fieldSize;
 	#pushAmount;
 	#field;
-//#endregion
+	//#endregion
 
-//#region Constructor
+	//#region Constructor
 	constructor() {
-		super();
-		Character.inst = this;
-		this.#characterType = Characters.TULIP;
-		this.#maxHealth = [1, 1, 1, 2];
-		this.#sizeMultiplier = [1, 1, 1, 1];
-		this.#speedMultiplier = [1, 1, 1.2, 1.2];
-		this.#fieldSize = [250, 300, 350, 400];
-		this.#pushAmount = [150, 160, 170, 180];
-		this.Field = null;
-	}
-//#endregion
-
-//#region Callbacks
-	startUp() {
-		let level = Characters.getCharacterLevel(this.#characterType);
-		super.startUp({
-			characterType: this.#characterType,
-			maxHealth: this.#maxHealth[level],
-			sizeMultiplier: this.#sizeMultiplier[level],
-			speedMultiplier: this.#speedMultiplier[level],
-		});
-		this.#fieldSize = this.#fieldSize[level];
-		this.#pushAmount = this.#pushAmount[level];
+		let characterType = Characters.TULIP;
+		let level = Characters.getCharacterLevel(characterType);
+		let maxHealth = [1, 1, 2, 2][level];
+		let speed = [500, 500, 600, 600][level];
+		let size = [100, 100, 100, 100][level];
+		super({ characterType: characterType, maxHealth: maxHealth, size: size, speed: speed });
+		Player.inst = this;
+		this.#fieldSize = [250, 300, 350, 400][level];
+		this.#pushAmount = [150, 160, 170, 180][level];
 		this.#field = new Field({
-			size: this.#fieldSize + this.getPlayerSize(),
-			color: super.getPlayerColor(),
-			parent: Player.inst,
+			size: this.#fieldSize,
+			color: super.getColor(),
+			parent: this,
 			targets: () => Game.inst.enemies,
-			onCollision: (target) => this.#onCollision(target),
+			onCollision: this.#onCollision.bind(this),
 		});
 	}
+	//#endregion
+
+	//#region Callbacks
 	update() {
 		super.update();
 		this.#field.update();
 	}
-//#endregion
+	//#endregion
 
-//#region Private methods
+	//#region Private methods
 	#onCollision(target) {
 		let targetPosition = target.getPosition();
-		let playerPosition = Player.inst.getPosition();
+		let playerPosition = super.getPosition();
 		let pushVector = p5.Vector.sub(targetPosition, playerPosition);
 		pushVector.normalize();
 		pushVector.mult(this.#pushAmount * deltaTime / 1000);
 		target.setPosition(p5.Vector.add(targetPosition, pushVector));
 	}
-//#endregion
+	//#endregion
 }

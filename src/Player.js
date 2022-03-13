@@ -1,57 +1,37 @@
-class Player {
-//#region Data
+class Player extends Interactable {
+	//#region Data
 	static inst;
-	#size;
-	#currentSize;
-	#speed;
-	#color;
 	#maxHealth;
 	#currentHealth;
 	#maxInvincibilityTime;
 	#currentInvincibilityTime;
-	#position;
-	#moveDirection;
 	#mouseToggle;
-//#endregion
+	//#endregion
 
-//#region Constructor
-	constructor() {
-		Player.inst = this;
-		this.#size = 100;
-		this.#currentSize = this.#size;
-		this.#speed = 500;
-		this.#maxHealth = 0;
-		this.#currentHealth = 0;
-		this.#color = color(255, 0, 0);
+	//#region Constructor
+	constructor({maxHealth, size, speed, color}) {
+		super({ targets: () => [], size: size, speed: speed, color: color})
+		this.#maxHealth = maxHealth;
+		this.#currentHealth = maxHealth;
+		super.setPosition(createVector(0, 0));
 		this.#maxInvincibilityTime = 1000;
 		this.#currentInvincibilityTime = 0;
-		this.#position = createVector(0, 0);
-		this.#moveDirection = createVector(0, 0);
 		this.#mouseToggle = false;
 	}
-//#endregion
-	
-//#region Public Setters
-	setInvincibility(time) { this.#currentInvincibilityTime = time; }
-	setSizeMultiplier(multiplier) { this.#size *= multiplier; }
-	setSpeedMultiplier(multiplier) { this.#speed *= multiplier; }
+	//#endregion
+
+	//#region Public Setters
 	setMaxHealth(maxHealth) { this.#maxHealth = maxHealth; }
-	setSize(size) { this.#size = size; }
-	setSpeed(speed) { this.#speed = speed; }
-	setColor(color) { this.#color = color; }
-//#endregion
+	setInvincibility(time) { this.#currentInvincibilityTime = time; }
+	//#endregion
 
-//#region Public Getters
-	getPosition() { return this.#position; }
-	getMaxSize() { return this.#size; }
-	getSize() { return this.#currentSize; }
-	getSpeed() { return this.#speed; }
-	getCurrentHealth() { return this.#currentHealth; }
+	//#region Public Getters
 	getMaxHealth() { return this.#maxHealth; }
+	getCurrentHealth() { return this.#currentHealth; }
 	isInvincible() { return this.#currentInvincibilityTime > 0; }
-//#endregion
+	//#endregion
 
-//#region Private Getters
+	//#region Private Getters
 	#getInput() {
 		let input = createVector(0, 0);
 		if (App.inst.getKeyboardControls()) {
@@ -76,39 +56,32 @@ class Player {
 		let shiftKey = 16;
 		return keyIsDown(shiftKey) ? 0.5 : 1;
 	}
-//#endregion
+	//#endregion
 
-//#region Callbacks
+	//#region Callbacks
 	startUp() {
 		this.#currentHealth = getItem("currentHealth") || this.#maxHealth;
 		GameUI.inst.setMaxHealth(this.#maxHealth);
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 	}
 	update() {
+		super.update()
 		this.#invincibility();
-		this.#updateSize();
-		this.#move();
+		this.#invincibilityFill();
+		this.#updateVelocity();
 		this.#detectEnvironmentCollision();
-		this.#renderPlayer();
 	}
 	mousePressed() {
 		this.#mouseToggle = !this.#mouseToggle;
 	}
 	takeDown() {
 	}
-//#endregion
+	//#endregion
 
-//#region Public Methods
-	resetPosition() {
-		this.#position.mult(0);
-	}
-	isTouching(interactable) {
-		let position = interactable.getPosition();
-		let size = interactable.getSize();
-		return this.#position.dist(position) < (this.#size / 2) + (size / 2);
-	}
+	//#region Public Methods
 	heal(amount) {
 		this.#currentHealth += amount;
+		if (Difficulty.getDifficulty() == "daredevil") this.#currentHealth = constrain(this.#currentHealth, 0, this.#maxHealth);
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 		App.inst.changeBackground(45, 1);
 	}
@@ -117,66 +90,45 @@ class Player {
 
 		this.#currentHealth -= damage; // Take damage
 		this.#currentInvincibilityTime = constrain(this.#currentInvincibilityTime, 0, this.#maxInvincibilityTime);
-		
-		if (this.#currentHealth <= 0) this.#die();
+		if (this.#currentHealth <= 0) { this.#die(); return; }
 		else this.#currentInvincibilityTime = this.#maxInvincibilityTime; // Start invincibility
-		
 
 		GameUI.inst.setCurrentHealth(this.#currentHealth);
 		new ParticleSystem({
 			count: 10,
 			lifeTime: 500,
-			color: color(red(this.#color), green(this.#color), blue(this.#color), 100),
+			color: color(red(super.getColor()), green(super.getColor()), blue(super.getColor()), 100),
 			speed: 300,
-			size: this.#size,
-			position: this.#position
+			size: super.getSize(),
+			position: super.getPosition()
 		});
 		PlayerCamera.inst.shake(200, 50);
 		App.inst.changeBackground(20, 0.5);
 	}
-//#endregion
-	
-//#region Private Methods
+	//#endregion
+
+	//#region Private Methods
 	#invincibility() {
-		if (this.#currentInvincibilityTime > 0) {
-			this.#currentInvincibilityTime -= deltaTime;
-		}
+		if (this.#currentInvincibilityTime > 0) this.#currentInvincibilityTime -= deltaTime;
 	}
 	#detectEnvironmentCollision() {
 		let size = Environment.inst.getSize();
-		let min = (-size / 2) + (this.#currentSize / 2);
-		let max = (size / 2) - (this.#currentSize / 2);
-		this.#position.x = constrain(this.#position.x, min, max);
-		this.#position.y = constrain(this.#position.y, min, max);
+		let min = (-size / 2) + (super.getSize() / 2);
+		let max = (size / 2) - (super.getSize() / 2);
+		super.setPosition(createVector(constrain(super.getPosition().x, min, max), constrain(super.getPosition().y, min, max)));
 	}
-	#updateMoveDirection() {
-		this.#moveDirection = this.#getInput();
-	}
-	#updateSize() {
-		this.#currentSize = lerp(this.#currentSize, this.#size, 10 * (deltaTime / 1000));
-	}
-	#move() {
-		this.#updateMoveDirection();
-		this.#position.add(
-			this.#moveDirection.copy().mult(
-				this.#speed * this.#getShiftMultiplier() * (deltaTime / 1000)
-			)
-		);
+	// #updateSize() {
+	// 	super.setSize(lerp(super.getSize(), this.#size, 10 * (deltaTime / 1000)));
+	// }
+	#updateVelocity() {
+		super.setVelocity(this.#getInput().mult(this.#getShiftMultiplier()));
 	}
 	#invincibilityFill() {
-		let interval = 250;
-		if (this.#currentInvincibilityTime > 0 && this.#currentInvincibilityTime % interval > interval / 3)
-			fill(color(red(this.#color), green(this.#color), blue(this.#color), 100));
-	}
-	#renderPlayer() {
-		stroke(0);
-		strokeWeight(5);
-		fill(this.#color);
-		this.#invincibilityFill();
-		circle(this.#position.x, this.#position.y, this.#currentSize);
+		if (this.#currentInvincibilityTime > 0) super.pulsate({ speed: 0.7, opacity: 0.5 });
+		else super.setCurrentColor(super.getColor());
 	}
 	#die() {
 		Game.inst.endGame();
 	}
-//#endregion
+	//#endregion
 }

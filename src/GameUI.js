@@ -1,45 +1,49 @@
 class GameUI {
-//#region Data
+	//#region Data
 	static inst;
 	#currentRound;
-	#currentHealth;
 	#maxHealth;
-	#currentOrbs;
+	#currentHealth;
 	#maxOrbs;
-//#endregion
+	#currentOrbs;
+	//#endregion
 
-//#region Constructor
+	//#region Constructor
 	constructor() {
 		GameUI.inst = this;
 		this.#currentRound = 0;
-		this.#currentHealth = 0;
 		this.#maxHealth = 0;
-		this.#currentOrbs = 0;
+		this.#currentHealth = 0;
 		this.#maxOrbs = 0;
+		this.#currentOrbs = 0;
 	}
-//#endregion
+	//#endregion
 
-//#region Public Setters
+	//#region Public Setters
 	setCurrentRound(round) { this.#currentRound = round; }
-	setCurrentHealth(health) { this.#currentHealth = health; }
 	setMaxHealth(health) { this.#maxHealth = health; }
+	setCurrentHealth(health) { this.#currentHealth = health; }
+	setMaxOrbs(orbs) { this.#maxOrbs = orbs; }
 	setCurrentOrbs(orbs) { this.#currentOrbs = orbs; }
 	addCurrentOrbs(orbs) { this.#currentOrbs += orbs; }
-	setMaxOrbs(orbs) { this.#maxOrbs = orbs; }
-//#endregion
+	//#endregion
 
-//#region Public Methods
+	//#region Public Getters
+	getCurrentOrbs() { return this.#currentOrbs; }
+	//#endregion
+
+	//#region Public Methods
 	startUp() {
-		
+
 	}
 	update() {
 		this.#render();
 	}
 	takeDown() {
 	}
-//#endregion
+	//#endregion
 
-//#region Private Methods
+	//#region Private Methods
 	#render() {
 		let buffer = 100;
 		let pos = PlayerCamera.inst.getPosition();
@@ -66,5 +70,5 @@ class GameUI {
 			-height / 2 - zoom + pos.y + buffer
 		);
 	}
-//#endregion
+	//#endregion
 }

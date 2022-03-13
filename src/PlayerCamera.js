@@ -40,6 +40,7 @@ class PlayerCamera {
 	}
 	takeDown() {
 		this.#camera.ortho(-width / 2, width / 2, -height / 2, height / 2, 0, 1000);
+		this.#camera = null;
 	}
 //#endregion
 
@@ -55,6 +56,7 @@ class PlayerCamera {
 
 //#region Private Methods
 	#moveToPlayer() {
+		if (!this.#camera) return;
 		let playerPosition = Player.inst.getPosition();
 		if (App.inst.getKeyboardControls()) {
 			let targetDirection = playerPosition.copy().sub(this.#position);

@@ -1,5 +1,5 @@
 class Rounds {
-//#region Static Getters
+	//#region Static Getters
 	static getRounds() {
 		return [
 			// 0
@@ -180,5 +180,5 @@ class Rounds {
 			},
 		];
 	}
-//#endregion
+	//#endregion
 }
